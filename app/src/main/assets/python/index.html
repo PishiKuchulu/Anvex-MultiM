@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- v4.10.1 (SEC-04): Subresource Integrity pins the bootstrap loader to the
+     exact published bytes (hash computed from the v0.26.4 artifact), so a
+     tampered CDN response fails to execute. The loader then fetches the wasm
+     core from the same pinned index URL — full offline bundling remains the
+     complete fix. -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js" integrity="sha256-wAaRB2IdW5QqZZ5zehLndMwEUf6qIlb0ddcuBx2ETsc=" crossorigin="anonymous"></script>
+</head>
+<body>
+<script>
+// Pinned Pyodide version. Output is collected from stdout/stderr and sent to the app once.
+const PYODIDE_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+let pyReady = null;
+
+function send(text) {
+  try { AnvexPython.onResult(String(text)); } catch (e) { /* bridge missing: nothing to report to */ }
+}
+
+async function runCode(code) {
+  try {
+    if (!pyReady) pyReady = loadPyodide({ indexURL: PYODIDE_URL });
+    const py = await pyReady;
+    const out = [];
+    py.setStdout({ batched: (s) => out.push(s) });
+    py.setStderr({ batched: (s) => out.push(s) });
+    const result = await py.runPythonAsync(code);
+    if (result !== undefined && result !== null) out.push(String(result));
+    send(out.join("\n") || "(no output)");
+  } catch (e) {
+    send("Error: " + e);
+  }
+}
+</script>
+</body>
+</html>

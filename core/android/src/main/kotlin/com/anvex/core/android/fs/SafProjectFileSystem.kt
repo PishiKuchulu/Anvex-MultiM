@@ -1,0 +1,399 @@
+package com.anvex.core.android.fs
+
+import android.content.ContentResolver
+import android.net.Uri
+import android.provider.DocumentsContract
+import com.anvex.core.engine.PathSanitizer
+import com.anvex.core.engine.ProjectFileSystem
+
+/** SAF-backed workspace implementation. Call from Dispatchers.IO. */
+class SafProjectFileSystem(
+    private val resolver: ContentResolver,
+    private val treeUri: Uri,
+) : ProjectFileSystem {
+    private val rootDocumentId = DocumentsContract.getTreeDocumentId(treeUri)
+
+    /**
+     * Root is represented by an empty relative path. PathSanitizer intentionally
+     * rejects empty paths for file operations, so SAF root handling must be
+     * explicit instead of passing "" through the sanitizer.
+     */
+    private fun safe(path: String): String =
+        if (path.isBlank()) "" else PathSanitizer.sanitize(path)
+
+    private fun child(parentId: String, name: String): Pair<String, Boolean>? {
+        val uri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId)
+        resolver.query(uri, arrayOf(
+            DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+            DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+        ), null, null, null)?.use { c ->
+            val id = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+            val mime = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+            val display = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+            while (c.moveToNext()) if (c.getString(display) == name) {
+                return c.getString(id) to (c.getString(mime) == DocumentsContract.Document.MIME_TYPE_DIR)
+            }
+        }
+        return null
+    }
+
+    private fun document(path: String, createDirs: Boolean = false): Pair<String, Boolean>? {
+        val clean = safe(path)
+        if (clean.isBlank()) return rootDocumentId to true
+        var parent = rootDocumentId
+        val parts = clean.split('/')
+        parts.forEachIndexed { index, part ->
+            val found = child(parent, part)
+            val current = if (found == null && createDirs) {
+                val uri = DocumentsContract.createDocument(
+                    resolver,
+                    DocumentsContract.buildDocumentUriUsingTree(treeUri, parent),
+                    DocumentsContract.Document.MIME_TYPE_DIR,
+                    part,
+                ) ?: return null
+                DocumentsContract.getDocumentId(uri) to true
+            } else found ?: return null
+            parent = current.first
+            if (index == parts.lastIndex) return current
+            if (!current.second) return null
+        }
+        return null
+    }
+
+    private fun parentAndName(path: String): Pair<String, String> {
+        val clean = safe(path)
+        require(clean.isNotBlank()) { "Root cannot be mutated" }
+        return clean.substringBeforeLast('/', "") to clean.substringAfterLast('/')
+    }
+
+    override fun mkdirs(relativePath: String) { if (safe(relativePath).isNotBlank()) document(relativePath, true) }
+    override fun exists(relativePath: String) = document(relativePath) != null
+    override fun isDirectory(relativePath: String) = document(relativePath)?.second == true
+
+    override fun writeFile(relativePath: String, content: String) = writeFileBytes(relativePath, content.toByteArray(Charsets.UTF_8))
+
+    /**
+     * Audit 04 (Low): writes used to open the LIVE document with "wt",
+     * truncating it before a single byte was written — a crash or
+     * provider failure mid-write destroyed the previous content. Writes
+     * now land in a sibling temp document first and are swapped into
+     * place (original renamed aside + temp renamed in; see
+     * [swapIntoPlace]), so the original survives any failure before the
+     * swap. Providers that refuse temp creation fall back to the
+     * previous in-place write; providers that refuse rename fall back
+     * to recreating the target from the completed temp — best effort
+     * per provider variance, but the destructive window is gone on
+     * every mainstream provider.
+     */
+    override fun writeFileBytes(relativePath: String, bytes: ByteArray) {
+        val (parentPath, name) = parentAndName(relativePath)
+        val parent = document(parentPath, true) ?: throw java.io.IOException("Workspace folder unavailable")
+        val existing = child(parent.first, name)
+        if (existing != null && existing.second) throw java.io.IOException("Path is a directory: $relativePath")
+        val parentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, parent.first)
+        val tmpUri = createTempDocument(parentUri, name)
+        if (tmpUri == null) {
+            // Provider cannot create a temp document: legacy in-place write.
+            val uri = existing?.let { DocumentsContract.buildDocumentUriUsingTree(treeUri, it.first) }
+                ?: DocumentsContract.createDocument(resolver, parentUri, mimeFor(name), name)
+                ?: throw java.io.IOException("Cannot create $name")
+            resolver.openOutputStream(uri, "wt")?.use { it.write(bytes) }
+                ?: throw java.io.IOException("Cannot write $name")
+            return
+        }
+        try {
+            resolver.openOutputStream(tmpUri, "wt")?.use { it.write(bytes) }
+                ?: throw java.io.IOException("Cannot write $name")
+        } catch (e: Exception) {
+            runCatching { DocumentsContract.deleteDocument(resolver, tmpUri) }
+            throw e
+        }
+        swapIntoPlace(tmpUri, existing, name) {
+            val uri = DocumentsContract.createDocument(resolver, parentUri, mimeFor(name), name)
+                ?: throw java.io.IOException("Cannot create $name")
+            resolver.openOutputStream(uri, "wt")?.use { it.write(bytes) }
+                ?: throw java.io.IOException("Cannot write $name")
+        }
+    }
+
+    override fun writeFileStream(relativePath: String, input: java.io.InputStream, maxBytes: Long) {
+        val (parentPath, name) = parentAndName(relativePath)
+        val parent = document(parentPath, true) ?: throw java.io.IOException("Workspace folder unavailable")
+        val existing = child(parent.first, name)
+        if (existing != null && existing.second) throw java.io.IOException("Path is a directory: $relativePath")
+        val parentUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, parent.first)
+        val tmpUri = createTempDocument(parentUri, name)
+        if (tmpUri == null) {
+            // Provider cannot create a temp document: legacy in-place write.
+            val uri = existing?.let { DocumentsContract.buildDocumentUriUsingTree(treeUri, it.first) }
+                ?: DocumentsContract.createDocument(resolver, parentUri, mimeFor(name), name)
+                ?: throw java.io.IOException("Cannot create $name")
+            copyStreamInto(input, uri, name, maxBytes)
+            return
+        }
+        try {
+            copyStreamInto(input, tmpUri, name, maxBytes)
+        } catch (e: Exception) {
+            runCatching { DocumentsContract.deleteDocument(resolver, tmpUri) }
+            throw e
+        }
+        swapIntoPlace(tmpUri, existing, name) {
+            val uri = DocumentsContract.createDocument(resolver, parentUri, mimeFor(name), name)
+                ?: throw java.io.IOException("Cannot create $name")
+            val copied = resolver.openInputStream(tmpUri)?.use { tmpIn ->
+                resolver.openOutputStream(uri, "wt")?.use { out -> tmpIn.copyTo(out) }
+            }
+            if (copied == null) throw java.io.IOException("Cannot write $name")
+        }
+    }
+
+    private fun createTempDocument(parentUri: Uri, name: String): Uri? = runCatching {
+        DocumentsContract.createDocument(
+            resolver, parentUri, mimeFor(name),
+            "$name.anvex-tmp-${java.util.UUID.randomUUID()}",
+        )
+    }.getOrNull()
+
+    private fun copyStreamInto(input: java.io.InputStream, uri: Uri, name: String, maxBytes: Long) {
+        resolver.openOutputStream(uri, "wt")?.use { out ->
+            val buffer = ByteArray(64 * 1024)
+            var total = 0L
+            while (true) {
+                val read = input.read(buffer)
+                if (read < 0) break
+                total += read
+                require(total <= maxBytes) { "File exceeds configured size limit." }
+                out.write(buffer, 0, read)
+            }
+        } ?: throw java.io.IOException("Cannot write $name")
+    }
+
+    /**
+     * Moves a fully-written temp document onto [name]. Ordering (audit
+     * round 2, N5): the original is renamed ASIDE to a backup name
+     * first, then the temp is renamed onto the target; the backup is
+     * deleted only once the new content is in place, and restored if
+     * the swap fails — no failure point leaves the target missing. If
+     * the provider refuses the backup rename (rename support is
+     * all-or-nothing in practice), the legacy order remains as the
+     * fallback: delete the original, then [recreate] copies the
+     * completed content into a fresh target. The temp is cleaned up
+     * unless the rename succeeded (in which case the temp IS the
+     * target now).
+     */
+    private fun swapIntoPlace(
+        tmpUri: Uri,
+        existing: Pair<String, Boolean>?,
+        name: String,
+        recreate: () -> Unit,
+    ) {
+        val existingUri = existing?.let {
+            DocumentsContract.buildDocumentUriUsingTree(treeUri, it.first)
+        }
+        var backupUri: Uri? = null
+        if (existingUri != null) {
+            backupUri = runCatching {
+                DocumentsContract.renameDocument(
+                    resolver, existingUri, "$name.anvex-bak-${java.util.UUID.randomUUID()}",
+                )
+            }.getOrNull()
+        }
+        var renamed = false
+        var placed = false
+        try {
+            renamed = runCatching {
+                DocumentsContract.renameDocument(resolver, tmpUri, name) != null
+            }.getOrDefault(false)
+            placed = renamed
+            if (!renamed) {
+                if (backupUri == null && existingUri != null) {
+                    // Rename unsupported: legacy fallback so recreate
+                    // lands on the target name.
+                    runCatching { DocumentsContract.deleteDocument(resolver, existingUri) }
+                }
+                recreate()
+                placed = true
+            }
+        } finally {
+            when {
+                // The temp IS the target now; only the backup is stale.
+                renamed -> backupUri?.let { uri ->
+                    runCatching { DocumentsContract.deleteDocument(resolver, uri) }
+                }
+                // Recreate copied the temp into place; both are stale.
+                placed -> {
+                    backupUri?.let { uri ->
+                        runCatching { DocumentsContract.deleteDocument(resolver, uri) }
+                    }
+                    runCatching { DocumentsContract.deleteDocument(resolver, tmpUri) }
+                }
+                // Swap failed: restore the original if it was set aside,
+                // so the target keeps its previous content.
+                else -> {
+                    backupUri?.let { uri ->
+                        runCatching { DocumentsContract.renameDocument(resolver, uri, name) }
+                    }
+                    runCatching { DocumentsContract.deleteDocument(resolver, tmpUri) }
+                }
+            }
+        }
+    }
+
+    override fun readFile(relativePath: String) = readFileBytes(relativePath)?.toString(Charsets.UTF_8)
+
+    override fun readFileBytes(relativePath: String): ByteArray? {
+        val doc = document(relativePath) ?: return null
+        if (doc.second) return null
+        return resolver.openInputStream(DocumentsContract.buildDocumentUriUsingTree(treeUri, doc.first))?.use { it.readBytes() }
+    }
+
+    override fun fileSize(relativePath: String): Long? {
+        val doc = document(relativePath) ?: return null
+        if (doc.second) return null
+        val uri = DocumentsContract.buildDocumentUriUsingTree(treeUri, doc.first)
+        return resolver.query(uri, arrayOf(DocumentsContract.Document.COLUMN_SIZE), null, null, null)?.use { c ->
+            if (!c.moveToFirst()) null else {
+                val index = c.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE)
+                if (index < 0 || c.isNull(index)) null else c.getLong(index).coerceAtLeast(0L)
+            }
+        }
+    }
+
+    override fun appendFile(relativePath: String, content: String) {
+        val doc = document(relativePath)
+        if (doc == null) { writeFile(relativePath, content); return }
+        if (doc.second) throw java.io.IOException("Cannot append to directory")
+        resolver.openOutputStream(DocumentsContract.buildDocumentUriUsingTree(treeUri, doc.first), "wa")?.use {
+            it.write(content.toByteArray(Charsets.UTF_8))
+        } ?: throw java.io.IOException("Cannot append file")
+    }
+
+    /** Delete this exact SAF tree root. Call only when the repository has recorded
+     * that Anvex created/owns this directory. External workspaces must never call it. */
+    fun deleteOwnedRoot(): Boolean {
+        return DocumentsContract.deleteDocument(
+            resolver,
+            DocumentsContract.buildDocumentUriUsingTree(treeUri, rootDocumentId),
+        )
+    }
+
+    override fun delete(relativePath: String, recursive: Boolean): Boolean {
+        if (relativePath.isBlank()) return false // Never delete the user-selected workspace root.
+        val doc = document(relativePath) ?: return false
+        if (doc.second && !recursive && list(relativePath).isNotEmpty()) return false
+        if (doc.second && recursive) list(relativePath).forEach { delete(if (relativePath.isBlank()) it.name else "$relativePath/${it.name}", true) }
+        return DocumentsContract.deleteDocument(resolver, DocumentsContract.buildDocumentUriUsingTree(treeUri, doc.first))
+    }
+
+    override fun list(relativePath: String): List<ProjectFileSystem.FileEntry> {
+        val parent = document(relativePath) ?: return emptyList()
+        if (!parent.second) return emptyList()
+        val uri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parent.first)
+        val result = ArrayList<ProjectFileSystem.FileEntry>()
+        resolver.query(uri, arrayOf(
+            DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+            DocumentsContract.Document.COLUMN_MIME_TYPE,
+            DocumentsContract.Document.COLUMN_SIZE,
+        ), null, null, "${DocumentsContract.Document.COLUMN_DISPLAY_NAME} COLLATE NOCASE ASC")?.use { c ->
+            val name = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+            val mime = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+            val size = c.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE)
+            while (c.moveToNext()) {
+                val n = c.getString(name) ?: continue
+                val dir = c.getString(mime) == DocumentsContract.Document.MIME_TYPE_DIR
+                result += ProjectFileSystem.FileEntry(n, dir, if (dir || size < 0 || c.isNull(size)) 0 else c.getLong(size))
+            }
+        }
+        return result
+    }
+
+    override fun move(from: String, to: String): Boolean {
+        val src = document(from) ?: return false
+        val (parentPath, targetName) = parentAndName(to)
+        val dst = document(parentPath, true) ?: return false
+        val srcName = from.substringAfterLast('/')
+        val moved = DocumentsContract.moveDocument(
+            resolver,
+            DocumentsContract.buildDocumentUriUsingTree(treeUri, src.first),
+            treeUri,
+            DocumentsContract.buildDocumentUriUsingTree(treeUri, dst.first),
+        ) ?: return false
+        if (targetName == srcName) return true
+        val movedId = DocumentsContract.getDocumentId(moved)
+        return DocumentsContract.renameDocument(
+            resolver, DocumentsContract.buildDocumentUriUsingTree(treeUri, movedId), targetName
+        ) != null
+    }
+
+    override fun copy(from: String, to: String): Boolean {
+        val src = document(from) ?: return false
+        if (src.second) return false
+        val bytes = readFileBytes(from) ?: return false
+        writeFileBytes(to, bytes)
+        return true
+    }
+
+    override fun walk(): List<String> = traverseWithSizes().map { it.first }
+
+    override fun walkWithSizes(): List<Pair<String, Long?>> = traverseWithSizes()
+
+    private data class ChildRow(val docId: String, val name: String, val isDir: Boolean, val size: Long?)
+
+    /**
+     * One children query per directory, traversed by document ID. The old
+     * path-based walk re-resolved every directory from the root through
+     * [document] — a chain of linear child scans per node — and callers
+     * then paid a second re-resolution per file size; on a slow SAF
+     * provider a large tree took minutes inside a single chat send
+     * (user report, 2026-11-03). Rows are collected before recursing so
+     * no cursor stays open across nested queries.
+     */
+    private fun traverseWithSizes(): List<Pair<String, Long?>> {
+        val out = ArrayList<Pair<String, Long?>>()
+        fun visit(dirId: String, prefix: String, depth: Int) {
+            if (depth > 64 || out.size >= 20_000) return
+            val uri = DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, dirId)
+            val rows = ArrayList<ChildRow>()
+            resolver.query(uri, arrayOf(
+                DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                DocumentsContract.Document.COLUMN_MIME_TYPE,
+                DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                DocumentsContract.Document.COLUMN_SIZE,
+            ), null, null, null)?.use { c ->
+                val id = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID)
+                val mime = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_MIME_TYPE)
+                val display = c.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                val size = c.getColumnIndex(DocumentsContract.Document.COLUMN_SIZE)
+                while (c.moveToNext()) {
+                    val name = c.getString(display) ?: continue
+                    val docId = c.getString(id) ?: continue
+                    val isDir = c.getString(mime) == DocumentsContract.Document.MIME_TYPE_DIR
+                    val sz = if (isDir || size < 0 || c.isNull(size)) null else c.getLong(size).coerceAtLeast(0L)
+                    rows += ChildRow(docId, name, isDir, sz)
+                }
+            }
+            for (row in rows) {
+                if (out.size >= 20_000) return
+                val path = if (prefix.isBlank()) row.name else "$prefix/${row.name}"
+                if (row.isDir) visit(row.docId, path, depth + 1) else out += path to row.size
+            }
+        }
+        visit(rootDocumentId, "", 0)
+        return out
+    }
+
+    private fun mimeFor(name: String): String = when (name.substringAfterLast('.', "").lowercase()) {
+        "html", "htm" -> "text/html"
+        "css" -> "text/css"
+        "js", "mjs", "cjs" -> "text/javascript"
+        "json" -> "application/json"
+        "xml" -> "application/xml"
+        "md", "txt" -> "text/plain"
+        "png" -> "image/png"
+        "jpg", "jpeg" -> "image/jpeg"
+        "gif" -> "image/gif"
+        "webp" -> "image/webp"
+        else -> "application/octet-stream"
+    }
+}

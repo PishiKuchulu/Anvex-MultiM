@@ -1,0 +1,244 @@
+package com.anvex.core.android.repo
+
+import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import com.anvex.core.model.ThinkingLevel
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+
+private val Context.dataStore by preferencesDataStore(name = "anvex_settings")
+
+@Serializable
+enum class ThemeMode { SYSTEM, LIGHT, DARK }
+
+/**
+ * v4.0 (GOAL 4): visual style family for the Compose shell.
+ * NEBULA — v4.2 default: deep-space canvas, violet→cyan signature gradient, glass cards.
+ * PROFESSIONAL — Linear/Vercel-inspired dark-first design system.
+ * GLASS — Glassmorphism / expressive Material 3 variant with translucent surfaces.
+ * AURORA — v4.4 port of the untitled.zip web-prototype design language: cyan/slate
+ *   dark ladder (#070b14→#050811), cyan primary, semantic status accents, mono badges.
+ * MIDNIGHT — deep-navy dark-first, ice-blue accent; calm and focused.
+ * FOREST — deep-green dark-first, mint accent; easy on the eyes.
+ * EMBER — warm-charcoal dark-first, amber accent; cozy contrast.
+ * MINT — near-black green dark-first, bright mint accent, pill-rounded surfaces;
+ *   port of the Lovable "graceful-screen-refresh" design.
+ * ATELIER — the «کارگاه» UI/UX design: warm paper (light) / ink (dark) neutrals,
+ *   orange accent reserved for the primary action, large radii (16/20/28).
+ */
+@Serializable
+enum class UiThemeStyle { PROFESSIONAL, GLASS, NEBULA, AURORA, MIDNIGHT, FOREST, EMBER, MINT, ATELIER }
+
+@Serializable
+enum class AppLanguage { SYSTEM, ENGLISH, PERSIAN }
+
+/**
+ * v4.4: how Node.js workloads execute on-device.
+ * IN_APP — the bundled Node-compatibility layer (WebView JS engine + Node-style APIs).
+ * TERMUX — forward `node`/`npm` commands to the Termux:API RUN_COMMAND bridge
+ *   (requires Termux + Termux:API installed and the bridge enabled in Settings).
+ */
+@Serializable
+enum class NodeBackend { IN_APP, TERMUX }
+
+/**
+ * v4.9: which agent engine drives agent runs.
+ * NATIVE — Anvex's own harness (DurableTaskEngine + ChatSession).
+ * PI — the Pi coding agent (bundled, runs in the :node process) as
+ *   experimental Engine #2; its tool calls still pass through
+ *   CommandApprovalService, and the native engine stays the default.
+ */
+@Serializable
+enum class AgentEngine { NATIVE, PI }
+
+/** Atelier theme accent choices (design: six accent dots in Settings). */
+enum class AtelierAccent { ORANGE, BLUE, GREEN, VIOLET, ROSE, TEAL }
+
+@Serializable
+data class AppSettings(
+    val themeMode: ThemeMode = ThemeMode.DARK,
+    val language: AppLanguage = AppLanguage.SYSTEM,
+    val dynamicColor: Boolean = false,
+    // v4.4.4 (Command Deck): fresh installs start with PROFESSIONAL — the restrained
+    // Obsidian IDE direction. Stored choices are kept.
+    val uiThemeStyle: UiThemeStyle = UiThemeStyle.PROFESSIONAL,
+    val editorFontSize: Int = 13,
+    val editorAutoSave: Boolean = true,
+    val chatFontSize: Int = 15,
+    val previewConsoleVisible: Boolean = false,
+    val lastProjectId: String = "",
+    val thinkingLevel: ThinkingLevel = ThinkingLevel.NORMAL,
+    val onboardingSeen: Boolean = false,
+    val lanEnabled: Boolean = false,
+    val webPort: Int = 8765,
+    /** v4.2: long-term memory (learn preferences across chats). */
+    val memoryEnabled: Boolean = true,
+    /** v4.2: free-form "how should the assistant behave" instructions. */
+    val customInstructions: String = "",
+    /** v4.2: allow the agent to use web fetch/search tools. */
+    val webToolsEnabled: Boolean = true,
+    /** v4.4: Node.js execution backend (in-app compatibility layer vs Termux bridge). */
+    val nodeBackend: NodeBackend = NodeBackend.IN_APP,
+    /** v4.4: allow forwarding commands to Termux through RUN_COMMAND (opt-in). */
+    val termuxBridgeEnabled: Boolean = false,
+    /** v4.9: agent engine selection (native harness vs Pi, experimental). */
+    val agentEngine: AgentEngine = AgentEngine.NATIVE,
+    /** v4.14 (Atelier): the selected accent for the Atelier theme. */
+    val atelierAccent: AtelierAccent = AtelierAccent.ORANGE,
+    /** Review A8: the on-launch update check can be turned off; the
+     * manual Settings check always remains available. */
+    val autoUpdateCheck: Boolean = true,
+    /** 2026-11-04 (external-audit wave): the periodic encrypted snapshot
+     * (BackupScheduler, every ~6h) used to run unconditionally with no
+     * user-facing switch. Default stays ON to preserve behavior; the
+     * Settings toggle cancels the alarm when turned off. */
+    val autoBackupEnabled: Boolean = true,
+)
+
+class SettingsRepository(private val context: Context) {
+
+    private object Keys {
+        val THEME = stringPreferencesKey("theme_mode")
+        val LANGUAGE = stringPreferencesKey("language")
+        val DYNAMIC = booleanPreferencesKey("dynamic_color")
+        val UI_THEME_STYLE = stringPreferencesKey("ui_theme_style")
+        val EDITOR_FONT = intPreferencesKey("editor_font_size")
+        val AUTOSAVE = booleanPreferencesKey("editor_autosave")
+        val CHAT_FONT = intPreferencesKey("chat_font_size")
+        val CONSOLE_VISIBLE = booleanPreferencesKey("preview_console_visible")
+        val LAST_PROJECT = stringPreferencesKey("last_project_id")
+        val THINKING = stringPreferencesKey("thinking_level")
+        val ONBOARDING = booleanPreferencesKey("onboarding_seen")
+        val LAN_ENABLED = booleanPreferencesKey("lan_enabled")
+        val WEB_PORT = intPreferencesKey("web_port")
+        val MEMORY_ENABLED = booleanPreferencesKey("memory_enabled")
+        val CUSTOM_INSTRUCTIONS = stringPreferencesKey("custom_instructions")
+        val WEB_TOOLS = booleanPreferencesKey("web_tools_enabled")
+        val NODE_BACKEND = stringPreferencesKey("node_backend")
+        val TERMUX_BRIDGE = booleanPreferencesKey("termux_bridge_enabled")
+        val AGENT_ENGINE = stringPreferencesKey("agent_engine")
+        val ATELIER_ACCENT = stringPreferencesKey("atelier_accent")
+        val AUTO_UPDATE_CHECK = booleanPreferencesKey("auto_update_check")
+        val AUTO_BACKUP = booleanPreferencesKey("auto_backup_enabled")
+        val PROVIDER_MODELS = stringPreferencesKey("provider_model_sets_json")
+    }
+
+    /**
+     * Per-provider multi-model selection (2026-11-04, user request):
+     * providerId → the model ids ticked in the provider editor. Kept as
+     * JSON in preferences, deliberately NOT a Room column (no schema
+     * bump); the provider's own `model` remains its one active model and
+     * is always part of its effective choice list.
+     */
+    val providerModelSets: Flow<Map<String, List<String>>> = context.dataStore.data
+        .catch { e ->
+            if (e is java.io.IOException) emit(emptyPreferences()) else throw e
+        }
+        .map { prefs ->
+            val raw = prefs[Keys.PROVIDER_MODELS] ?: return@map emptyMap()
+            runCatching {
+                Json.decodeFromString<Map<String, List<String>>>(raw)
+            }.getOrDefault(emptyMap())
+        }
+
+    suspend fun setProviderModelSet(providerId: String, models: List<String>) {
+        context.dataStore.edit { prefs ->
+            val current = prefs[Keys.PROVIDER_MODELS]?.let {
+                runCatching { Json.decodeFromString<Map<String, List<String>>>(it) }.getOrDefault(emptyMap())
+            } ?: emptyMap()
+            val next = if (models.isEmpty()) current - providerId
+                else current + (providerId to models.distinct())
+            prefs[Keys.PROVIDER_MODELS] = Json.encodeToString(next)
+        }
+    }
+
+    val settings: Flow<AppSettings> = context.dataStore.data
+        // Audit 02: a corrupt preferences file (DataStore surfaces it as
+        // an IOException / CorruptionException) used to terminate this
+        // flow, and every screen collecting `settings.first()` crashed or
+        // spun forever. The DataStore-recommended recovery is to fall
+        // back to defaults; later edits rewrite a healthy file.
+        .catch { e ->
+            if (e is java.io.IOException) emit(emptyPreferences()) else throw e
+        }
+        .map { p ->
+        AppSettings(
+            themeMode = p[Keys.THEME]?.let { runCatching { ThemeMode.valueOf(it) }.getOrNull() } ?: ThemeMode.DARK,
+            language = p[Keys.LANGUAGE]?.let { runCatching { AppLanguage.valueOf(it) }.getOrNull() } ?: AppLanguage.SYSTEM,
+            dynamicColor = p[Keys.DYNAMIC] ?: false,
+            uiThemeStyle = p[Keys.UI_THEME_STYLE]?.let { runCatching { UiThemeStyle.valueOf(it) }.getOrNull() } ?: UiThemeStyle.PROFESSIONAL,
+            editorFontSize = p[Keys.EDITOR_FONT] ?: 13,
+            editorAutoSave = p[Keys.AUTOSAVE] ?: true,
+            chatFontSize = p[Keys.CHAT_FONT] ?: 15,
+            previewConsoleVisible = p[Keys.CONSOLE_VISIBLE] ?: false,
+            lastProjectId = p[Keys.LAST_PROJECT] ?: "",
+            thinkingLevel = p[Keys.THINKING]?.let { runCatching { ThinkingLevel.valueOf(it) }.getOrNull() } ?: ThinkingLevel.NORMAL,
+            onboardingSeen = p[Keys.ONBOARDING] ?: false,
+            lanEnabled = p[Keys.LAN_ENABLED] ?: false,
+            webPort = (p[Keys.WEB_PORT] ?: 8765).coerceIn(1024, 65535),
+            memoryEnabled = p[Keys.MEMORY_ENABLED] ?: true,
+            customInstructions = p[Keys.CUSTOM_INSTRUCTIONS] ?: "",
+            webToolsEnabled = p[Keys.WEB_TOOLS] ?: true,
+            nodeBackend = p[Keys.NODE_BACKEND]?.let { runCatching { NodeBackend.valueOf(it) }.getOrNull() } ?: NodeBackend.IN_APP,
+            termuxBridgeEnabled = p[Keys.TERMUX_BRIDGE] ?: false,
+            agentEngine = p[Keys.AGENT_ENGINE]?.let { runCatching { AgentEngine.valueOf(it) }.getOrNull() } ?: AgentEngine.NATIVE,
+            atelierAccent = p[Keys.ATELIER_ACCENT]?.let { runCatching { AtelierAccent.valueOf(it) }.getOrNull() } ?: AtelierAccent.ORANGE,
+            autoUpdateCheck = p[Keys.AUTO_UPDATE_CHECK] ?: true,
+            autoBackupEnabled = p[Keys.AUTO_BACKUP] ?: true,
+        )
+    }
+
+    suspend fun setThemeMode(mode: ThemeMode) = context.dataStore.edit { it[Keys.THEME] = mode.name }
+    suspend fun setUiThemeStyle(style: UiThemeStyle) = context.dataStore.edit { it[Keys.UI_THEME_STYLE] = style.name }
+    suspend fun setLanguage(language: AppLanguage) = context.dataStore.edit { it[Keys.LANGUAGE] = language.name }
+    suspend fun setDynamicColor(v: Boolean) = context.dataStore.edit { it[Keys.DYNAMIC] = v }
+    suspend fun setEditorFontSize(v: Int) = context.dataStore.edit { it[Keys.EDITOR_FONT] = v.coerceIn(10, 24) }
+    suspend fun setEditorAutoSave(v: Boolean) = context.dataStore.edit { it[Keys.AUTOSAVE] = v }
+    suspend fun setChatFontSize(v: Int) = context.dataStore.edit { it[Keys.CHAT_FONT] = v.coerceIn(12, 22) }
+    suspend fun setPreviewConsoleVisible(v: Boolean) = context.dataStore.edit { it[Keys.CONSOLE_VISIBLE] = v }
+    suspend fun setLastProject(id: String) = context.dataStore.edit { it[Keys.LAST_PROJECT] = id }
+    suspend fun setThinkingLevel(level: ThinkingLevel) = context.dataStore.edit { it[Keys.THINKING] = level.name }
+    suspend fun setOnboardingSeen(v: Boolean) = context.dataStore.edit { it[Keys.ONBOARDING] = v }
+    suspend fun setLanEnabled(v: Boolean) = context.dataStore.edit { it[Keys.LAN_ENABLED] = v }
+    suspend fun setWebPort(v: Int) = context.dataStore.edit { it[Keys.WEB_PORT] = v.coerceIn(1024, 65535) }
+    suspend fun setMemoryEnabled(v: Boolean) = context.dataStore.edit { it[Keys.MEMORY_ENABLED] = v }
+    suspend fun setCustomInstructions(v: String) = context.dataStore.edit { it[Keys.CUSTOM_INSTRUCTIONS] = v.take(4_000) }
+    suspend fun setWebToolsEnabled(v: Boolean) = context.dataStore.edit { it[Keys.WEB_TOOLS] = v }
+    suspend fun setNodeBackend(v: NodeBackend) = context.dataStore.edit { it[Keys.NODE_BACKEND] = v.name }
+    suspend fun setAgentEngine(v: AgentEngine) = context.dataStore.edit { it[Keys.AGENT_ENGINE] = v.name }
+    suspend fun setAtelierAccent(v: AtelierAccent) = context.dataStore.edit { it[Keys.ATELIER_ACCENT] = v.name }
+    suspend fun setAutoUpdateCheck(v: Boolean) = context.dataStore.edit { it[Keys.AUTO_UPDATE_CHECK] = v }
+    suspend fun setAutoBackupEnabled(v: Boolean) = context.dataStore.edit { it[Keys.AUTO_BACKUP] = v }
+    suspend fun setTermuxBridgeEnabled(v: Boolean) = context.dataStore.edit { it[Keys.TERMUX_BRIDGE] = v }
+
+    suspend fun restoreFromBackup(encoded: String) {
+        val s = Json { ignoreUnknownKeys = true }.decodeFromString<AppSettings>(encoded)
+        context.dataStore.edit { p ->
+            // M-09: a backup restored onto a new phone must NOT silently
+            // enable network listeners or switch the agent engine — the
+            // target device keeps its own values for the security-surface
+            // flags (lanEnabled, webPort, webToolsEnabled,
+            // termuxBridgeEnabled, agentEngine). The user re-enables them
+            // deliberately if wanted. Font sizes are clamped here too:
+            // the setters clamp, but this direct write did not.
+            p[Keys.THEME] = s.themeMode.name; p[Keys.LANGUAGE] = s.language.name; p[Keys.DYNAMIC] = s.dynamicColor; p[Keys.UI_THEME_STYLE] = s.uiThemeStyle.name; p[Keys.EDITOR_FONT] = s.editorFontSize.coerceIn(10, 24)
+            p[Keys.AUTOSAVE] = s.editorAutoSave; p[Keys.CHAT_FONT] = s.chatFontSize.coerceIn(12, 22); p[Keys.CONSOLE_VISIBLE] = s.previewConsoleVisible
+            p[Keys.LAST_PROJECT] = s.lastProjectId; p[Keys.THINKING] = s.thinkingLevel.name; p[Keys.ONBOARDING] = s.onboardingSeen
+            p[Keys.MEMORY_ENABLED] = s.memoryEnabled; p[Keys.CUSTOM_INSTRUCTIONS] = s.customInstructions.take(4_000)
+            p[Keys.NODE_BACKEND] = s.nodeBackend.name; p[Keys.ATELIER_ACCENT] = s.atelierAccent.name
+            p[Keys.AUTO_UPDATE_CHECK] = s.autoUpdateCheck
+            p[Keys.AUTO_BACKUP] = s.autoBackupEnabled
+        }
+    }
+}

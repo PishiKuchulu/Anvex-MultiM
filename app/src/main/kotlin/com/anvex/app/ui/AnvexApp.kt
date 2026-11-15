@@ -1,0 +1,466 @@
+package com.anvex.app.ui
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.anvex.app.ui.screens.backup.BackupScreen
+import com.anvex.app.ui.screens.build.BuildScreen
+import com.anvex.app.ui.screens.chat.ChatScreen
+import com.anvex.app.ui.screens.debug.DebugScreen
+import com.anvex.app.ui.screens.developer.AgentCenterScreen
+import com.anvex.app.ui.screens.developer.DeveloperCenterScreen
+import com.anvex.app.ui.screens.editor.EditorScreen
+import com.anvex.app.ui.screens.github.GitHubScreen
+import com.anvex.app.ui.screens.harness.HarnessScreen
+import com.anvex.app.ui.screens.history.HistoryScreen
+import com.anvex.app.ui.screens.memory.MemoryScreen
+import com.anvex.app.ui.screens.home.HomeScreen
+import com.anvex.app.ui.screens.preview.PreviewScreen
+import com.anvex.app.ui.screens.providers.ProviderEditScreen
+import com.anvex.app.ui.screens.providers.ProvidersScreen
+import com.anvex.app.ui.screens.settings.SettingsScreen
+import com.anvex.app.ui.screens.terminal.TerminalScreen
+import com.anvex.app.ui.screens.usage.UsageScreen
+import kotlinx.coroutines.launch
+import com.anvex.app.i18n.tr
+
+object Routes {
+    const val HOME = "home"
+    const val PROJECTS = "projects"
+    const val MEMORY = "memory"
+    const val SETTINGS = "settings"
+    const val PROVIDERS = "providers"
+    const val PROVIDER_EDIT = "provider/{id}?kind={kind}"
+    const val DEBUG = "debug"
+    const val CHAT = "chat/{projectId}"
+    const val DIRECT_CHAT = "direct-chat"
+    const val EDITOR = "editor/{projectId}?file={file}"
+    const val PREVIEW = "preview/{projectId}"
+    const val BUILD = "build/{projectId}"
+    const val HISTORY = "history/{projectId}"
+    const val USAGE = "usage"
+    const val GITHUB = "github/{projectId}"
+    const val BACKUP = "backup"
+    const val DEVELOPER = "developer"
+    const val EXTENSIONS = "extensions"
+    const val AGENT_CENTER = "agent-center"
+    const val TERMINAL = "terminal/{projectId}"
+    const val GIT = "git/{projectId}"
+    const val GIT_CONFLICT = "git-conflict/{projectId}?file={file}"
+    const val HARNESS = "harness/{projectId}"
+    const val SIGNING_KEY = "signing-key"
+
+    fun providerEdit(id: String, kind: String? = null) =
+        if (kind.isNullOrBlank()) "provider/$id" else "provider/$id?kind=$kind"
+    fun chat(projectId: String) = "chat/$projectId"
+    fun terminal(projectId: String) = "terminal/$projectId"
+    fun git(projectId: String) = "git/$projectId"
+    fun gitConflict(projectId: String, file: String) =
+        "git-conflict/$projectId?file=${android.net.Uri.encode(file)}"
+    fun editor(projectId: String, file: String? = null) =
+        if (file == null) "editor/$projectId" else "editor/$projectId?file=${android.net.Uri.encode(file)}"
+    fun preview(projectId: String) = "preview/$projectId"
+    fun build(projectId: String) = "build/$projectId"
+    fun history(projectId: String) = "history/$projectId"
+    fun github(projectId: String) = "github/$projectId"
+    fun harness(projectId: String) = "harness/$projectId"
+}
+
+@Composable
+fun AnvexApp() {
+    val navController = rememberNavController()
+    val backStack by navController.currentBackStackEntryAsState()
+    val currentRoute = backStack?.destination?.route
+    val topLevel = currentRoute == Routes.HOME ||
+        currentRoute == Routes.DIRECT_CHAT ||
+        currentRoute == Routes.AGENT_CENTER ||
+        currentRoute == Routes.MEMORY ||
+        currentRoute == Routes.SETTINGS
+
+    val graph = com.anvex.core.android.AppGraph.get()
+    val settings by graph.settings.settings.collectAsState(initial = null)
+    val tasks by graph.reliability.observeTaskItems(20).collectAsState(initial = emptyList())
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+
+    // v4.7: in-app updates — one controller for the on-launch check, the
+    // launch popup and Settings → "Check for update" (shared state machine).
+    val appContext = androidx.compose.ui.platform.LocalContext.current.applicationContext
+    val updateController = androidx.compose.runtime.remember {
+        com.anvex.app.ui.components.AppUpdateController(appContext)
+    }
+    // Review C6: cancel the controller's scope when this composition
+    // leaves for good instead of leaking it for the process lifetime.
+    androidx.compose.runtime.DisposableEffect(updateController) {
+        onDispose { updateController.dispose() }
+    }
+    var showUpdatePopup by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    // Review A8: the launch-time check honors the user's auto-check
+    // setting once settings have loaded (manual checks are unaffected).
+    androidx.compose.runtime.LaunchedEffect(settings?.autoUpdateCheck) {
+        val loaded = settings
+        if (loaded != null && loaded.autoUpdateCheck) updateController.check()
+    }
+    androidx.compose.runtime.LaunchedEffect(updateController.state) {
+        if (updateController.state is com.anvex.app.ui.components.AppUpdateController.State.Available &&
+            settings?.onboardingSeen != false
+        ) {
+            showUpdatePopup = true
+        }
+    }
+    if (showUpdatePopup) {
+        com.anvex.app.ui.components.AppUpdateDialog(updateController) { showUpdatePopup = false }
+    }
+
+    if (settings?.onboardingSeen == false) {
+        AlertDialog(
+            // Deliberately modal (first-run must be acknowledged), but the
+            // confirm write is guarded: a failed write used to surface as
+            // an uncaught exception in this scope; now the dialog simply
+            // stays until the write succeeds (2026-11-03 audit).
+            onDismissRequest = { },
+            title = { Text(tr("Welcome to Anvex")) },
+            text = {
+                Text(
+                    tr("Chat with any model you add, build projects, get real ZIP/PDF files, and let the assistant remember your preferences in the Memory tab. Start by adding a provider in Settings.")
+                )
+            },
+            confirmButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = {
+                        scope.launch {
+                            runCatching { graph.settings.setOnboardingSeen(true) }
+                        }
+                    },
+                ) { Text(tr("Get started")) }
+            },
+        )
+    }
+
+    // One NavHost owns the entire app graph. The scaffold chrome changes with the
+    // destination, but the navigation tree itself is never replaced, preserving
+    // back-stack and saved-state behavior across Home/Agent/Settings and project screens.
+    com.anvex.app.ui.components.NebulaBackground {
+    Scaffold(
+        // v4.4.5 (UX): explicit contentColor — latent black-text hazard for
+        // any future screen without its own Scaffold (see MemoryScreen fix).
+        containerColor = androidx.compose.ui.graphics.Color.Transparent,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        bottomBar = {
+            if (settings?.uiThemeStyle == com.anvex.core.android.repo.UiThemeStyle.ATELIER) {
+                // Atelier IA: a flat dock on the main destinations. Settings is
+                // reached from the Home avatar. Chat joined the dock next to
+                // Projects at the user's request (2026-11-02), so the dock now
+                // also shows on the Quick chat screen.
+                if (currentRoute == Routes.HOME || currentRoute == Routes.PROJECTS ||
+                    currentRoute == Routes.DIRECT_CHAT ||
+                    currentRoute == Routes.AGENT_CENTER || currentRoute == Routes.MEMORY
+                ) {
+                    Box(Modifier.imePadding()) {
+                        com.anvex.app.ui.components.AtelierDock(
+                            listOf(
+                                com.anvex.app.ui.components.DockItem(
+                                    label = tr("Home"),
+                                    icon = Icons.Filled.Home,
+                                    selected = currentRoute == Routes.HOME,
+                                    onClick = { navController.navigateTop(Routes.HOME) },
+                                ),
+                                com.anvex.app.ui.components.DockItem(
+                                    label = tr("Projects"),
+                                    icon = Icons.Filled.Folder,
+                                    selected = currentRoute == Routes.PROJECTS,
+                                    onClick = { navController.navigateTop(Routes.PROJECTS) },
+                                ),
+                                com.anvex.app.ui.components.DockItem(
+                                    label = tr("Chat"),
+                                    icon = Icons.AutoMirrored.Filled.Chat,
+                                    selected = currentRoute == Routes.DIRECT_CHAT,
+                                    onClick = { navController.navigateTop(Routes.DIRECT_CHAT) },
+                                ),
+                                com.anvex.app.ui.components.DockItem(
+                                    label = tr("Agent"),
+                                    icon = Icons.Filled.AutoAwesome,
+                                    selected = currentRoute == Routes.AGENT_CENTER,
+                                    onClick = { navController.navigateTop(Routes.AGENT_CENTER) },
+                                ),
+                                com.anvex.app.ui.components.DockItem(
+                                    label = tr("Memory"),
+                                    icon = Icons.Filled.Psychology,
+                                    selected = currentRoute == Routes.MEMORY,
+                                    onClick = { navController.navigateTop(Routes.MEMORY) },
+                                ),
+                            ),
+                        )
+                    }
+                }
+            } else if (topLevel) {
+                // v4.6 (keyboard fix): imePadding on the bottom bar makes the
+                // Scaffold's content padding GROW by the keyboard height, so
+                // every top-level screen (notably Direct Chat, whose composer
+                // had no IME handling at all) is lifted above the keyboard by
+                // layout measurement — not by inset propagation that nested
+                // scaffolds/consumers can swallow.
+                Box(Modifier.imePadding()) {
+                // v4.4.5 (UX): the floating Command Deck dock — same component
+                // as the project tabs, replacing the chunky full-width bar.
+                com.anvex.app.ui.components.AnvexDock(
+                    listOf(
+                        com.anvex.app.ui.components.DockItem(
+                            label = tr("Home"),
+                            icon = Icons.Filled.Home,
+                            selected = currentRoute == Routes.HOME,
+                            onClick = { navController.navigateTop(Routes.HOME) },
+                        ),
+                        com.anvex.app.ui.components.DockItem(
+                            label = tr("Chat"),
+                            icon = Icons.AutoMirrored.Filled.Chat,
+                            selected = currentRoute == Routes.DIRECT_CHAT,
+                            onClick = { navController.navigateTop(Routes.DIRECT_CHAT) },
+                        ),
+                        com.anvex.app.ui.components.DockItem(
+                            label = tr("Agent"),
+                            icon = Icons.Filled.AutoAwesome,
+                            selected = currentRoute == Routes.AGENT_CENTER,
+                            onClick = { navController.navigateTop(Routes.AGENT_CENTER) },
+                        ),
+                        com.anvex.app.ui.components.DockItem(
+                            label = tr("Memory"),
+                            icon = Icons.Filled.Psychology,
+                            selected = currentRoute == Routes.MEMORY,
+                            onClick = { navController.navigateTop(Routes.MEMORY) },
+                        ),
+                        com.anvex.app.ui.components.DockItem(
+                            label = tr("Settings"),
+                            icon = Icons.Filled.Settings,
+                            selected = currentRoute == Routes.SETTINGS,
+                            onClick = { navController.navigateTop(Routes.SETTINGS) },
+                        ),
+                    ),
+                )
+                }
+            }
+        },
+    ) { padding ->
+        Box(Modifier.fillMaxSize()) {
+            // Root-cause fix for the large empty bands at the top and bottom of every screen:
+            // each screen has its own Scaffold, which applied the status/navigation-bar insets a
+            // second time on top of this padding. Consuming them here makes inner Scaffolds
+            // (TopAppBar, NavigationBar, imePadding) see them as already handled.
+            AnvexNavHost(navController, Modifier.padding(padding).consumeWindowInsets(padding), updateController)
+            FloatingAgentStatus(tasks)
+        }
+    }
+    }
+}
+
+@Composable
+private fun AnvexNavHost(
+    navController: NavHostController,
+    modifier: Modifier,
+    updateController: com.anvex.app.ui.components.AppUpdateController,
+) {
+    // Directional, RTL-aware transitions (SlideDirection.Start/End mirror automatically in
+    // Persian): the incoming screen slides a short distance while fading, the outgoing one
+    // recedes — instead of the library default 700 ms cross-fade.
+    val slideSpec = androidx.compose.animation.core.tween<androidx.compose.ui.unit.IntOffset>(300)
+    val fadeInSpec = androidx.compose.animation.core.tween<Float>(260, delayMillis = 40)
+    val fadeOutSpec = androidx.compose.animation.core.tween<Float>(160)
+    NavHost(
+        navController = navController,
+        startDestination = Routes.HOME,
+        modifier = modifier,
+        enterTransition = {
+            slideIntoContainer(
+                androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Start, slideSpec,
+                initialOffset = { it / 6 },
+            ) + androidx.compose.animation.fadeIn(fadeInSpec)
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.Start, slideSpec,
+                targetOffset = { it / 8 },
+            ) + androidx.compose.animation.fadeOut(fadeOutSpec)
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.End, slideSpec,
+                initialOffset = { it / 8 },
+            ) + androidx.compose.animation.fadeIn(fadeInSpec)
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection.End, slideSpec,
+                targetOffset = { it / 6 },
+            ) + androidx.compose.animation.fadeOut(fadeOutSpec)
+        },
+    ) {
+        composable(Routes.HOME) { HomeScreen(navController) }
+        composable(Routes.PROJECTS) { com.anvex.app.ui.screens.projects.ProjectsScreen(navController) }
+        composable(Routes.SETTINGS) { SettingsScreen(navController, updateController) }
+        composable(Routes.MEMORY) { MemoryScreen(navController) }
+        composable(Routes.USAGE) { UsageScreen(navController) }
+        composable(Routes.BACKUP) { BackupScreen(navController) }
+        composable(Routes.SIGNING_KEY) { com.anvex.app.ui.screens.signing.SigningKeyScreen(navController) }
+        composable(Routes.DEVELOPER) { DeveloperCenterScreen(navController) }
+        composable(Routes.EXTENSIONS) { com.anvex.app.ui.screens.extensions.ExtensionsScreen(navController) }
+        composable(Routes.AGENT_CENTER) { AgentCenterScreen(null) }
+        // v4.4.6: project-less direct chat — top-level Chat tab.
+        composable(Routes.DIRECT_CHAT) {
+            com.anvex.app.ui.screens.chat.DirectChatScreen(navController)
+        }
+        composable(Routes.TERMINAL, arguments = listOf(navArgument("projectId") { type = NavType.StringType })) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            TerminalScreen(navController, projectId)
+        }
+        composable(Routes.GITHUB, arguments = listOf(navArgument("projectId") { type = NavType.StringType })) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            GitHubScreen(navController, projectId)
+        }
+        composable(Routes.GIT, arguments = listOf(navArgument("projectId") { type = NavType.StringType })) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            com.anvex.app.ui.screens.git.GitScreen(navController, projectId)
+        }
+        composable(
+            Routes.GIT_CONFLICT,
+            arguments = listOf(
+                navArgument("projectId") { type = NavType.StringType },
+                navArgument("file") { type = NavType.StringType; defaultValue = "" },
+            ),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            val file = entry.arguments?.getString("file").orEmpty()
+            com.anvex.app.ui.screens.git.ConflictResolverScreen(navController, projectId, file)
+        }
+        composable(Routes.PROVIDERS) { ProvidersScreen(navController) }
+        composable(
+            Routes.PROVIDER_EDIT,
+            arguments = listOf(androidx.navigation.navArgument("kind") { defaultValue = "" }),
+        ) { entry ->
+            ProviderEditScreen(
+                navController,
+                entry.arguments?.getString("id") ?: "new",
+                entry.arguments?.getString("kind").orEmpty(),
+            )
+        }
+        composable(Routes.DEBUG) { DebugScreen(navController) }
+        composable(
+            Routes.CHAT,
+            arguments = listOf(navArgument("projectId") { type = NavType.StringType }),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            ChatScreen(navController, projectId)
+        }
+        composable(
+            Routes.EDITOR,
+            arguments = listOf(
+                navArgument("projectId") { type = NavType.StringType },
+                navArgument("file") { type = NavType.StringType; nullable = true; defaultValue = null },
+            ),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            EditorScreen(
+                navController,
+                projectId,
+                entry.arguments?.getString("file"),
+            )
+        }
+        composable(
+            Routes.BUILD,
+            arguments = listOf(navArgument("projectId") { type = NavType.StringType }),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            BuildScreen(navController, projectId)
+        }
+        composable(
+            Routes.HISTORY,
+            arguments = listOf(navArgument("projectId") { type = NavType.StringType }),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            HistoryScreen(navController, projectId)
+        }
+        composable(
+            Routes.PREVIEW,
+            arguments = listOf(navArgument("projectId") { type = NavType.StringType }),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            PreviewScreen(navController, projectId)
+        }
+        composable(
+            Routes.HARNESS,
+            arguments = listOf(navArgument("projectId") { type = NavType.StringType }),
+        ) { entry ->
+            val projectId = requireNotNull(entry.arguments?.getString("projectId")) { "Missing required navigation argument: projectId" }
+            HarnessScreen(navController, projectId)
+        }
+    }
+}
+
+private fun NavHostController.navigateTop(route: String) {
+    navigate(route) {
+        popUpTo(graph.findStartDestination().id) { saveState = true }
+        launchSingleTop = true
+        restoreState = true
+    }
+}
+
+@Composable
+private fun BoxScope.FloatingAgentStatus(tasks: List<com.anvex.core.model.TaskRunItem>) {
+    val active = tasks.count { it.state == "RUNNING" || it.state == "RETRYING" || it.state == "WAITING_APPROVAL" }
+    if (active == 0) return
+    // 2026-11-03 audit: the chip rendered hard-coded English with no
+    // semantics, despite looking tappable. It is a passive indicator:
+    // the label is localized and the whole chip carries one content
+    // description (resolved here — tr() cannot run inside the
+    // semantics lambda).
+    val chipText = "${tr("Agent")} • $active ${tr("active")}"
+    Surface(
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(end = 16.dp, bottom = 84.dp)
+            .semantics { contentDescription = chipText },
+        shape = MaterialTheme.shapes.large,
+        tonalElevation = 4.dp,
+        shadowElevation = 4.dp,
+    ) {
+        Row(Modifier.padding(horizontal = 14.dp, vertical = 9.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            androidx.compose.material3.CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
+            Spacer(Modifier.size(8.dp))
+            Text(chipText, style = MaterialTheme.typography.labelLarge)
+        }
+    }
+}

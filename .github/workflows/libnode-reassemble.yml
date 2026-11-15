@@ -1,0 +1,267 @@
+name: Reassemble libnode 24 release (dependency closure fix)
+
+# The libnode-v24.18.0 release from run 39713653831 contains ONLY libnode.so
+# per ABI: the per-ABI artifacts were built from tp/output/*.deb, which holds
+# just the nodejs-lts deb — the -I dependency debs are installed inside the
+# Termux docker container and never reach output/. libnode.so's DT_NEEDED
+# (libz.so.1, libcares.so, libsqlite3.so, libcrypto.so.3, libssl.so.3,
+# libicui18n.so.78, libicuuc.so.78) would not resolve on Android.
+#
+# This workflow reuses that run's artifacts (no 2h rebuild), fetches the
+# dependency debs from the Termux apt repo (Packages index, SHA-256
+# verified), computes the full DT_NEEDED closure, and republishes the
+# release. A second defect: AGP only packages *.so files from jniLibs, so
+# the versioned names (libcrypto.so.3, libicui18n.so.78, ...) never reached
+# the APK at all — this workflow also renames every lib to its *.so form
+# with patchelf (SONAME + DT_NEEDED rewritten), and bundles Termux's own
+# libc++_shared.so, which the APK otherwise lacks entirely.
+# Manual dispatch only.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "Actions run that produced the libnode-libs-* artifacts"
+        default: "39713653831"
+        required: true
+
+permissions:
+  contents: write
+  actions: read
+
+env:
+  NODE_VERSION: "24.22.1"
+
+jobs:
+  reassemble:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Download per-ABI library + header artifacts from the source run
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          for name in libnode-libs-x86_64 libnode-libs-arm64-v8a libnode-libs-armeabi-v7a libnode-headers; do
+            id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/${{ inputs.source_run_id }}/artifacts" --jq ".artifacts[] | select(.name==\"$name\") | .id")
+            test -n "$id"
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$id/zip" > "artifacts/$name.zip"
+            mkdir -p "artifacts/$name" && unzip -o -q "artifacts/$name.zip" -d "artifacts/$name"
+            echo "$name: $(find "artifacts/$name" -type f | wc -l) files"
+          done
+
+      - name: Fetch Termux dependency packages (index-verified)
+        run: |
+          set -euo pipefail
+          python3 - <<'PYEOF'
+          import gzip, hashlib, os, subprocess, urllib.request
+          REPO = "https://packages.termux.dev/apt/termux-main"
+          WANT = {"zlib", "c-ares", "openssl", "libicu", "libsqlite", "libc++"}
+          ARCHES = {"x86_64": "x86_64", "aarch64": "arm64-v8a", "arm": "armeabi-v7a"}
+          def fetch(url):
+              with urllib.request.urlopen(url) as r:
+                  return r.read()
+          for tarch, abi in ARCHES.items():
+              try:
+                  raw = fetch(f"{REPO}/dists/stable/main/binary-{tarch}/Packages")
+              except Exception:
+                  raw = gzip.decompress(fetch(f"{REPO}/dists/stable/main/binary-{tarch}/Packages.gz"))
+              entries, cur = [], {}
+              for line in raw.decode().splitlines():
+                  if not line.strip():
+                      if cur: entries.append(cur)
+                      cur = {}
+                  elif ": " in line:
+                      k, v = line.split(": ", 1); cur[k] = v
+              if cur: entries.append(cur)
+              outdir = f"deps/{abi}"
+              os.makedirs(outdir, exist_ok=True)
+              for e in entries:
+                  if e.get("Package") not in WANT: continue
+                  data = fetch(f"{REPO}/{e['Filename']}")
+                  digest = hashlib.sha256(data).hexdigest()
+                  assert digest == e["SHA256"], (e["Package"], digest, e["SHA256"])
+                  deb = f"/tmp/{abi}-{e['Package']}.deb"
+                  open(deb, "wb").write(data)
+                  xdir = f"/tmp/{abi}-{e['Package']}-x"
+                  os.makedirs(xdir, exist_ok=True)
+                  subprocess.run(["ar", "x", deb], cwd=xdir, check=True)
+                  subprocess.run(["tar", "-xJf", "data.tar.xz"], cwd=xdir, check=True)
+                  libdir = None
+                  for root, dirs, files in os.walk(xdir):
+                      if root.endswith("usr/lib"):
+                          libdir = root; break
+                  n = 0
+                  if libdir:
+                      for name in os.listdir(libdir):
+                          src = os.path.join(libdir, name)
+                          if ".so" in name and (os.path.isfile(src) or os.path.islink(src)):
+                              dst = os.path.join(outdir, name)
+                              if os.path.islink(src):
+                                  if not os.path.lexists(dst): os.symlink(os.readlink(src), dst)
+                              elif not os.path.exists(dst):
+                                  import shutil; shutil.copy2(src, dst)
+                              n += 1
+                  print(f"{abi}: {e['Package']} {e['Version']} -> {n} lib entries")
+          PYEOF
+          find deps -name "*.so*" | sort | head -60
+
+      - name: Compute full closure and assemble package
+        run: |
+          set -euo pipefail
+          mkdir -p pkg/bin pkg/include
+          for abi in x86_64 arm64-v8a armeabi-v7a; do
+            mkdir -p "pkg/bin/$abi"
+            python3 - "artifacts/libnode-libs-$abi" "deps/$abi" "pkg/bin/$abi" <<'PYEOF'
+          import os, re, subprocess, sys
+          srcdirs, outdir = sys.argv[1:-1], sys.argv[-1]
+          libs = []
+          for d in srcdirs:
+              out = subprocess.run(['find', d, '-name', '*.so*'], capture_output=True, text=True).stdout.split()
+              libs += [p for p in out if os.path.isfile(p) or os.path.islink(p)]
+          def soname(path):
+              out = subprocess.run(['readelf', '-d', os.path.realpath(path)], capture_output=True, text=True).stdout
+              m = re.search(r'SONAME.*\[(.+?)\]', out)
+              return m.group(1) if m else os.path.basename(path)
+          def needed(path):
+              out = subprocess.run(['readelf', '-d', os.path.realpath(path)], capture_output=True, text=True).stdout
+              return re.findall(r'NEEDED.*\[(.+?)\]', out)
+          index = {}
+          for p in libs:
+              index.setdefault(soname(p), p)
+              index.setdefault(os.path.basename(p), p)
+          seen, queue = set(), [os.path.basename(p) for p in libs if os.path.basename(p).startswith('libnode.so')]
+          assert queue, "libnode.so missing"
+          name_for_real = {}
+          while queue:
+              cur = queue.pop()
+              path = index.get(cur)
+              if path is None or path in seen: continue
+              seen.add(path)
+              # The loader searches for the exact DT_NEEDED string. A lib
+              # without a SONAME (Termux libsqlite3) must be shipped under
+              # the name it was requested by, not its real file name.
+              name_for_real.setdefault(os.path.realpath(path), cur)
+              queue.extend(needed(path))
+          SYSTEM = {"libc.so", "libm.so", "libdl.so", "liblog.so", "libandroid.so"}
+          PROVIDED = set()  # everything non-system is bundled, incl. Termux libc++_shared.so
+          unresolved = set()
+          for p in seen:
+              for n in needed(p):
+                  if n not in index and n not in SYSTEM and n not in PROVIDED:
+                      unresolved.add(n)
+          if unresolved:
+              print("FATAL: unresolved DT_NEEDED:", sorted(unresolved)); sys.exit(2)
+          # One regular file per real file, named by its SONAME — the exact
+          # name DT_NEEDED asks for. No symlinks: Gradle's ZipInputStream
+          # extraction would turn a zip symlink entry into a text file.
+          total = 0
+          for real, req_name in sorted(name_for_real.items(), key=lambda kv: kv[1]):
+              dest = os.path.join(outdir, req_name)
+              with open(real, 'rb') as f, open(dest, 'wb') as g: g.write(f.read())
+              total += os.path.getsize(real)
+              print(f"{os.path.getsize(real):>12}  {req_name}")
+          out_names = set(os.listdir(outdir))
+          missing = set()
+          for p in seen:
+              for n in needed(p):
+                  if n not in out_names and n not in SYSTEM and n not in PROVIDED:
+                      missing.add(n)
+          if missing:
+              print("FATAL: output dir lacks requested names:", sorted(missing)); sys.exit(2)
+          print(f"closure OK: {len(name_for_real)} real files, {total} bytes, all DT_NEEDED names present")
+          PYEOF
+          done
+          cp -r artifacts/libnode-headers pkg/include/node
+          ls -la pkg/bin/*/ | head -50
+
+      - name: Normalize library names for Android packaging (string surgery)
+        run: |
+          set -euo pipefail
+          python3 - <<'PYEOF'
+          import os, re, subprocess
+          # patchelf --replace-needed was tried first and REJECTED: it moves
+          # .dynsym/.dynstr into an appended LOAD segment (+10 MB) and the
+          # result failed bionic symbol resolution on the emulator smoke
+          # ("cannot locate symbol node::Start") despite readelf looking
+          # fine. In-place string surgery moves NOTHING: versioned names in
+          # .dynstr (DT_NEEDED + SONAME slots) are shortened and NUL-padded
+          # to the same byte length; files are renamed to match.
+          SYSTEM = {"libc.so", "libm.so", "libdl.so", "liblog.so", "libandroid.so"}
+          def needed(p):
+              out = subprocess.run(['readelf', '-d', p], capture_output=True, text=True).stdout
+              return re.findall(r'NEEDED.*\[(.+?)\]', out)
+          for abi in ("x86_64", "arm64-v8a", "armeabi-v7a"):
+              d = f"pkg/bin/{abi}"
+              renames = {}
+              for f in sorted(os.listdir(d)):
+                  m = re.match(r"^(.+\.so)\..+$", f)
+                  if m:
+                      renames[f] = m.group(1)
+              for f in sorted(os.listdir(d)):
+                  p = os.path.join(d, f)
+                  data = open(p, 'rb').read()
+                  total = 0
+                  for old, new in renames.items():
+                      old_b, new_b = old.encode(), new.encode()
+                      pat = old_b + b"\x00"
+                      rep = new_b + b"\x00" * (len(old_b) - len(new_b) + 1)
+                      cnt = data.count(pat)
+                      if cnt:
+                          data = data.replace(pat, rep)
+                          total += cnt
+                  if total:
+                      open(p, 'wb').write(data)
+                      print(f"{abi}/{f}: {total} string replacements")
+              for old, new in renames.items():
+                  os.rename(os.path.join(d, old), os.path.join(d, new))
+                  print(f"{abi}: {old} -> {new}")
+              names = set(os.listdir(d))
+              bad = set()
+              for f in names:
+                  for n in needed(os.path.join(d, f)):
+                      if n not in names and n not in SYSTEM:
+                          bad.add(n)
+              assert not bad, f"{abi}: still unresolved after surgery: {bad}"
+              print(f"{abi}: names normalized, closure self-contained ({len(names)} libs)")
+          PYEOF
+
+      - name: Fetch official Node.js source tarball (npm version only)
+        run: |
+          set -euo pipefail
+          base="https://nodejs.org/dist/v${NODE_VERSION}"
+          curl -fsSLO "$base/node-v${NODE_VERSION}.tar.gz"
+          curl -fsSLO "$base/SHASUMS256.txt"
+          grep " node-v${NODE_VERSION}.tar.gz\$" SHASUMS256.txt | sha256sum -c -
+          tar -xzf "node-v${NODE_VERSION}.tar.gz" "node-v${NODE_VERSION}/deps/npm/package.json"
+          NPM_VERSION=$(python3 -c "import json; print(json.load(open('node-v${NODE_VERSION}/deps/npm/package.json'))['version'])")
+          echo "NPM_VERSION=$NPM_VERSION" >> "$GITHUB_ENV"
+          echo "npm bundled with Node ${NODE_VERSION}: $NPM_VERSION"
+
+      - name: Write manifest, zip, publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          {
+            echo "anvex-libnode ${NODE_VERSION}"
+            echo "node: ${NODE_VERSION} (LTS), built via Termux nodejs-lts for bionic with --shared"
+            echo "npm: ${NPM_VERSION} (version shipped in the official source tarball)"
+            echo "deps: DT_NEEDED closure from Termux apt packages (zlib, c-ares, openssl, libicu, libsqlite, libc++), index SHA-256 verified; all libs renamed to *.so via in-place .dynstr surgery (Android packaging drops versioned names; patchelf output failed bionic symbol resolution)"
+            echo "layout: bin/<android-abi>/*.so (libnode.so + DT_NEEDED closure, one regular file per SONAME), include/node/ (generated headers from the same build)"
+            echo
+            find pkg -type f -printf "%s\t%p\n" | sort -k2
+          } > pkg/manifest.txt
+          sed -i 's|pkg/||g' pkg/manifest.txt
+          cat pkg/manifest.txt
+          (cd pkg && zip -r "../anvex-libnode-${NODE_VERSION}.zip" .)
+          sha256sum "anvex-libnode-${NODE_VERSION}.zip" | tee "anvex-libnode-${NODE_VERSION}.zip.sha256"
+          tag="libnode-v${NODE_VERSION}"
+          notes="Anvex libnode ${NODE_VERSION} package (dependency-closed rebuild). SHA-256: $(cut -d' ' -f1 "anvex-libnode-${NODE_VERSION}.zip.sha256"). See manifest.txt inside the zip for the per-ABI file list. libnode.so built by libnode-release.yml from Termux nodejs-lts (+--shared); dependency closure from Termux apt packages; headers generated by the same build."
+          if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$tag" "anvex-libnode-${NODE_VERSION}.zip" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release edit "$tag" --repo "$GITHUB_REPOSITORY" --notes "$notes"
+          else
+            gh release create "$tag" "anvex-libnode-${NODE_VERSION}.zip" --repo "$GITHUB_REPOSITORY" --title "libnode ${NODE_VERSION} (Anvex runtime package)" --notes "$notes"
+          fi
