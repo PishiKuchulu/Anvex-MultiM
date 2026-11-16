@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UNVERIFIED (never built). English strings of the Agent Teams module. Every string exists in values-fa too. -->
+<resources>
+    <string name="agents_title">Agent Teams</string>
+    <string name="agents_back">Back</string>
+    <string name="agents_new_team">New team</string>
+    <string name="agents_team_name">Team name</string>
+    <string name="agents_no_teams">No teams yet. Create one to let several AI agents work on this project.</string>
+    <string name="agents_add_agent">Add agent</string>
+    <string name="agents_agent_name">Name</string>
+    <string name="agents_agent_role">Role and instructions</string>
+    <string name="agents_provider">Provider</string>
+    <string name="agents_model">Model</string>
+    <string name="agents_temperature">Temperature (optional)</string>
+    <string name="agents_write_globs">Files it may change (comma separated, e.g. src/**)</string>
+    <string name="agents_can_execute">May run commands</string>
+    <string name="agents_can_approve">May review and approve others\' work</string>
+    <string name="agents_add_task">Add task</string>
+    <string name="agents_task_title">Title</string>
+    <string name="agents_task_acceptance">Acceptance criteria</string>
+    <string name="agents_task_claims">Expected files (comma separated, optional)</string>
+    <string name="agents_task_assignees">Assign to (choose several to compare results)</string>
+    <string name="agents_max_concurrent">Agents at the same time</string>
+    <string name="agents_token_budget">Token budget (0 = none)</string>
+    <string name="agents_start_run">Start</string>
+    <string name="agents_save">Save</string>
+    <string name="agents_cancel">Cancel</string>
+    <string name="agents_delete">Delete</string>
+    <string name="agents_unsupported_project">This project is stored in a shared folder and is not supported by Agent Teams yet.</string>
+    <string name="agents_tokens_used">Tokens used: %1$s</string>
+    <string name="agents_cost_used">Cost: %1$s USD</string>
+    <string name="agents_state_pending">Waiting</string>
+    <string name="agents_state_assigned">Assigned</string>
+    <string name="agents_state_in_progress">Working</string>
+    <string name="agents_state_blocked">Needs you</string>
+    <string name="agents_state_under_review">Under review</string>
+    <string name="agents_state_revision">Revision required</string>
+    <string name="agents_state_completed">Done</string>
+    <string name="agents_state_failed">Failed</string>
+    <string name="agents_state_cancelled">Cancelled</string>
+    <string name="agents_pause">Pause</string>
+    <string name="agents_resume">Resume</string>
+    <string name="agents_stop">Stop</string>
+    <string name="agents_show_changes">Show changes</string>
+    <string name="agents_approve">Approve</string>
+    <string name="agents_reject">Reject</string>
+    <string name="agents_rerun">Run again</string>
+    <string name="agents_retry">Retry</string>
+    <string name="agents_undo">Undo</string>
+    <string name="agents_gate_needs_review">Needs independent review. The author cannot approve it.</string>
+    <string name="agents_need_conflict">Conflict with another agent\'s changes. Nothing was applied.</string>
+    <string name="agents_need_approval">Touches files outside the task. Your approval is needed.</string>
+    <string name="agents_need_stopped">The agent was stopped.</string>
+    <string name="agents_need_budget">The budget was reached.</string>
+    <string name="agents_choose_result">Choose the result to keep:</string>
+    <string name="agents_notice_budget_warning">80 percent of the budget is used.</string>
+    <string name="agents_notice_gate_attempt">Someone tried to approve without being allowed to. It was refused.</string>
+    <string name="agents_no_changes">No changes.</string>
+</resources>

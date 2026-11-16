@@ -1,0 +1,5615 @@
+{
+  "schemaVersion": "5.7.0",
+  "packageVersion": "5.7.0",
+  "project": {
+    "id": "ANVEX-AGENTS",
+    "name": "Anvex Agent Teams (multi-agent module)",
+    "mode": "hybrid"
+  },
+  "readiness": {
+    "status": "CODING_AGENT_READY",
+    "reason": "Foundation is complete for milestones M0–M6: all technology decisions are LOCKED, every requirement has a complete trace, the credentials requirement has a security trace. OPEN governance decisions ADR-028 and ADR-029 carry recommended defaults and do not block work. Android-dependent milestones remain UNVERIFIED until built on real tooling.",
+    "validatedAt": "2026-11-05"
+  },
+  "requirements": [
+    {
+      "id": "PRD-FR-1",
+      "title": "Evolve Anvex into a multi-agent development environment",
+      "source": "Transform Anvex from a single-agent AI coding application into an advanced, extensible, multi-agent software development environment.",
+      "sourceHash": "553a4aa9c8f09793574de9ff096815fcc4024e4d7b6275eae64046c3cd5cb2b0",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-2",
+      "title": "Multiple agents collaborate on one project with different models/providers/roles",
+      "source": "The system must support multiple AI agents working collaboratively on the same software project, using different AI models, providers, tools, roles, and execution strategies.",
+      "sourceHash": "3b0af7a7a706c8b1c5c40771cb4d8da7c60ac5371f25ab095c497016ae103d88",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-3",
+      "title": "Per-agent provider and model",
+      "source": "Select a different AI provider and model for each agent.",
+      "sourceHash": "69e88ddc7050326e45a066ea3f822623fdfff228b270a9ec48986f87287ec9f5",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-4",
+      "title": "Per-agent model parameters",
+      "source": "Configure individual temperature and other supported model parameters.",
+      "sourceHash": "9b1af34f1de9a5a105dc3dcf9a9819128ab1037b99851b02fa0cdede108a8e5f",
+      "securitySensitive": false,
+      "priority": "should",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-5",
+      "title": "Same task to multiple agents",
+      "source": "Assign the same task to multiple agents.",
+      "sourceHash": "693e49c9e4ceb2cf92edf8f5f7255d7e2bd631187fa2ecb2a46f4810ffcc8711",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-6",
+      "title": "Simultaneous agent execution",
+      "source": "Run multiple agents simultaneously.",
+      "sourceHash": "8d079e72b7e93159290b6ab0ff1a3c69eb9283c13c109b7ee672ba3d4abcfc0d",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-7",
+      "title": "Task dependencies and execution order",
+      "source": "Define task dependencies and execution order.",
+      "sourceHash": "88da9a844ac51a150bbeca60f5322abf8884a24157cdabecab276073b89d74dd",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-8",
+      "title": "Compare independent implementations",
+      "source": "Compare independent implementations.",
+      "sourceHash": "13b67e9c2510cb7d1fab3e1af2a4655a451bddcec75f9f010a708c3da27b753b",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-9",
+      "title": "Approve, reject, modify, reassign tasks",
+      "source": "Approve, reject, modify, or reassign tasks.",
+      "sourceHash": "4cd1fc59c771b05778f24ebb06c3c7145317f5b81b00d98017dc5435746aee3d",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-10",
+      "title": "Pause, resume, terminate agents",
+      "source": "Pause, resume, or terminate individual agents.",
+      "sourceHash": "0c1e846963831bcc50bdf190f60d63ac2dde8764def2146b83c2a033d147d0df",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-11",
+      "title": "Per-agent read/modify/execute/approve permissions",
+      "source": "Control which agents can read, modify, execute, or approve project changes.",
+      "sourceHash": "80c3121d25b2b70230e36aed099eef848b831773cc73026ec526e7ac9bf87c3f",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-12",
+      "title": "Agents cannot self-verify",
+      "source": "Agents must not mark their own work as successfully verified merely because their implementation process completed.",
+      "sourceHash": "1cdb95459077ca97262c62323098c4161ed21b06e282dbf372632ef219bd614a",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-13",
+      "title": "Never silently overwrite another agent's changes",
+      "source": "The system must never silently overwrite another agent's changes.",
+      "sourceHash": "b30b9de871988bf8c45911991683c42cb9662cf023dc2e33dc29e635483c11fb",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-14",
+      "title": "Gates cannot be bypassed via manager approval",
+      "source": "An agent must never be able to bypass mandatory verification gates simply by requesting approval from the Project Manager.",
+      "sourceHash": "512e50aee6ac07a5bd11e4c2a94f9d7e1dbd253b802d06126ec99cd19868b019",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-15",
+      "title": "Parallelism from dependencies and file-level conflicts",
+      "source": "Parallel execution must be based on task dependencies and actual file-level conflicts, not simply the number of available agents.",
+      "sourceHash": "4311c930bf8545f692dc584df419e53e0fe85f7b85a0c383c038b92304da6c28",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-16",
+      "title": "Isolated agent workspaces",
+      "source": "Isolated agent workspaces.",
+      "sourceHash": "df3eb926e09a5e5bc43f2f363f3b1ccf8b312ceaaeb1e8b6c5647c0dbffb7bde",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-17",
+      "title": "Merge and conflict resolution",
+      "source": "Merge and conflict resolution.",
+      "sourceHash": "c7a1e17e014750ccd4efca02d73a5ec255f4e162c52e96f4211401b457c8782e",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-18",
+      "title": "Rollback and recovery",
+      "source": "Rollback and recovery.",
+      "sourceHash": "6e4231a7b565d14e372261aefc04b42eee0ab32a82f49826eb5790af123a31b1",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-19",
+      "title": "Per-agent token tracking",
+      "source": "Per-agent token consumption tracking.",
+      "sourceHash": "5b556650fb9188c4cbdefc0adc4dc32da4026c0dd4aabb634bf5355a08fab176",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-20",
+      "title": "Configurable execution budgets",
+      "source": "Configurable execution budgets.",
+      "sourceHash": "084c59ac37f79e4e6b8b226648f728d931de45364865b4706217d9a29f57da94",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-21",
+      "title": "Maximum concurrent agent limit",
+      "source": "Maximum concurrent agent limits.",
+      "sourceHash": "ba098b5871bf9f6e46fdb9c1efffc7967db35850a93b6693c45c70d69f989582",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-22",
+      "title": "Interrupted execution recovery",
+      "source": "Interrupted execution recovery.",
+      "sourceHash": "1af863c5423a0c6ef5c421bcb1730258a5a08399cbc6816065abad6d4499652a",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-23",
+      "title": "Agent output is untrusted until validated",
+      "source": "Agent messages and generated content must be treated as untrusted input unless independently validated.",
+      "sourceHash": "a350930ab5923fa8462fcba67bfcdc82262675467184288cec9f233a96c707d0",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-24",
+      "title": "Secure credential handling",
+      "source": "Secure credential handling.",
+      "sourceHash": "36eedf8ee577ec31983eb85017dd5dcc87c0cab4a641547657c66b082a16724d",
+      "securitySensitive": true,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-25",
+      "title": "Governance independent of provider/model",
+      "source": "Governance enforcement must not depend on the selected AI provider or model.",
+      "sourceHash": "b2e1ce6cd160209fc79404015757757b842d285b0835647be1e1e9d5ecabb55b",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-26",
+      "title": "Controlled context distribution",
+      "source": "Avoid repeatedly sending the entire project source code to every model. Use relevant context retrieval and controlled context distribution.",
+      "sourceHash": "fb831b6d3de218e161010a414e175f359993f08667c9f03f12081307e8915df0",
+      "securitySensitive": false,
+      "priority": "should",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-27",
+      "title": "New agent types without core changes",
+      "source": "Add new agent types without modifying the core orchestration engine.",
+      "sourceHash": "6769e7b8502d2262ad47d2451a7a2067e87f9c8b59638bc954b7e1c13c4bb591",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-28",
+      "title": "Architecture allows section-13 capabilities later",
+      "source": "Design the architecture so that the following capabilities can be added without redesigning the core engine:",
+      "sourceHash": "0044d40b948721549abc47210a4ff0041753ed767028698f8493a953328d0bce",
+      "securitySensitive": false,
+      "priority": "should",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-29",
+      "title": "Compatible with existing Anvex architecture",
+      "source": "Compatibility with the existing Anvex architecture.",
+      "sourceHash": "457cf29787333ddb6350924a9b26d0d0470e705f95fd582dac518e2747b53f93",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-30",
+      "title": "No unnecessary external infrastructure",
+      "source": "No unnecessary external infrastructure dependencies.",
+      "sourceHash": "2bd6541c38314b5df72b25a37f8462d57d4c70bbf2f6e02091aca96e78cef70c",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-31",
+      "title": "PFP remains the authoritative governance layer",
+      "source": "PFP must remain the authoritative governance layer.",
+      "sourceHash": "a2f2931ace00735f34e13937c04eff524789cdfd76058a6c3c5468eb1425a249",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "dispositioned",
+      "refs": [
+        "SD-001"
+      ]
+    },
+    {
+      "id": "PRD-FR-32",
+      "title": "Git branches and worktrees where supported",
+      "source": "Git branches and Git Worktrees where supported.",
+      "sourceHash": "0ba0ea2ef611fad8637322f8c924219f85860725d5176881e3a79d483df75189",
+      "securitySensitive": false,
+      "priority": "should",
+      "status": "dispositioned",
+      "refs": [
+        "SD-002"
+      ]
+    },
+    {
+      "id": "PRD-FR-33",
+      "title": "Central Project Manager agent",
+      "source": "A central Project Manager Agent manages a team of specialized subordinate agents.",
+      "sourceHash": "7f389dbf37b1968d21e4be04de75353549fd97a480782d8aa900cf02d0bb3ac9",
+      "securitySensitive": false,
+      "priority": "should",
+      "status": "dispositioned",
+      "refs": [
+        "SD-003"
+      ]
+    },
+    {
+      "id": "PRD-FR-34",
+      "title": "Import/export agent configurations",
+      "source": "Import and export agent configurations.",
+      "sourceHash": "a1d425978692e1db5b817373c156020d6dfbdd3fe7c64f591e4c79b64b045b58",
+      "securitySensitive": false,
+      "priority": "could",
+      "status": "dispositioned",
+      "refs": [
+        "SD-004"
+      ]
+    },
+    {
+      "id": "PRD-FR-35",
+      "title": "Engine works only on real file paths",
+      "source": "موتور چندعاملی (ارکستراسیون، گیت، پچ، مرج، تشخیص تعارض، ایزوله‌سازی) فقط و فقط با RealProjectFileSystem (مسیرهای واقعی فایل) کار می‌کند.",
+      "sourceHash": "68184bc634c0dd075739a17bc3685bcb98f7fd4dd7b187a63b94ed2cf50351a1",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-36",
+      "title": "No direct SAF in the engine core",
+      "source": "پشتیبانی مستقیم از SAF (URIهای content://) در هسته موتور چندعاملی ممنوع است.",
+      "sourceHash": "5b99a2aa26bbf99500512e4ab6d2aafaec996e075de0c93d1d78b8f34ea74567",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-37",
+      "title": "SAF only at an import/export gateway",
+      "source": "در ورودی: فایل‌ها از SAF به فضای کاری واقعی (app-private یا مسیر واقعی) کپی/وارد می‌شوند.",
+      "sourceHash": "1fb756e83bfda4e9c7c23c28eb98b41489ec3f37b9b0b474e29154982e0c9502",
+      "securitySensitive": false,
+      "priority": "should",
+      "status": "dispositioned",
+      "refs": [
+        "SD-005"
+      ]
+    },
+    {
+      "id": "PRD-FR-38",
+      "title": "Project must be real-FS before entering the workspace",
+      "source": "قانون: به‌محض ورود پروژه به فضای کاری چندعاملی، باید به RealProjectFileSystem تبدیل شده باشد.",
+      "sourceHash": "1e7dd9432671267c630824e874b28348922f8621c608f64db0ad939d4d06ff15",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-39",
+      "title": "Port named WorkspaceFileSystem / RealWorkspaceFileSystem",
+      "source": "تأیید تغییر اسم به WorkspaceFileSystem / RealWorkspaceFileSystem — بدون اعتراض.",
+      "sourceHash": "989a9a854389b7c9e2163eb3565671e208d4ee256139502f6bbaf323a7e2924b",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-40",
+      "title": "No getAbsolutePath; root-relative path model; separate ports",
+      "source": "تأیید حذف getAbsolutePath و استفاده از پورت‌های جدا — با مدل مسیرِ نسبت‌به‌ریشه در هسته.",
+      "sourceHash": "fda0935a8c7afc6f93e0bfbda4a4e824c637ea21aafdf4b7b2db864af3e51325",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-41",
+      "title": "WorkspaceFileSystem delegates to the existing ProjectFileSystem",
+      "source": "ADR-002: رابطهٔ WorkspaceFileSystem با ProjectFileSystem موجود = واگذاری/سوارشدن، نه موازی‌سازی.",
+      "sourceHash": "d3434f01f34d9c66bc271a5e49b6c9df4255051eb97bc12235be528c26389791",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-42",
+      "title": "Snapshots backed by recoverable content",
+      "source": "اصلاح معنای اسنپ‌شات: مانیفست باید به محتوای قابل‌بازیابی (ذخیره‌ساز محتوامحور یا COW) پشتوانه شود، نه هشِ تنها.",
+      "sourceHash": "941306ec8984ac41ac15ede0d1a4b6a02de6603a1423d657a9e4a8362d868e59",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-43",
+      "title": "MVP merge: auto only for non-overlapping regions",
+      "source": "سیاست ادغام برای MVP: خودکار فقط برای ناحیه‌های غیرهم‌پوشان؛ هم‌پوشانی = تعارض.",
+      "sourceHash": "b1cb312aa131ebcc32f6e3181e22cb415300ad0fa5fe5de790010d07692a55fa",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-44",
+      "title": "Defined edge-case behavior",
+      "source": "تعریف رفتار لبه‌ها (باینری، CRLF، حذف+ویرایش، اضافه در هر دو طرف).",
+      "sourceHash": "051ae6573a6b568691ce7491fcb4698bb475683fc06772d0c00dc6ee2787529c",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-45",
+      "title": "Ownership and permissions enforced in core/Integrator",
+      "source": "نقطهٔ اعمال مالکیت فایل و مجوزها: در هسته/Integrator (سیاست)، نه در پورت‌ها.",
+      "sourceHash": "c2de03dd652e62a91490f83f9cb9568489ead86367e533f8262b214eeaf812cd",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-46",
+      "title": "Validate every agent output before applying",
+      "source": "هر خروجی عامل ورودی غیرقابل‌اعتماد است و قبل از اعمال باید اعتبارسنجی شود.",
+      "sourceHash": "c2c09d8e154e2ec8ddb3ffab37cea3a4673ea08cb24774215c1eca19cbb336c9",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    },
+    {
+      "id": "PRD-FR-47",
+      "title": "Build the module completely, integrate at the end",
+      "source": "این قابلیت رو کامل بسازیم و در انتها اضافش کنیم به سورس اصلی",
+      "sourceHash": "52d79956c6e78a44baf5b1c36320b0868d36292f3ed4b25fdee466db82b4f052",
+      "securitySensitive": false,
+      "priority": "must",
+      "status": "preserved"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ADR-001",
+      "title": "SAF is allowed only at an import/export gateway; the engine core never sees content:// URIs",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "Engine core operates only on workspaces backed by real file paths; SAF code lives only in ARC-FS-4 (gateway) and is DEFERRED.",
+      "reason": "Directive from the product owner; content:// grants are revocable and cannot support atomic apply, isolation or ownership checks."
+    },
+    {
+      "id": "ADR-002",
+      "title": "WorkspaceFileSystem delegates to (is mounted on) the existing ProjectFileSystem; it is not a parallel implementation",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "RealWorkspaceFileSystem wraps an injected com.anvex.core.engine.ProjectFileSystem (verified signature in core:engine, implemented by core:android RealProjectFileSystem). It adds only: content digests, CAS snapshots, fork/materialize. It exposes the wrapped ProjectFileSystem to the Anvex ActionDispatcher in the adapter layer.",
+      "reason": "RealProjectFileSystem already provides PathSanitizer checks, canonical-path confinement, atomic tmp+fsync+rename writes and symlink-safe delete/walk; duplicating them would fork security-critical code."
+    },
+    {
+      "id": "ADR-003",
+      "title": "Port is named WorkspaceFileSystem; implementation RealWorkspaceFileSystem",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "com.anvex.agents.fs.WorkspaceFileSystem (port, in agents-core) and com.anvex.agents.fs.RealWorkspaceFileSystem (agents-fs).",
+      "reason": "Avoids name collision with com.anvex.core.engine.ProjectFileSystem and com.anvex.core.android.fs.RealProjectFileSystem, which already exist in Anvex 4.15.2."
+    },
+    {
+      "id": "ADR-004",
+      "title": "Core uses a root-relative RelPath model; no absolute paths; version control and shell are separate ports",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "WorkspaceFileSystem has no getAbsolutePath. RelPath validates (no .., no absolute, no NUL/control/bidi, segment <= 255, total <= 4096). VersionControlPort and ShellPort are implemented in the Android layer against the same real root.",
+      "reason": "An absolute path in the core invites File use; GitLite needs a root File, so it is reached through a port, not through the filesystem interface."
+    },
+    {
+      "id": "ADR-005",
+      "title": "Snapshot = content-addressed store (CAS) plus manifest; a hash alone is never a snapshot",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "Blobs are stored by SHA-256 under <agentsRoot>/cas/<aa>/<sha256>. A Manifest maps RelPath to (blobId,size,kind); SnapshotId = SHA-256 of the canonical manifest. restoreSnapshot rebuilds the tree from blobs and verifies every blob hash on read. Copy-on-write is not used: app-private storage offers no reflink API.",
+      "reason": "Directive: a manifest must be backed by recoverable content. Limits (documented): empty directories, symlinks and mode bits are not captured."
+    },
+    {
+      "id": "ADR-006",
+      "title": "MVP merge policy: line-based three-way merge, automatic only for non-overlapping regions, overlap is a conflict",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "Base = snapshot taken at fork; ours = current integration workspace; theirs = agent result. Hunks that touch the same or adjacent base lines conflict. Identical changes on both sides are clean. Edge-case table in 04_ARCHITECTURE/03_backend_architecture.md.",
+      "reason": "Conservative policy chosen over heuristics; false conflicts are recoverable, silent wrong merges are not."
+    },
+    {
+      "id": "ADR-007",
+      "title": "Ownership and permissions are enforced by the core Policy Engine and Integrator, not by ports",
+      "area": "security",
+      "classification": "LOCKED",
+      "value": "Ports perform mechanical operations only. PolicyEngine evaluates every ChangeSet entry before the Integrator applies it. Decisions: ALLOW, DENY, ESCALATE, DEFER with precedence DENY > ESCALATE > DEFER > ALLOW; missing evidence is never ALLOW.",
+      "reason": "Directive; mirrors the PFP Runtime Enforcement Contract fail-closed sequence."
+    },
+    {
+      "id": "ADR-008",
+      "title": "Every agent output is untrusted input and is validated before it can be applied",
+      "area": "security",
+      "classification": "LOCKED",
+      "value": "ChangeSetValidator rejects: invalid RelPath, symlink/mode entries, size or count over limits, paths outside the task write grant, sensitive paths, and malformed structure. Free-text messages never reach a shell or policy decision.",
+      "reason": "Directive and PFP Runtime Enforcement Contract; validation is code, not prompt text."
+    },
+    {
+      "id": "ADR-009",
+      "title": "agents-core is pure JVM with zero Anvex dependencies; the scheduler is a deterministic state machine",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "Module :feature:agents-core depends only on the Kotlin standard library. Scheduler contract: next(state, event) returns (state, commands). Coroutines appear only in agents-runtime.",
+      "reason": "Allows the whole decision logic to be compiled and tested without Gradle, Android or a device."
+    },
+    {
+      "id": "ADR-010",
+      "title": "Language: Kotlin 2.0.21",
+      "area": "language",
+      "classification": "LOCKED",
+      "value": "Kotlin 2.0.21, jvmTarget 17.",
+      "reason": "Matches gradle/libs.versions.toml of Anvex 4.15.2."
+    },
+    {
+      "id": "ADR-011",
+      "title": "Framework: Kotlin standard library and kotlinx-coroutines 1.9.0 (runtime only); Jetpack Compose Material 3 via BOM 2024.12.01 (UI only)",
+      "area": "framework",
+      "classification": "LOCKED",
+      "value": "agents-core and agents-fs use only the Kotlin standard library. agents-runtime uses kotlinx-coroutines 1.9.0. agents-ui uses Compose BOM 2024.12.01 with Material 3.",
+      "reason": "Same versions as the host app; no new frameworks introduced."
+    },
+    {
+      "id": "ADR-012",
+      "title": "Platform: Android minSdk 26, compileSdk 35, targetSdk 35; core and fs modules target the JVM",
+      "area": "platform",
+      "classification": "LOCKED",
+      "value": "minSdk 26, compileSdk 35, targetSdk 35 (identical to app and core:android).",
+      "reason": "Verified in app/build.gradle.kts and core/android/build.gradle.kts."
+    },
+    {
+      "id": "ADR-013",
+      "title": "Build: Gradle with the Anvex version catalog (AGP 8.7.3, KSP 2.0.21-1.0.28)",
+      "area": "build",
+      "classification": "LOCKED",
+      "value": "Gradle wrapper of Anvex 4.15.2; versions taken only from gradle/libs.versions.toml; no new repositories (FAIL_ON_PROJECT_REPOS stays).",
+      "reason": "Compatibility with the existing build and release workflows."
+    },
+    {
+      "id": "ADR-014",
+      "title": "Runtime: JVM 17 bytecode for core modules; Android ART for runtime/ui modules",
+      "area": "runtime",
+      "classification": "LOCKED",
+      "value": "JVM 17 target, no preview language features.",
+      "reason": "Host app uses JavaVersion.VERSION_17."
+    },
+    {
+      "id": "ADR-015",
+      "title": "Toolchain: JDK 17 for Gradle builds; kotlinc 2.0.21 for standalone verification of JVM modules",
+      "area": "toolchain",
+      "classification": "LOCKED",
+      "value": "Official builds use JDK 17. Standalone verification compiles with kotlinc 2.0.21 and -jvm-target 17 on any JDK >= 17.",
+      "reason": "Lets agents-core and agents-fs be verified without Gradle; the Gradle build remains the authoritative build."
+    },
+    {
+      "id": "ADR-016",
+      "title": "Database: Room 2.6.1 with KSP, in a separate database file agents.db",
+      "area": "database",
+      "classification": "LOCKED",
+      "value": "Own AgentsDatabase (agents.db) with its own migration chain and schema snapshots. Cross-reference to Anvex projects by projectId string only.",
+      "reason": "Keeps the module removable and the integration free of changes to AnvexDatabase."
+    },
+    {
+      "id": "ADR-017",
+      "title": "Dependency injection: manual constructor injection through an AgentsGraph; no DI framework",
+      "area": "di",
+      "classification": "LOCKED",
+      "value": "AgentsGraph is constructed by the host AppGraph with the adapters of ARC-INT-1.",
+      "reason": "Anvex AppGraph is a manual DI graph; no DI framework is present."
+    },
+    {
+      "id": "ADR-018",
+      "title": "Networking: the module opens no network connections; model calls go through the host ProviderClient (OkHttp 4.12.0 in core:ai)",
+      "area": "networking",
+      "classification": "LOCKED",
+      "value": "No HTTP client dependency in any agents module. AgentRunnerPort in agents-runtime obtains a ProviderClient from the host through ProviderPort.",
+      "reason": "Provider independence and a single credential handling path."
+    },
+    {
+      "id": "ADR-019",
+      "title": "Testing: JUnit 4.13.2 and kotlinx-coroutines-test 1.9.0; JVM modules must be runnable without Android",
+      "area": "testing",
+      "classification": "LOCKED",
+      "value": "JUnit 4.13.2 (same as libs.versions.toml). Tests of agents-core and agents-fs run on the plain JVM.",
+      "reason": "Matches existing test stack."
+    },
+    {
+      "id": "ADR-020",
+      "title": "The module has its own parallel scheduler; DurableTaskEngine is used only as a pattern",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "DurableTaskEngine.drain() holds workerMutex and joins each task, so tasks run strictly one at a time. The module schedules in parallel itself and persists to agents.db.",
+      "reason": "Verified in core/android .../reliability/DurableTaskEngine.kt."
+    },
+    {
+      "id": "ADR-021",
+      "title": "The module does not reuse ChatSession; the runner composes ProviderClient, BoltStreamParser, ActionDispatcher and PatchEngine",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "No change to ChatSession (1525 lines) or HarnessBridge (1232 lines). ActionDispatcher receives a ProjectFileSystem view of the agent workspace.",
+      "reason": "ChatSession is coupled to chat persistence and UI state; both are known technical debt in CHANGELOG."
+    },
+    {
+      "id": "ADR-022",
+      "title": "PFP is a development-time standard; the in-app Policy Engine implements the semantics of the PFP Runtime Enforcement Contract",
+      "area": "security",
+      "classification": "LOCKED",
+      "value": "No PFP code ships in the app. Rules (fail-closed, DENY precedence, evidence chain, no implicit ALLOW) are implemented in code in ARC-SEC-1 and recorded in ARC-SEC-3.",
+      "reason": "PFP v5.7.7 is specification plus Python validators and states that it is not a runtime."
+    },
+    {
+      "id": "ADR-023",
+      "title": "Integration touches the main source only at the listed contract points",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "Allowed edits: settings.gradle.kts (include lines), app dependency lines, AppGraph wiring, one navigation route and entry point, string resources (en, fa), source-mirror regeneration. Any other edit requires a new ADR.",
+      "reason": "Directive: build the module completely, then add it at the end."
+    },
+    {
+      "id": "ADR-024",
+      "title": "Competing implementations of one task are compared by the user; they are never auto-merged with each other",
+      "area": "product",
+      "classification": "LOCKED",
+      "value": "Each competitor has its own fork. Selecting one result integrates only that ChangeSet.",
+      "reason": "Merging two independent solutions to the same problem produces incoherent code."
+    },
+    {
+      "id": "ADR-025",
+      "title": "Autonomous Project Manager is DEFERRED; milestone 5 ships a manager that only proposes a plan",
+      "area": "product",
+      "classification": "DEFERRED",
+      "reason": "Task decomposition and delegation quality must be proven on user-managed teams first.",
+      "targetPhase": "after M6 (post-integration)",
+      "fallback": "User-managed teams (Mode B); the manager proposes a task graph that the user approves.",
+      "acceptance": "Manager-created plans are accepted by users without edits in at least 8 of 10 benchmark objectives, and gates remain non-bypassable."
+    },
+    {
+      "id": "ADR-026",
+      "title": "Agent profile import/export is DEFERRED",
+      "area": "product",
+      "classification": "DEFERRED",
+      "reason": "Needs a versioned profile schema and credential-stripping rules; not needed for MVP.",
+      "targetPhase": "after M6 (post-integration)",
+      "fallback": "Profiles are created in the UI and stored in agents.db; JSON export is not offered.",
+      "acceptance": "Exported profile contains no credential material and re-imports byte-identically."
+    },
+    {
+      "id": "ADR-027",
+      "title": "SAF import/export gateway is DEFERRED; SAF-backed projects are unsupported in v1",
+      "area": "architecture",
+      "classification": "DEFERRED",
+      "reason": "Gateway needs its own UX (copy-in, copy-out, conflict on export) and must not influence the core design.",
+      "targetPhase": "after M6 (post-integration)",
+      "fallback": "Team creation on a SAF-backed project fails closed with an explanatory message.",
+      "acceptance": "A SAF project is copied to an app-private real workspace, worked on, and exported back; the engine never receives a content:// URI."
+    },
+    {
+      "id": "ADR-028",
+      "title": "Default maximum concurrent agents",
+      "area": "governance",
+      "classification": "OPEN",
+      "reason": "Depends on measured memory and rate-limit behavior on target devices.",
+      "options": [
+        "2",
+        "3",
+        "4"
+      ],
+      "recommended": "3",
+      "deadline": "End of M3",
+      "resolver": "Product owner with M3 device measurements",
+      "impactIfUnresolved": "Implementation uses 3 as a configurable default; users can change it, so work is not blocked."
+    },
+    {
+      "id": "ADR-029",
+      "title": "Default review policy for low-risk changes",
+      "area": "governance",
+      "classification": "OPEN",
+      "reason": "Automatic approval of low-risk changes is requested by the vision, but a risk classifier does not exist yet.",
+      "options": [
+        "Independent reviewer always required",
+        "Auto-approve when all checks pass and the diff is under a size limit",
+        "Auto-approve only for documentation files"
+      ],
+      "recommended": "Independent reviewer always required",
+      "deadline": "Start of M5",
+      "resolver": "Product owner",
+      "impactIfUnresolved": "M5 ships with the independent reviewer always required, which is the safe default."
+    },
+    {
+      "id": "ADR-030",
+      "title": "The Orchestrator that executes scheduler commands lives in agents-core; the Android layer is only an asynchronous shell around it",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "Orchestrator (core, pure JVM) forks workspaces, vets agent output, selects an independent reviewer, applies change sets through the Integrator and persists events write-ahead. RunLauncher is the only asynchronous seam; CoroutineRunLauncher in agents-runtime starts coroutines and reports results as events.",
+      "reason": "Lets the whole flow (run, review, merge, crash recovery) be proven with plain JVM tests; verified by 203 core tests."
+    },
+    {
+      "id": "ADR-031",
+      "title": "Events are persisted write-ahead as canonical JSON and the hash chain covers that JSON, not toString",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "EventCodec defines a strict, versioned JSON form of every scheduler event. An event is appended to the store BEFORE it changes state; a store failure drops the event and changes nothing. EventLog hashes seq|prevHash|canonical JSON. Free text is scrubbed of credentials before persisting and GuardedEventStore refuses credential-like payloads.",
+      "reason": "Data-class toString is not a stable format; replay must reproduce the exact state."
+    },
+    {
+      "id": "ADR-032",
+      "title": "After a restart interrupted work is redone: a Requeue event returns the task to RevisionRequired without consuming an attempt; a write-ahead apply journal repairs a half-applied project",
+      "area": "architecture",
+      "classification": "LOCKED",
+      "value": "ApplyJournal.started(task, rollbackSnapshot) is durable before the first workspace write. On restart ApplyRecovery restores the snapshot, then Orchestrator.reconcile() requeues every task that was Assigned, InProgress, UnderReview or waiting for the user. Forks of the dead process are not reused.",
+      "reason": "Review verdicts and change sets live in process memory; redoing is simpler and safer than persisting them in this version."
+    },
+    {
+      "id": "ADR-033",
+      "title": "RelPath accepts only the canonical form: a string is valid exactly when the host PathSanitizer returns it unchanged and it is at most 4096 characters",
+      "area": "security",
+      "classification": "LOCKED",
+      "value": "RelPath.parse(x) is non-null <=> PathSanitizer.sanitizeOrNull(x) == x and x.length <= 4096. Verified on 180000 generated inputs. Finding: the host sanitizer is not idempotent (for example it rewrites ./C:/x to C:/x, whose own sanitization would reject it); RelPath refuses such outputs and agents-fs fails closed on workspace names it cannot represent, except inside ignored areas.",
+      "reason": "Stricter than the host by design for untrusted agent output."
+    },
+    {
+      "id": "ADR-034",
+      "title": "agents-fs is an Android library module only so that its tests can use the host RealProjectFileSystem; its main code uses no Android API",
+      "area": "build",
+      "classification": "LOCKED",
+      "value": "com.android.library with testImplementation(project(':core:android')); FsArchitectureGuardTest keeps main sources free of File, Uri, DocumentFile, ContentResolver and Android imports.",
+      "reason": "RealProjectFileSystem lives in an Android library; a plain JVM module cannot depend on it."
+    }
+  ],
+  "architecture": [
+    {
+      "id": "ARC-CORE-1",
+      "title": "Domain model, task state machine and append-only event log"
+    },
+    {
+      "id": "ARC-CORE-2",
+      "title": "Conflict-aware parallel scheduler (pure state machine)"
+    },
+    {
+      "id": "ARC-CORE-3",
+      "title": "ChangeSet model and untrusted-output validator"
+    },
+    {
+      "id": "ARC-CORE-4",
+      "title": "Integrator: three-way merge, conflict detection, atomic apply"
+    },
+    {
+      "id": "ARC-CORE-5",
+      "title": "Review and verification gates (maker is never verifier)"
+    },
+    {
+      "id": "ARC-CORE-6",
+      "title": "Budget, rate-limit and usage ledger"
+    },
+    {
+      "id": "ARC-CORE-7",
+      "title": "Context retrieval and controlled distribution"
+    },
+    {
+      "id": "ARC-CORE-8",
+      "title": "Agent profile registry and extension points"
+    },
+    {
+      "id": "ARC-PORT-1",
+      "title": "Port set: runner, workspace provider, version control, shell, approval, usage, store, clock"
+    },
+    {
+      "id": "ARC-FS-1",
+      "title": "WorkspaceFileSystem port and root-relative path model"
+    },
+    {
+      "id": "ARC-FS-2",
+      "title": "Content-addressed snapshot store"
+    },
+    {
+      "id": "ARC-FS-3",
+      "title": "Isolated workspace fork and base-snapshot lifecycle"
+    },
+    {
+      "id": "ARC-FS-4",
+      "title": "SAF import/export gateway (deferred)"
+    },
+    {
+      "id": "ARC-SEC-1",
+      "title": "Policy engine: ownership, permissions, fail-closed admission"
+    },
+    {
+      "id": "ARC-SEC-2",
+      "title": "Credential reference model: no secrets in module state"
+    },
+    {
+      "id": "ARC-SEC-3",
+      "title": "Append-only audit trail with evidence chain"
+    },
+    {
+      "id": "ARC-AND-1",
+      "title": "AgentRunner adapter over ProviderClient, BoltStreamParser, ActionDispatcher"
+    },
+    {
+      "id": "ARC-AND-2",
+      "title": "Separate Room database agents.db and event store"
+    },
+    {
+      "id": "ARC-AND-3",
+      "title": "Execution host: coroutine runtime and foreground service"
+    },
+    {
+      "id": "ARC-UI-1",
+      "title": "Agent Teams Compose UI"
+    },
+    {
+      "id": "ARC-INT-1",
+      "title": "Integration contract and Anvex adapters"
+    },
+    {
+      "id": "ARC-CORE-9",
+      "title": "Orchestrator: command executor with write-ahead events, output vetting and recovery"
+    },
+    {
+      "id": "ARC-CORE-10",
+      "title": "Apply journal and crash recovery of the integration workspace"
+    }
+  ],
+  "roadmap": [
+    {
+      "id": "RDM-M-0",
+      "title": "Foundation: PFP package validated and Anvex 4.15.2 baseline frozen"
+    },
+    {
+      "id": "RDM-M-1",
+      "title": "Core: domain, events, scheduler, budgets, ports, policy (pure JVM)"
+    },
+    {
+      "id": "RDM-M-2",
+      "title": "Workspaces: path model, CAS snapshots, fork, ChangeSet validation, Integrator"
+    },
+    {
+      "id": "RDM-M-3",
+      "title": "Runtime: agents.db, AgentRunner adapter, execution host, adapters"
+    },
+    {
+      "id": "RDM-M-4",
+      "title": "UI: Agent Teams screens, diff comparison, approvals, i18n"
+    },
+    {
+      "id": "RDM-M-5",
+      "title": "Assurance: independent reviewer gates and propose-only manager"
+    },
+    {
+      "id": "RDM-M-6",
+      "title": "Integration: add the module to the main source and pass the release audit"
+    }
+  ],
+  "threats": [
+    {
+      "id": "THREAT-001",
+      "title": "Agent output uses traversal, absolute paths or symlinks to reach files outside its workspace"
+    },
+    {
+      "id": "THREAT-002",
+      "title": "Agent changes files outside its task write grant or sensitive paths"
+    },
+    {
+      "id": "THREAT-003",
+      "title": "Injected text in project files or peer messages steers an agent into unauthorized actions"
+    },
+    {
+      "id": "THREAT-004",
+      "title": "Provider credentials leak into events, logs, diffs, prompts or the database"
+    },
+    {
+      "id": "THREAT-005",
+      "title": "Concurrent integration overwrites another agent's accepted changes"
+    },
+    {
+      "id": "THREAT-006",
+      "title": "An agent, or the manager on its behalf, marks work verified without independent review"
+    },
+    {
+      "id": "THREAT-007",
+      "title": "Retry storms or parallel agents exhaust token or monetary budgets"
+    },
+    {
+      "id": "THREAT-008",
+      "title": "Snapshot blobs are corrupted or tampered with and a restore produces wrong content"
+    },
+    {
+      "id": "THREAT-009",
+      "title": "A revocable content:// workspace enters the engine and breaks atomicity or confinement"
+    },
+    {
+      "id": "THREAT-010",
+      "title": "Process death during apply leaves a half-integrated workspace"
+    },
+    {
+      "id": "THREAT-011",
+      "title": "Huge diffs, binaries or file counts exhaust storage or memory"
+    },
+    {
+      "id": "THREAT-012",
+      "title": "Agent-requested shell commands bypass the approval boundary"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Validate this PFP package and archive the validator report",
+      "sourceRef": "M0"
+    },
+    {
+      "id": "TASK-002",
+      "title": "Pin Anvex 4.15.2 as the compile baseline and record the source inventory hash",
+      "sourceRef": "M0"
+    },
+    {
+      "id": "TASK-003",
+      "title": "Create Gradle modules agents-core and agents-fs aligned with the Anvex version catalog",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-004",
+      "title": "Implement domain model and task state machine",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-005",
+      "title": "Implement append-only event log and deterministic replay",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-006",
+      "title": "Implement conflict-aware parallel scheduler with concurrency cap",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-007",
+      "title": "Implement budget, retry and usage ledger",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-008",
+      "title": "Define port interfaces with fake implementations",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-009",
+      "title": "Implement policy engine with DENY>ESCALATE>DEFER>ALLOW precedence",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-010",
+      "title": "Add architecture guard test forbidding File, Uri, DocumentFile and ContentResolver in agents-core",
+      "sourceRef": "M1"
+    },
+    {
+      "id": "TASK-011",
+      "title": "Implement RelPath with parity tests against Anvex PathSanitizer",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-012",
+      "title": "Implement RealWorkspaceFileSystem over ProjectFileSystem",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-013",
+      "title": "Implement CAS snapshot store, restore and verified reads",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-014",
+      "title": "Implement workspace fork and dispose lifecycle",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-015",
+      "title": "Implement ChangeSet extraction and untrusted-output validator",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-016",
+      "title": "Implement line-based three-way merge with the edge-case table",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-017",
+      "title": "Implement Integrator with atomic apply and rollback snapshot",
+      "sourceRef": "M2"
+    },
+    {
+      "id": "TASK-018",
+      "title": "Implement agents.db entities, DAOs, migrations and schema snapshots",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-019",
+      "title": "Implement AgentRunner adapter and ProviderPort",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-020",
+      "title": "Implement execution host, foreground service and cancellation propagation",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-021",
+      "title": "Implement Anvex adapters listed in the integration contract",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-022",
+      "title": "Implement the Orchestrator, RunLauncher port and write-ahead persistence in agents-core",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-023",
+      "title": "Implement the canonical event codec and the credential-guarded event store",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-024",
+      "title": "Implement the apply journal, crash recovery and the Requeue event",
+      "sourceRef": "M3"
+    },
+    {
+      "id": "TASK-025",
+      "title": "Implement team, agent, task and run-monitor screens",
+      "sourceRef": "M4"
+    },
+    {
+      "id": "TASK-026",
+      "title": "Implement diff comparison and conflict screens",
+      "sourceRef": "M4"
+    },
+    {
+      "id": "TASK-027",
+      "title": "Implement approval, budget and notification surfaces",
+      "sourceRef": "M4"
+    },
+    {
+      "id": "TASK-028",
+      "title": "Provide English and Persian strings with RTL layout",
+      "sourceRef": "M4"
+    },
+    {
+      "id": "TASK-029",
+      "title": "Implement independent reviewer task type and gate enforcement",
+      "sourceRef": "M5"
+    },
+    {
+      "id": "TASK-030",
+      "title": "Implement propose-only manager producing a validated task graph",
+      "sourceRef": "M5"
+    },
+    {
+      "id": "TASK-031",
+      "title": "Add the module to the main source following the integration contract",
+      "sourceRef": "M6"
+    },
+    {
+      "id": "TASK-032",
+      "title": "Run Anvex release audit and manual device checklist",
+      "sourceRef": "M6"
+    }
+  ],
+  "acceptanceTests": [
+    {
+      "id": "AC-001",
+      "title": "Independent tasks run in parallel; dependent tasks wait for their prerequisites"
+    },
+    {
+      "id": "AC-002",
+      "title": "Tasks whose declared file claims overlap are serialized; disjoint tasks run together"
+    },
+    {
+      "id": "AC-003",
+      "title": "Number of running agents never exceeds the configured cap under a stress sequence"
+    },
+    {
+      "id": "AC-004",
+      "title": "Exhausting a token or cost budget stops new work and cancels running agents"
+    },
+    {
+      "id": "AC-005",
+      "title": "Replaying the event log reproduces the exact scheduler state after a simulated crash"
+    },
+    {
+      "id": "AC-006",
+      "title": "Traversal, absolute, NUL, bidi and symlink paths are rejected by RelPath and the real filesystem"
+    },
+    {
+      "id": "AC-007",
+      "title": "Restoring a snapshot reproduces every file byte for byte and detects a corrupted blob"
+    },
+    {
+      "id": "AC-008",
+      "title": "Writes in a fork never change the base workspace or another fork"
+    },
+    {
+      "id": "AC-009",
+      "title": "Malformed, oversized, traversal and sensitive-path ChangeSets are rejected before any write"
+    },
+    {
+      "id": "AC-010",
+      "title": "Non-overlapping edits from two agents merge automatically and correctly"
+    },
+    {
+      "id": "AC-011",
+      "title": "Overlapping or adjacent edits produce a conflict and no file is modified"
+    },
+    {
+      "id": "AC-012",
+      "title": "Binary, CRLF, delete-vs-edit and add-in-both cases behave exactly as the edge-case table states"
+    },
+    {
+      "id": "AC-013",
+      "title": "Applying a ChangeSet whose base is stale never overwrites newer content"
+    },
+    {
+      "id": "AC-014",
+      "title": "A failure injected mid-apply restores the pre-apply snapshot"
+    },
+    {
+      "id": "AC-015",
+      "title": "A change outside the task write grant is denied or escalated, never applied silently"
+    },
+    {
+      "id": "AC-016",
+      "title": "A task cannot reach Verified without a review by a different agent or the user"
+    },
+    {
+      "id": "AC-017",
+      "title": "Approval messages from the manager or the author do not satisfy a mandatory gate"
+    },
+    {
+      "id": "AC-018",
+      "title": "A scan of agents.db, event log, audit trail and prompts finds no credential material"
+    },
+    {
+      "id": "AC-019",
+      "title": "Static scan of agents-core finds no java.io.File, Uri, DocumentFile or ContentResolver"
+    },
+    {
+      "id": "AC-020",
+      "title": "A SAF-backed project is refused at team creation with a clear message"
+    },
+    {
+      "id": "AC-021",
+      "title": "After a simulated process kill, interrupted runs resume or are marked interrupted without data loss"
+    },
+    {
+      "id": "AC-022",
+      "title": "Cancelling a team cancels all agents and releases their workspaces"
+    },
+    {
+      "id": "AC-023",
+      "title": "The same run succeeds with a fake provider and with two different real provider kinds"
+    },
+    {
+      "id": "AC-024",
+      "title": "UI shows each agent's status, files touched, decisions, tokens and remaining work"
+    },
+    {
+      "id": "AC-025",
+      "title": "User can compare two competing results side by side and choose one"
+    },
+    {
+      "id": "AC-026",
+      "title": "Manager output is a plan that cannot start without explicit user approval"
+    },
+    {
+      "id": "AC-027",
+      "title": "Anvex release audit scripts pass with the module integrated"
+    },
+    {
+      "id": "AC-028",
+      "title": "A diff of the main source touches only the files listed in the integration contract"
+    },
+    {
+      "id": "AC-029",
+      "title": "Context sent to an agent stays within its configured size and excludes unrelated files"
+    },
+    {
+      "id": "AC-030",
+      "title": "A process kill at any step of an apply is repaired on restart: the project equals its pre-apply state and the task is redone"
+    },
+    {
+      "id": "AC-031",
+      "title": "Unusable agent output never reaches review: it becomes a retryable failure and is never integrated"
+    },
+    {
+      "id": "AC-032",
+      "title": "A new agent role is added by registering a profile without modifying scheduler or integrator code"
+    }
+  ],
+  "traceability": [
+    {
+      "requirement": "PRD-FR-1",
+      "architecture": [
+        "ARC-INT-1",
+        "ARC-CORE-1"
+      ],
+      "decisions": [
+        "ADR-009",
+        "ADR-023"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-6"
+      ],
+      "tasks": [
+        "TASK-003",
+        "TASK-031"
+      ],
+      "acceptance": [
+        "AC-028",
+        "AC-027"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-2",
+      "architecture": [
+        "ARC-CORE-1",
+        "ARC-CORE-2",
+        "ARC-PORT-1",
+        "ARC-CORE-9"
+      ],
+      "decisions": [
+        "ADR-009",
+        "ADR-020",
+        "ADR-030"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-004",
+        "TASK-006",
+        "TASK-008",
+        "TASK-022"
+      ],
+      "acceptance": [
+        "AC-001",
+        "AC-023"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-3",
+      "architecture": [
+        "ARC-CORE-8",
+        "ARC-AND-1",
+        "ARC-PORT-1"
+      ],
+      "decisions": [
+        "ADR-018",
+        "ADR-021"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-019"
+      ],
+      "acceptance": [
+        "AC-023"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-4",
+      "architecture": [
+        "ARC-CORE-8",
+        "ARC-AND-1"
+      ],
+      "decisions": [
+        "ADR-021"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-019"
+      ],
+      "acceptance": [
+        "AC-023"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-5",
+      "architecture": [
+        "ARC-CORE-2",
+        "ARC-FS-3"
+      ],
+      "decisions": [
+        "ADR-024"
+      ],
+      "roadmap": [
+        "RDM-M-2",
+        "RDM-M-4"
+      ],
+      "tasks": [
+        "TASK-006",
+        "TASK-014",
+        "TASK-026"
+      ],
+      "acceptance": [
+        "AC-008",
+        "AC-025"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-6",
+      "architecture": [
+        "ARC-CORE-2",
+        "ARC-AND-3"
+      ],
+      "decisions": [
+        "ADR-020"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-006",
+        "TASK-020"
+      ],
+      "acceptance": [
+        "AC-001",
+        "AC-003"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-7",
+      "architecture": [
+        "ARC-CORE-1",
+        "ARC-CORE-2"
+      ],
+      "decisions": [
+        "ADR-009"
+      ],
+      "roadmap": [
+        "RDM-M-1"
+      ],
+      "tasks": [
+        "TASK-004",
+        "TASK-006"
+      ],
+      "acceptance": [
+        "AC-001"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-8",
+      "architecture": [
+        "ARC-UI-1",
+        "ARC-CORE-4"
+      ],
+      "decisions": [
+        "ADR-024"
+      ],
+      "roadmap": [
+        "RDM-M-4"
+      ],
+      "tasks": [
+        "TASK-026"
+      ],
+      "acceptance": [
+        "AC-025"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-9",
+      "architecture": [
+        "ARC-UI-1",
+        "ARC-CORE-5"
+      ],
+      "decisions": [
+        "ADR-007",
+        "ADR-029"
+      ],
+      "roadmap": [
+        "RDM-M-4",
+        "RDM-M-5"
+      ],
+      "tasks": [
+        "TASK-027",
+        "TASK-029"
+      ],
+      "acceptance": [
+        "AC-016",
+        "AC-024"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-10",
+      "architecture": [
+        "ARC-AND-3",
+        "ARC-CORE-1"
+      ],
+      "decisions": [
+        "ADR-020"
+      ],
+      "roadmap": [
+        "RDM-M-3",
+        "RDM-M-4"
+      ],
+      "tasks": [
+        "TASK-020",
+        "TASK-025"
+      ],
+      "acceptance": [
+        "AC-022",
+        "AC-024"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-11",
+      "architecture": [
+        "ARC-SEC-1",
+        "ARC-CORE-8"
+      ],
+      "decisions": [
+        "ADR-007"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-009",
+        "TASK-017"
+      ],
+      "acceptance": [
+        "AC-015"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-12",
+      "architecture": [
+        "ARC-CORE-5",
+        "ARC-CORE-1"
+      ],
+      "decisions": [
+        "ADR-007"
+      ],
+      "roadmap": [
+        "RDM-M-5"
+      ],
+      "tasks": [
+        "TASK-029"
+      ],
+      "acceptance": [
+        "AC-016"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-13",
+      "architecture": [
+        "ARC-CORE-4",
+        "ARC-FS-2"
+      ],
+      "decisions": [
+        "ADR-006",
+        "ADR-005"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-017",
+        "TASK-016"
+      ],
+      "acceptance": [
+        "AC-013",
+        "AC-011"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-14",
+      "architecture": [
+        "ARC-CORE-5",
+        "ARC-SEC-1"
+      ],
+      "decisions": [
+        "ADR-007",
+        "ADR-022"
+      ],
+      "roadmap": [
+        "RDM-M-5"
+      ],
+      "tasks": [
+        "TASK-029",
+        "TASK-009"
+      ],
+      "acceptance": [
+        "AC-017",
+        "AC-016"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-15",
+      "architecture": [
+        "ARC-CORE-2",
+        "ARC-SEC-1"
+      ],
+      "decisions": [
+        "ADR-020",
+        "ADR-009"
+      ],
+      "roadmap": [
+        "RDM-M-1"
+      ],
+      "tasks": [
+        "TASK-006"
+      ],
+      "acceptance": [
+        "AC-002",
+        "AC-001"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-16",
+      "architecture": [
+        "ARC-FS-3",
+        "ARC-FS-1",
+        "ARC-FS-2"
+      ],
+      "decisions": [
+        "ADR-002",
+        "ADR-005"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-014",
+        "TASK-012",
+        "TASK-013"
+      ],
+      "acceptance": [
+        "AC-008",
+        "AC-006"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-17",
+      "architecture": [
+        "ARC-CORE-4"
+      ],
+      "decisions": [
+        "ADR-006"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-016",
+        "TASK-017"
+      ],
+      "acceptance": [
+        "AC-010",
+        "AC-011"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-18",
+      "architecture": [
+        "ARC-FS-2",
+        "ARC-CORE-4",
+        "ARC-CORE-10"
+      ],
+      "decisions": [
+        "ADR-005",
+        "ADR-032"
+      ],
+      "roadmap": [
+        "RDM-M-2",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-013",
+        "TASK-017",
+        "TASK-024"
+      ],
+      "acceptance": [
+        "AC-007",
+        "AC-014",
+        "AC-030"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-19",
+      "architecture": [
+        "ARC-CORE-6",
+        "ARC-AND-2"
+      ],
+      "decisions": [
+        "ADR-016"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-007",
+        "TASK-018"
+      ],
+      "acceptance": [
+        "AC-004"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-20",
+      "architecture": [
+        "ARC-CORE-6",
+        "ARC-AND-3"
+      ],
+      "decisions": [
+        "ADR-028"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-007",
+        "TASK-020"
+      ],
+      "acceptance": [
+        "AC-004"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-21",
+      "architecture": [
+        "ARC-CORE-2",
+        "ARC-CORE-6"
+      ],
+      "decisions": [
+        "ADR-028",
+        "ADR-020"
+      ],
+      "roadmap": [
+        "RDM-M-1"
+      ],
+      "tasks": [
+        "TASK-006"
+      ],
+      "acceptance": [
+        "AC-003"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-22",
+      "architecture": [
+        "ARC-CORE-1",
+        "ARC-AND-2",
+        "ARC-AND-3",
+        "ARC-CORE-9",
+        "ARC-CORE-10"
+      ],
+      "decisions": [
+        "ADR-016",
+        "ADR-020",
+        "ADR-030",
+        "ADR-031",
+        "ADR-032"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-005",
+        "TASK-018",
+        "TASK-020",
+        "TASK-022",
+        "TASK-023",
+        "TASK-024"
+      ],
+      "acceptance": [
+        "AC-005",
+        "AC-021",
+        "AC-030"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-23",
+      "architecture": [
+        "ARC-CORE-3",
+        "ARC-SEC-1",
+        "ARC-CORE-9"
+      ],
+      "decisions": [
+        "ADR-008",
+        "ADR-031"
+      ],
+      "roadmap": [
+        "RDM-M-2",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-015",
+        "TASK-009",
+        "TASK-022",
+        "TASK-023"
+      ],
+      "acceptance": [
+        "AC-009",
+        "AC-031"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-24",
+      "architecture": [
+        "ARC-SEC-2",
+        "ARC-PORT-1"
+      ],
+      "decisions": [
+        "ADR-018",
+        "ADR-008"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-019",
+        "TASK-021"
+      ],
+      "acceptance": [
+        "AC-018"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-25",
+      "architecture": [
+        "ARC-SEC-1",
+        "ARC-CORE-5"
+      ],
+      "decisions": [
+        "ADR-022",
+        "ADR-007"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-5"
+      ],
+      "tasks": [
+        "TASK-009",
+        "TASK-029"
+      ],
+      "acceptance": [
+        "AC-023",
+        "AC-017"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-26",
+      "architecture": [
+        "ARC-CORE-7"
+      ],
+      "decisions": [
+        "ADR-021"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-019"
+      ],
+      "acceptance": [
+        "AC-029"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-27",
+      "architecture": [
+        "ARC-CORE-8",
+        "ARC-PORT-1"
+      ],
+      "decisions": [
+        "ADR-009",
+        "ADR-017"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-008",
+        "TASK-004"
+      ],
+      "acceptance": [
+        "AC-032"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-28",
+      "architecture": [
+        "ARC-PORT-1",
+        "ARC-CORE-8",
+        "ARC-CORE-1"
+      ],
+      "decisions": [
+        "ADR-009"
+      ],
+      "roadmap": [
+        "RDM-M-1"
+      ],
+      "tasks": [
+        "TASK-008",
+        "TASK-003"
+      ],
+      "acceptance": [
+        "AC-032"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-29",
+      "architecture": [
+        "ARC-INT-1"
+      ],
+      "decisions": [
+        "ADR-023",
+        "ADR-016",
+        "ADR-012",
+        "ADR-010",
+        "ADR-011",
+        "ADR-013",
+        "ADR-014",
+        "ADR-015",
+        "ADR-019"
+      ],
+      "roadmap": [
+        "RDM-M-0",
+        "RDM-M-4",
+        "RDM-M-6"
+      ],
+      "tasks": [
+        "TASK-002",
+        "TASK-031",
+        "TASK-028",
+        "TASK-032"
+      ],
+      "acceptance": [
+        "AC-028",
+        "AC-027"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-30",
+      "architecture": [
+        "ARC-AND-2",
+        "ARC-AND-3"
+      ],
+      "decisions": [
+        "ADR-016",
+        "ADR-018"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-018",
+        "TASK-020"
+      ],
+      "acceptance": [
+        "AC-028"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-31",
+      "architecture": [
+        "ARC-SEC-1",
+        "ARC-SEC-3"
+      ],
+      "decisions": [
+        "ADR-022"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-5"
+      ],
+      "tasks": [
+        "TASK-009",
+        "TASK-029"
+      ],
+      "acceptance": [
+        "AC-017"
+      ],
+      "status": "complete",
+      "rationale": "Dispositioned by scope decision SD-001; trace shows the replacement design."
+    },
+    {
+      "requirement": "PRD-FR-32",
+      "architecture": [
+        "ARC-FS-3",
+        "ARC-FS-2"
+      ],
+      "decisions": [
+        "ADR-005",
+        "ADR-002"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-014",
+        "TASK-013"
+      ],
+      "acceptance": [
+        "AC-008"
+      ],
+      "status": "complete",
+      "rationale": "Dispositioned by scope decision SD-002; trace shows the replacement design."
+    },
+    {
+      "requirement": "PRD-FR-33",
+      "architecture": [
+        "ARC-CORE-1",
+        "ARC-CORE-5"
+      ],
+      "decisions": [
+        "ADR-025",
+        "ADR-029"
+      ],
+      "roadmap": [
+        "RDM-M-5"
+      ],
+      "tasks": [
+        "TASK-030"
+      ],
+      "acceptance": [
+        "AC-026"
+      ],
+      "status": "complete",
+      "rationale": "Dispositioned by scope decision SD-003; trace shows the replacement design."
+    },
+    {
+      "requirement": "PRD-FR-34",
+      "architecture": [
+        "ARC-CORE-8"
+      ],
+      "decisions": [
+        "ADR-026"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-018"
+      ],
+      "acceptance": [
+        "AC-032"
+      ],
+      "status": "complete",
+      "rationale": "Dispositioned by scope decision SD-004; trace shows the replacement design."
+    },
+    {
+      "requirement": "PRD-FR-35",
+      "architecture": [
+        "ARC-FS-1",
+        "ARC-FS-3",
+        "ARC-CORE-4"
+      ],
+      "decisions": [
+        "ADR-001",
+        "ADR-002"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-012",
+        "TASK-010"
+      ],
+      "acceptance": [
+        "AC-019",
+        "AC-020"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-36",
+      "architecture": [
+        "ARC-FS-1",
+        "ARC-FS-4"
+      ],
+      "decisions": [
+        "ADR-001",
+        "ADR-027"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-010"
+      ],
+      "acceptance": [
+        "AC-019",
+        "AC-020"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-37",
+      "architecture": [
+        "ARC-FS-4"
+      ],
+      "decisions": [
+        "ADR-001",
+        "ADR-027"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-021"
+      ],
+      "acceptance": [
+        "AC-020"
+      ],
+      "status": "complete",
+      "rationale": "Dispositioned by scope decision SD-005; trace shows the replacement design."
+    },
+    {
+      "requirement": "PRD-FR-38",
+      "architecture": [
+        "ARC-FS-4",
+        "ARC-FS-1"
+      ],
+      "decisions": [
+        "ADR-001",
+        "ADR-027"
+      ],
+      "roadmap": [
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-021"
+      ],
+      "acceptance": [
+        "AC-020"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-39",
+      "architecture": [
+        "ARC-FS-1"
+      ],
+      "decisions": [
+        "ADR-003"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-012"
+      ],
+      "acceptance": [
+        "AC-019"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-40",
+      "architecture": [
+        "ARC-FS-1",
+        "ARC-PORT-1"
+      ],
+      "decisions": [
+        "ADR-004",
+        "ADR-033"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-011",
+        "TASK-010"
+      ],
+      "acceptance": [
+        "AC-006",
+        "AC-019"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-41",
+      "architecture": [
+        "ARC-FS-1",
+        "ARC-INT-1"
+      ],
+      "decisions": [
+        "ADR-002",
+        "ADR-034"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-012"
+      ],
+      "acceptance": [
+        "AC-006",
+        "AC-008"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-42",
+      "architecture": [
+        "ARC-FS-2"
+      ],
+      "decisions": [
+        "ADR-005"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-013"
+      ],
+      "acceptance": [
+        "AC-007"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-43",
+      "architecture": [
+        "ARC-CORE-4"
+      ],
+      "decisions": [
+        "ADR-006"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-016"
+      ],
+      "acceptance": [
+        "AC-010",
+        "AC-011"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-44",
+      "architecture": [
+        "ARC-CORE-4"
+      ],
+      "decisions": [
+        "ADR-006"
+      ],
+      "roadmap": [
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-016"
+      ],
+      "acceptance": [
+        "AC-012"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-45",
+      "architecture": [
+        "ARC-SEC-1",
+        "ARC-CORE-4"
+      ],
+      "decisions": [
+        "ADR-007"
+      ],
+      "roadmap": [
+        "RDM-M-1",
+        "RDM-M-2"
+      ],
+      "tasks": [
+        "TASK-009",
+        "TASK-017"
+      ],
+      "acceptance": [
+        "AC-015"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-46",
+      "architecture": [
+        "ARC-CORE-3",
+        "ARC-SEC-1",
+        "ARC-CORE-9"
+      ],
+      "decisions": [
+        "ADR-008",
+        "ADR-030"
+      ],
+      "roadmap": [
+        "RDM-M-2",
+        "RDM-M-3"
+      ],
+      "tasks": [
+        "TASK-015",
+        "TASK-022"
+      ],
+      "acceptance": [
+        "AC-009",
+        "AC-031"
+      ],
+      "status": "complete",
+      "rationale": ""
+    },
+    {
+      "requirement": "PRD-FR-47",
+      "architecture": [
+        "ARC-INT-1"
+      ],
+      "decisions": [
+        "ADR-023",
+        "ADR-009"
+      ],
+      "roadmap": [
+        "RDM-M-0",
+        "RDM-M-6"
+      ],
+      "tasks": [
+        "TASK-001",
+        "TASK-003",
+        "TASK-031"
+      ],
+      "acceptance": [
+        "AC-028"
+      ],
+      "status": "complete",
+      "rationale": ""
+    }
+  ],
+  "securityTraceability": [
+    {
+      "requirement": "PRD-FR-24",
+      "threats": [
+        "THREAT-004"
+      ],
+      "decisions": [
+        "ADR-018",
+        "ADR-008"
+      ],
+      "architecture": [
+        "ARC-SEC-2",
+        "ARC-SEC-3"
+      ],
+      "tasks": [
+        "TASK-019",
+        "TASK-021"
+      ],
+      "acceptance": [
+        "AC-018"
+      ],
+      "stages": [
+        "authentication",
+        "encryption/decryption",
+        "key wrapping"
+      ],
+      "status": "complete"
+    }
+  ],
+  "scopeDecisions": [
+    {
+      "id": "SD-001",
+      "original": "PFP must remain the authoritative governance layer.",
+      "proposed": "PFP stays authoritative as the development-time standard (this package and its validators); the in-app Policy Engine implements the semantics of the PFP Runtime Enforcement Contract in code.",
+      "reason": "PFP v5.7.7 is specification plus Python validators and declares itself not a runtime; there is no PFP code to embed in the app.",
+      "impact": "Governance of generated code is enforced by PFP gates; runtime governance of agent actions is enforced by ARC-SEC-1.",
+      "decision": "Adopt contract semantics in code (ADR-022).",
+      "approvalStatus": "assumed",
+      "affectedRefs": [
+        "PRD-FR-31",
+        "ADR-022",
+        "ARC-SEC-1"
+      ]
+    },
+    {
+      "id": "SD-002",
+      "original": "Git branches and Git Worktrees where supported.",
+      "proposed": "Isolated workspaces are CAS-backed forks; merging is performed by the in-module Integrator.",
+      "reason": "GitLite offers one working tree and no merge; worktrees are not supported on this platform ('where supported' applies).",
+      "impact": "Same isolation and conflict goals without Git worktrees.",
+      "decision": "Use forks and three-way merge (ADR-005, ADR-006).",
+      "approvalStatus": "assumed",
+      "affectedRefs": [
+        "PRD-FR-32",
+        "ADR-005",
+        "ADR-006",
+        "ARC-FS-3"
+      ]
+    },
+    {
+      "id": "SD-003",
+      "original": "A central Project Manager Agent manages a team of specialized subordinate agents.",
+      "proposed": "Milestone 5 ships a manager that only proposes a task graph requiring user approval; autonomous management is deferred.",
+      "reason": "Delegation quality must be proven on user-managed teams, and gates must remain non-bypassable.",
+      "impact": "Mode A is partial in the first release.",
+      "decision": "Defer autonomy (ADR-025).",
+      "approvalStatus": "assumed",
+      "affectedRefs": [
+        "PRD-FR-33",
+        "ADR-025",
+        "ADR-029"
+      ]
+    },
+    {
+      "id": "SD-004",
+      "original": "Import and export agent configurations.",
+      "proposed": "Deferred until a credential-free profile schema exists.",
+      "reason": "Risk of exporting credential material; not needed for MVP.",
+      "impact": "Profiles are not portable in v1.",
+      "decision": "Defer (ADR-026).",
+      "approvalStatus": "assumed",
+      "affectedRefs": [
+        "PRD-FR-34",
+        "ADR-026"
+      ]
+    },
+    {
+      "id": "SD-005",
+      "original": "در ورودی: فایل‌ها از SAF به فضای کاری واقعی (app-private یا مسیر واقعی) کپی/وارد می‌شوند.",
+      "proposed": "The SAF gateway is deferred; v1 fails closed for SAF-backed projects.",
+      "reason": "The gateway needs its own UX and must not influence the core; the directive allows it only outside the engine.",
+      "impact": "SAF-backed projects are unsupported in v1.",
+      "decision": "Defer (ADR-027).",
+      "approvalStatus": "assumed",
+      "affectedRefs": [
+        "PRD-FR-37",
+        "ADR-027",
+        "ARC-FS-4"
+      ]
+    }
+  ],
+  "projectInventory": {
+    "root": "Anvex_4.15.2 (source archive)",
+    "files": [
+      {
+        "path": ".editorconfig",
+        "kind": "other",
+        "sizeBytes": 229
+      },
+      {
+        "path": ".gitattributes",
+        "kind": "other",
+        "sizeBytes": 351
+      },
+      {
+        "path": ".github/dependabot.yml",
+        "kind": "other",
+        "sizeBytes": 608
+      },
+      {
+        "path": ".github/workflows/build-apk.yml",
+        "kind": "other",
+        "sizeBytes": 6665
+      },
+      {
+        "path": ".github/workflows/codeql.yml",
+        "kind": "other",
+        "sizeBytes": 1054
+      },
+      {
+        "path": ".github/workflows/dependency-audit.yml",
+        "kind": "other",
+        "sizeBytes": 990
+      },
+      {
+        "path": ".github/workflows/emulator-smoke.yml",
+        "kind": "other",
+        "sizeBytes": 2787
+      },
+      {
+        "path": ".github/workflows/libnode-reassemble.yml",
+        "kind": "other",
+        "sizeBytes": 14186
+      },
+      {
+        "path": ".github/workflows/libnode-release.yml",
+        "kind": "other",
+        "sizeBytes": 11634
+      },
+      {
+        "path": ".github/workflows/poc-libnode.yml",
+        "kind": "other",
+        "sizeBytes": 2212
+      },
+      {
+        "path": ".github/workflows/release-signed.yml",
+        "kind": "other",
+        "sizeBytes": 5625
+      },
+      {
+        "path": ".gitignore",
+        "kind": "other",
+        "sizeBytes": 813
+      },
+      {
+        "path": "CHANGELOG.md",
+        "kind": "other",
+        "sizeBytes": 116604
+      },
+      {
+        "path": "LICENSE",
+        "kind": "other",
+        "sizeBytes": 1228
+      },
+      {
+        "path": "README.md",
+        "kind": "other",
+        "sizeBytes": 15648
+      },
+      {
+        "path": "app/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 10911
+      },
+      {
+        "path": "app/proguard-rules.pro",
+        "kind": "other",
+        "sizeBytes": 1411
+      },
+      {
+        "path": "app/src/main/AndroidManifest.xml",
+        "kind": "other",
+        "sizeBytes": 3683
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-Bold.ttf",
+        "kind": "other",
+        "sizeBytes": 105228
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-ExtraBold.ttf",
+        "kind": "other",
+        "sizeBytes": 105404
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-Medium.ttf",
+        "kind": "other",
+        "sizeBytes": 104724
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-Regular.ttf",
+        "kind": "other",
+        "sizeBytes": 104640
+      },
+      {
+        "path": "app/src/main/assets/harness/app.jsx",
+        "kind": "JavaScript/React",
+        "sizeBytes": 45941
+      },
+      {
+        "path": "app/src/main/assets/harness/bridge.js",
+        "kind": "JavaScript",
+        "sizeBytes": 14946
+      },
+      {
+        "path": "app/src/main/assets/harness/fonts/JetBrainsMono-Bold.ttf",
+        "kind": "other",
+        "sizeBytes": 274096
+      },
+      {
+        "path": "app/src/main/assets/harness/fonts/JetBrainsMono-Medium.ttf",
+        "kind": "other",
+        "sizeBytes": 270316
+      },
+      {
+        "path": "app/src/main/assets/harness/fonts/JetBrainsMono-Regular.ttf",
+        "kind": "other",
+        "sizeBytes": 270224
+      },
+      {
+        "path": "app/src/main/assets/harness/index.html",
+        "kind": "HTML",
+        "sizeBytes": 808
+      },
+      {
+        "path": "app/src/main/assets/harness/jszip.min.js",
+        "kind": "JavaScript",
+        "sizeBytes": 97642
+      },
+      {
+        "path": "app/src/main/assets/harness/styles.css",
+        "kind": "CSS",
+        "sizeBytes": 15051
+      },
+      {
+        "path": "app/src/main/assets/python/index.html",
+        "kind": "HTML",
+        "sizeBytes": 1459
+      },
+      {
+        "path": "app/src/main/assets/runtime/babel.min.js",
+        "kind": "JavaScript",
+        "sizeBytes": 2983906
+      },
+      {
+        "path": "app/src/main/assets/runtime/mermaid.min.js",
+        "kind": "JavaScript",
+        "sizeBytes": 5494801
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-dom-client.js",
+        "kind": "JavaScript",
+        "sizeBytes": 212
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-dom.js",
+        "kind": "JavaScript",
+        "sizeBytes": 349
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-dom.umd.js",
+        "kind": "JavaScript",
+        "sizeBytes": 132102
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-jsx-runtime.js",
+        "kind": "JavaScript",
+        "sizeBytes": 809
+      },
+      {
+        "path": "app/src/main/assets/runtime/react.js",
+        "kind": "JavaScript",
+        "sizeBytes": 1365
+      },
+      {
+        "path": "app/src/main/assets/runtime/react.umd.js",
+        "kind": "JavaScript",
+        "sizeBytes": 10782
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/AnvexApplication.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1267
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/MainActivity.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14519
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/i18n/Strings.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 85297
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/project/ArchiveTextExtractor.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15437
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/project/ProjectKnowledge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1792
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/AgentForegroundService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7234
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/AgentRuntimeState.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 559
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/AgentServiceController.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 807
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/BackupAlarmReceiver.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 920
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/BackupScheduler.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1229
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/RuntimeBootReceiver.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1226
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/share/IncomingShare.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1479
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/AnvexApp.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 23878
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AnvexDock.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5392
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AnvexUi.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4884
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AppUpdate.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 27903
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ApprovalDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2326
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ArtifactCard.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14799
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AtelierDock.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5268
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/BidiText.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4020
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ChatTranscriptExporter.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3636
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/CodeSearchDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7587
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ConfirmDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2046
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/DeliverableCard.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15257
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/DiffSheet.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6118
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/GooThinkingIcon.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5919
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/MarkdownText.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17714
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/MessageActions.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6172
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/Nebula.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10773
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ProjectKnowledgeDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3758
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ProjectScaffold.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14278
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/PythonRunner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6467
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/QuickActionsRow.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1771
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ReadAloud.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3709
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ThinkingCard.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7525
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/editor/CodeEditorField.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10037
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/editor/SyntaxHighlighter.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14518
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/backup/BackupScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9459
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/chat/ChatScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 83404
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/chat/DirectChatScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 61589
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/chat/ReviewChanges.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20148
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/debug/DebugScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8011
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/developer/AgentCenterScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 21257
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/developer/DeveloperCenterScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19219
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/editor/EditorScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 32776
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/editor/FileExplorerSheet.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11120
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/extensions/ExtensionsScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13520
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/git/ConflictResolverScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10657
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/git/GitRoot.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 789
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/git/GitScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 18618
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/github/GitHubScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 16090
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/harness/HarnessScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15288
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/history/HistoryScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6676
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/home/AtelierHome.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 27593
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/home/HomeScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 37108
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/memory/MemoryScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10671
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/preview/PreviewScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 31037
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/projects/ProjectsScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 12968
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/providers/ProvidersScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 42110
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/settings/AtelierSettingsHeader.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13376
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/settings/PiEnginePanel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9944
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/settings/SettingsScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 44485
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/signing/SigningKeyScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17974
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/terminal/TerminalScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 23129
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/usage/UsageScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3005
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/theme/DesignSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1667
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/theme/Theme.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 36315
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/theme/Typography.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6952
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/BuildViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19860
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/ChatViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 73422
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/DirectChatViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 41121
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/EditorViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 32820
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/ExtensionsViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10099
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/HomeViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10351
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/PreviewViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9837
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/ProvidersViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20327
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/SigningKeyViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4730
+      },
+      {
+        "path": "app/src/main/res/drawable/anvex_emblem.png",
+        "kind": "other",
+        "sizeBytes": 59613
+      },
+      {
+        "path": "app/src/main/res/drawable/ic_stat_agent.xml",
+        "kind": "other",
+        "sizeBytes": 352
+      },
+      {
+        "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+        "kind": "other",
+        "sizeBytes": 337
+      },
+      {
+        "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+        "kind": "other",
+        "sizeBytes": 337
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 11288
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 36849
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 9917
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 11276
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 5218
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 17647
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 4747
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 5240
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 19149
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 62790
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 16888
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 19159
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 41054
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 132897
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 35660
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 41043
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 71028
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 223696
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 59394
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 71014
+      },
+      {
+        "path": "app/src/main/res/values/colors.xml",
+        "kind": "other",
+        "sizeBytes": 209
+      },
+      {
+        "path": "app/src/main/res/values/strings.xml",
+        "kind": "other",
+        "sizeBytes": 107
+      },
+      {
+        "path": "app/src/main/res/values/themes.xml",
+        "kind": "other",
+        "sizeBytes": 599
+      },
+      {
+        "path": "app/src/main/res/values-fa/strings.xml",
+        "kind": "other",
+        "sizeBytes": 110
+      },
+      {
+        "path": "app/src/main/res/values-night/themes.xml",
+        "kind": "other",
+        "sizeBytes": 463
+      },
+      {
+        "path": "app/src/main/res/xml/backup_rules.xml",
+        "kind": "other",
+        "sizeBytes": 337
+      },
+      {
+        "path": "app/src/main/res/xml/data_extraction_rules.xml",
+        "kind": "other",
+        "sizeBytes": 917
+      },
+      {
+        "path": "app/src/main/res/xml/file_paths.xml",
+        "kind": "other",
+        "sizeBytes": 1014
+      },
+      {
+        "path": "app/src/main/res/xml/locales_config.xml",
+        "kind": "other",
+        "sizeBytes": 197
+      },
+      {
+        "path": "app/src/main/res/xml/network_security_config.xml",
+        "kind": "other",
+        "sizeBytes": 1214
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/i18n/TranslationCoverageTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2226
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/project/ArchiveTextExtractorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6611
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/ui/components/BidiTextTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 995
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/ui/components/MarkdownParserTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2906
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/ui/components/ReadAloudTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 628
+      },
+      {
+        "path": "build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 366
+      },
+      {
+        "path": "core/ai/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 492
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/AiTypes.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4342
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/AnthropicClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14560
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/FallbackProviderClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4556
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/GeminiCapabilities.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 774
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/GeminiClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10589
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/JsonExtensions.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 335
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/OpenAiCompatibleClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14804
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/OpenCodeClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9569
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/ProviderClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2476
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/ProviderFeatures.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5544
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/Sse.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11139
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/mcp/McpClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13129
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/zai/ZaiAccountCoordinator.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11612
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/zai/ZaiProtocol.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10114
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/FallbackProviderClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3276
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/OpenAiEffortTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5541
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/OpenCodeClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 22145
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/ProviderClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14628
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/SseProtocolTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9758
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/ThinkingLevelMappingTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2029
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7042
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpConfigSaveTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1808
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/zai/ZaiAccountCoordinatorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13163
+      },
+      {
+        "path": "core/android/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 14235
+      },
+      {
+        "path": "core/android/schemas/com.anvex.core.android.db.AnvexDatabase/12.json",
+        "kind": "other",
+        "sizeBytes": 26668
+      },
+      {
+        "path": "core/android/schemas/com.anvex.core.android.db.AnvexDatabase/13.json",
+        "kind": "other",
+        "sizeBytes": 26849
+      },
+      {
+        "path": "core/android/schemas/com.anvex.core.android.db.AnvexDatabase/2.json",
+        "kind": "other",
+        "sizeBytes": 9066
+      },
+      {
+        "path": "core/android/src/androidTest/AndroidManifest.xml",
+        "kind": "other",
+        "sizeBytes": 438
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-poc.zip",
+        "kind": "other",
+        "sizeBytes": 2669620
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-test/ext/scripted-provider-v2.ts",
+        "kind": "TypeScript",
+        "sizeBytes": 3039
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-test/ext/scripted-provider.ts",
+        "kind": "TypeScript",
+        "sizeBytes": 4182
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-test/vendor/event-stream.js",
+        "kind": "JavaScript",
+        "sizeBytes": 4027
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeLineDeliveryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1989
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeRuntimeSmokeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1140
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/PiPocTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5437
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiChatBridgeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3400
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiEngineTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4201
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1118
+      },
+      {
+        "path": "core/android/src/main/AndroidManifest.xml",
+        "kind": "other",
+        "sizeBytes": 1288
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/devserver-host.js",
+        "kind": "JavaScript",
+        "sizeBytes": 7363
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/lsp-host.js",
+        "kind": "JavaScript",
+        "sizeBytes": 5369
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/npm.zip",
+        "kind": "other",
+        "sizeBytes": 4584223
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/preload.js",
+        "kind": "JavaScript",
+        "sizeBytes": 2446
+      },
+      {
+        "path": "core/android/src/main/assets/pi-runtime.zip",
+        "kind": "other",
+        "sizeBytes": 2652776
+      },
+      {
+        "path": "core/android/src/main/assets/rag/vocab.txt",
+        "kind": "other",
+        "sizeBytes": 231508
+      },
+      {
+        "path": "core/android/src/main/assets/runtime/node_compat_prelude.js",
+        "kind": "JavaScript",
+        "sizeBytes": 7594
+      },
+      {
+        "path": "core/android/src/main/cpp/CMakeLists.txt",
+        "kind": "other",
+        "sizeBytes": 10090
+      },
+      {
+        "path": "core/android/src/main/cpp/git/git_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 19081
+      },
+      {
+        "path": "core/android/src/main/cpp/node_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 2444
+      },
+      {
+        "path": "core/android/src/main/cpp/pty/pty_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 5773
+      },
+      {
+        "path": "core/android/src/main/cpp/ts/ts_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 17117
+      },
+      {
+        "path": "core/android/src/main/cpp/vec/vec_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 14551
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/AgentIdeBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2194
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/AppGraph.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15132
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/KeystoreCrypto.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5905
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/PortableBackup.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8203
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/ProjectBackupService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4470
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/artifacts/ArtifactManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20598
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/artifacts/VideoRenderer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17073
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/db/Database.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 31459
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/fs/ProjectFileObserver.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4145
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/fs/RealProjectFileSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8632
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/fs/SafProjectFileSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19580
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/harness/HarnessBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 59414
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/harness/SkillGitInstaller.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10595
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/mcp/McpApprovalBroker.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1543
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/mcp/McpServerStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2985
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/mcp/McpToolRunner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2486
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/pdf/PdfPageRenderer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2106
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/AdvancedBackupMigration.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2603
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/AgentTaskBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11335
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/CommandApprovalService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3362
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/DeviceCapabilityDetector.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2059
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/DurableApprovalRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2492
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/DurableTaskEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10959
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/InternalWebServer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 940
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/LanAccessManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9745
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/PluginMarketplace.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6147
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/PluginPackageInstaller.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8754
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/PluginRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1886
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/ReliabilityRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19759
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/SelfHealingEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2625
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/SkillRuntimeService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1708
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ChatRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7897
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/CloudBuildRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 28517
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ConversationMetaStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4122
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/GitHubRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 27820
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/MemoryRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4934
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/MutationRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2576
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ProjectRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 33479
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ProviderRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20194
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/SettingsRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14375
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/AndroidRuntimeGateway.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5522
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/AndroidShellRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9864
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/AndroidTerminalSession.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6300
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/NodeCompatRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11923
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/NodeRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5154
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ProviderAgentPlanner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2692
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/TermuxBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4772
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/ConflictTextParser.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4448
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/GitBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2510
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/GitMirror.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3802
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/GitRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6562
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/lsp/LspManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15802
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/lsp/LspService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3489
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/node/NodeBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2077
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/node/NodeExecService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4031
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/node/NodeMobileRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11380
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiChatBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7553
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 16171
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiProviderMapping.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2840
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2702
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiTaskBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5768
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiToolMapping.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8516
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiTranscriptReducer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3114
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pty/PtyBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3236
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pty/PtySession.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3838
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/CodebaseIndexer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4815
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/OnnxEmbedder.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3053
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/RagManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6116
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/RagModelManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4777
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/VecBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1394
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/VecStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5416
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/WordPieceTokenizer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3795
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/server/NodeServerService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3759
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/symbols/SymbolIndexManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5559
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/symbols/SymbolStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4782
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TreeSitterCodeIntelligence.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1913
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TsBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2521
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TsEdit.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3067
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TsProtocol.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3582
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/DevServerManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10898
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/HarnessWebServer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20501
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/LoopbackAuth.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2843
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/StaticPreviewServer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 25324
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/session/ChatSession.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 82871
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/session/IntentDetection.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6994
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/signing/SigningKeyManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14352
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/terminal/InteractivePromptDetector.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2234
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/terminal/VtEmulator.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 12835
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/tools/AgentToolExecutor.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17997
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/update/AppUpdateChecker.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 12876
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/CryptoEnvelopeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5173
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/DurableApprovalRepositoryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1610
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/NodeRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 603
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/PortableBackupBytesTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 831
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/SelfHealingEngineTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1598
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/db/MigrationTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 26238
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/harness/SkillGitInstallerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 974
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/mcp/McpApprovalBrokerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 922
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/repo/CloudBuildRepositoryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5249
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/ProviderAgentPlannerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1342
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/RuntimeSecurityTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2288
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/StdinHangTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1646
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/git/ConflictTextParserTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1902
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiMappingsTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7516
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiTranscriptReducerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2642
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/VecStoreTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1941
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/WordPieceTokenizerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1945
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsEditTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1569
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsProtocolTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1489
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/server/LoopbackLeakTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3236
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/session/ChatSessionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 25607
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/session/IntentDetectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3496
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/signing/SigningSealedBoxTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1733
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/terminal/InteractivePromptDetectorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1612
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/terminal/VtEmulatorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2473
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/tools/AgentToolExecutorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8334
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/update/AppUpdateCheckerHostTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1705
+      },
+      {
+        "path": "core/engine/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 297
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ActionDispatcher.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 30742
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ActionSafetyPolicy.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 18876
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/AgentOrchestration.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4687
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ArtifactPackaging.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14266
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ArtifactRunner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4048
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BatchMutation.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3896
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BoltActions.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3348
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BoltStreamParser.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 18931
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BuildScriptRiskScanner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1100
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/CommandTranslator.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11102
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ContextBuilder.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8483
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/DiffEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2822
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ErrorMessages.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 863
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/PatchEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6166
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/PathSanitizer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2267
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/PreviewHarness.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 26055
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectFileSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2721
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5115
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectSearch.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3422
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectTemplates.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5384
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SensitivePaths.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9592
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SkillExecutionRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1964
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SkillsRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 993
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SystemPromptFactory.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 30670
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ToolSecurity.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 214
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/UserIntentClassifier.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5107
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/VersionNumbers.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1222
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ZipCodec.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6777
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/CodeChunker.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2865
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/CodeIntelligence.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3004
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/FoldMath.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5279
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/SymbolIndexCore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4152
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/diagnostics/LightDiagnostics.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10353
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/lsp/LspFraming.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2293
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/memory/Memory.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6025
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/vcs/GitLite.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 33814
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ActionSafetyPolicyTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 943
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ArtifactPackagingTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5210
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/AuditFixWaveTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5728
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/Batch1AgentRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2898
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/BatchMutationTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3134
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/BoltStreamParserTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9766
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ContextBuilderSecurityTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4912
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/DiagramPreviewTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7295
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/DispatcherProtectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2836
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/EngineTests.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13275
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ExportDetectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 668
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ExternalReviewRegressionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8325
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/FakeFs.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3217
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/McpToolTargetTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 469
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/MediaDetectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2653
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/PatchEngineTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5775
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/PreviewHarnessSecurityTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 569
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ProjectSearchTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1864
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SecondReviewRegressionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6232
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SecurityFixesRegressionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5838
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SensitivePathsBypassTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1807
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SkillExecutionRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 958
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SkillsRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 532
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/UserIntentClassifierTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1714
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/V1_1_RegressionsTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 16935
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/V42FeaturesTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5170
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/VersionNumbersTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1353
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/CodeChunkerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2063
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/FoldMathTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2024
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/SymbolIndexCoreTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2661
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/diagnostics/LightDiagnosticsTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2914
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/lsp/LspFramingTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1566
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/memory/MemoryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2909
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/vcs/GitLiteTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8226
+      },
+      {
+        "path": "core/model/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 336
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Chat.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3902
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Memory.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1167
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Project.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2349
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Provider.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9782
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/TaskRunItem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 668
+      },
+      {
+        "path": "docs/AI_PROVIDERS.md",
+        "kind": "other",
+        "sizeBytes": 4911
+      },
+      {
+        "path": "docs/ANDROID_IDE_AI_AGENT_V2.md",
+        "kind": "other",
+        "sizeBytes": 2307
+      },
+      {
+        "path": "docs/ANDROID_RUNTIME.md",
+        "kind": "other",
+        "sizeBytes": 4302
+      },
+      {
+        "path": "docs/ANTIGRAVITY_ASSESSMENT.md",
+        "kind": "other",
+        "sizeBytes": 11239
+      },
+      {
+        "path": "docs/ANTIGRAVITY_SIGNIN_FIRST_BLOCKER.md",
+        "kind": "other",
+        "sizeBytes": 7314
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "kind": "other",
+        "sizeBytes": 4416
+      },
+      {
+        "path": "docs/ARTIFACT_PACKAGING.md",
+        "kind": "other",
+        "sizeBytes": 2166
+      },
+      {
+        "path": "docs/BUILD.md",
+        "kind": "other",
+        "sizeBytes": 5908
+      },
+      {
+        "path": "docs/CHANGELOG.md",
+        "kind": "other",
+        "sizeBytes": 6123
+      },
+      {
+        "path": "docs/CHANGES_V4_4.md",
+        "kind": "other",
+        "sizeBytes": 8927
+      },
+      {
+        "path": "docs/CHANGES_V4_4_1.md",
+        "kind": "other",
+        "sizeBytes": 8261
+      },
+      {
+        "path": "docs/CLINE_INTEGRATION_REPORT.md",
+        "kind": "other",
+        "sizeBytes": 9984
+      },
+      {
+        "path": "docs/DESIGN_SPEC_WEB_PORT.md",
+        "kind": "other",
+        "sizeBytes": 5827
+      },
+      {
+        "path": "docs/DESIGN_SYSTEM.md",
+        "kind": "other",
+        "sizeBytes": 4826
+      },
+      {
+        "path": "docs/DSHA_FULL_CLONE_MASTER_PLAN.md",
+        "kind": "other",
+        "sizeBytes": 18060
+      },
+      {
+        "path": "docs/HARNESS.md",
+        "kind": "other",
+        "sizeBytes": 6066
+      },
+      {
+        "path": "docs/KNOWN_LIMITATIONS.md",
+        "kind": "other",
+        "sizeBytes": 14289
+      },
+      {
+        "path": "docs/MANUAL_DEVICE_CHECKLIST.md",
+        "kind": "other",
+        "sizeBytes": 4864
+      },
+      {
+        "path": "docs/MEMORY.md",
+        "kind": "other",
+        "sizeBytes": 1583
+      },
+      {
+        "path": "docs/OPENCODE_INTEGRATION_REPORT.md",
+        "kind": "other",
+        "sizeBytes": 7088
+      },
+      {
+        "path": "docs/OPENCODE_RUNTIME_FEASIBILITY.md",
+        "kind": "other",
+        "sizeBytes": 23716
+      },
+      {
+        "path": "docs/PFP_V4_TRACEABILITY.md",
+        "kind": "other",
+        "sizeBytes": 7751
+      },
+      {
+        "path": "docs/RELIABILITY_CENTER.md",
+        "kind": "other",
+        "sizeBytes": 1659
+      },
+      {
+        "path": "docs/RUNTIME_EVALUATION.md",
+        "kind": "other",
+        "sizeBytes": 6917
+      },
+      {
+        "path": "docs/SECURITY.md",
+        "kind": "other",
+        "sizeBytes": 5803
+      },
+      {
+        "path": "docs/SECURITY_AUDIT_V1_1.md",
+        "kind": "other",
+        "sizeBytes": 8434
+      },
+      {
+        "path": "docs/THIRD_PARTY_NOTICES.md",
+        "kind": "other",
+        "sizeBytes": 3586
+      },
+      {
+        "path": "docs/V1_1_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 10531
+      },
+      {
+        "path": "docs/assets/anvex-emblem.jpg",
+        "kind": "other",
+        "sizeBytes": 702865
+      },
+      {
+        "path": "docs/assets/anvex-wordmark.jpg",
+        "kind": "other",
+        "sizeBytes": 231526
+      },
+      {
+        "path": "docs/audit/18_ITEM_COMPLETION.md",
+        "kind": "other",
+        "sizeBytes": 1583
+      },
+      {
+        "path": "docs/audit/ARCHITECTURE_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 7406
+      },
+      {
+        "path": "docs/audit/ARTIFACT_PACKAGING_V3.3.1.md",
+        "kind": "other",
+        "sizeBytes": 1706
+      },
+      {
+        "path": "docs/audit/AUDIT_RECONCILIATION_V3.3.9.md",
+        "kind": "other",
+        "sizeBytes": 3961
+      },
+      {
+        "path": "docs/audit/BATCH_1_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1343
+      },
+      {
+        "path": "docs/audit/BATCH_1_HARDENING_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 2020
+      },
+      {
+        "path": "docs/audit/BATCH_1_IMPLEMENTATION.md",
+        "kind": "other",
+        "sizeBytes": 1468
+      },
+      {
+        "path": "docs/audit/BATCH_2_IMPLEMENTATION_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1563
+      },
+      {
+        "path": "docs/audit/BATCH_3_IMPLEMENTATION_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1665
+      },
+      {
+        "path": "docs/audit/BATCH_4_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1476
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_30_FINAL_v3.1.0.md",
+        "kind": "other",
+        "sizeBytes": 3564
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_EXTERNAL_SECURITY_FIX_v3.1.1.md",
+        "kind": "other",
+        "sizeBytes": 2153
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_FINAL_v3.1.2.md",
+        "kind": "other",
+        "sizeBytes": 1657
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_V3.3.8.md",
+        "kind": "other",
+        "sizeBytes": 3458
+      },
+      {
+        "path": "docs/audit/DEEP_VERIFICATION_V3.2.8.md",
+        "kind": "other",
+        "sizeBytes": 2769
+      },
+      {
+        "path": "docs/audit/DEPENDENCY_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 3000
+      },
+      {
+        "path": "docs/audit/DSHA_CAPABILITY_EXPANSION_19_30.md",
+        "kind": "other",
+        "sizeBytes": 1433
+      },
+      {
+        "path": "docs/audit/EXTERNAL_AI_AUDIT_REVIEW_V3.2.7.md",
+        "kind": "other",
+        "sizeBytes": 3819
+      },
+      {
+        "path": "docs/audit/FINAL_AUDIT_CORRECTION_V3.3.7.md",
+        "kind": "other",
+        "sizeBytes": 2489
+      },
+      {
+        "path": "docs/audit/FINAL_UIUX_DEEP_AUDIT_V3.2.2.md",
+        "kind": "other",
+        "sizeBytes": 889
+      },
+      {
+        "path": "docs/audit/FINAL_UIUX_DEEP_AUDIT_V3.2.4.md",
+        "kind": "other",
+        "sizeBytes": 4469
+      },
+      {
+        "path": "docs/audit/GROK_AUDIT_REMEDIATION_V3.2.5.md",
+        "kind": "other",
+        "sizeBytes": 1295
+      },
+      {
+        "path": "docs/audit/MIGRATION_PLAN.md",
+        "kind": "other",
+        "sizeBytes": 5204
+      },
+      {
+        "path": "docs/audit/PERSIAN_LANGUAGE_SUPPORT_V3.2.6.md",
+        "kind": "other",
+        "sizeBytes": 1320
+      },
+      {
+        "path": "docs/audit/POST_AUDIT_FIX_3.1.3.md",
+        "kind": "other",
+        "sizeBytes": 1617
+      },
+      {
+        "path": "docs/audit/POST_AUDIT_FIX_3.1.4.md",
+        "kind": "other",
+        "sizeBytes": 2022
+      },
+      {
+        "path": "docs/audit/RUNTIME_ANALYSIS.md",
+        "kind": "other",
+        "sizeBytes": 6196
+      },
+      {
+        "path": "docs/audit/UIUX_REDESIGN_V3.2.0.md",
+        "kind": "other",
+        "sizeBytes": 3107
+      },
+      {
+        "path": "docs/audit/UIUX_REDESIGN_V3.2.1.md",
+        "kind": "other",
+        "sizeBytes": 1187
+      },
+      {
+        "path": "docs/audit/UIUX_REDESIGN_V3.2.2.md",
+        "kind": "other",
+        "sizeBytes": 858
+      },
+      {
+        "path": "docs/audit/deep-audit/DEEP_AUDIT_FIX_REPORT_v2.9.1.md",
+        "kind": "other",
+        "sizeBytes": 2206
+      },
+      {
+        "path": "docs/audit/deep-audit/DEEP_AUDIT_HARDENING.md",
+        "kind": "other",
+        "sizeBytes": 3557
+      },
+      {
+        "path": "docs/audit/deep-audit/DEEP_AUDIT_HARDENING_v2.9.0.md",
+        "kind": "other",
+        "sizeBytes": 2319
+      },
+      {
+        "path": "docs/audit/phase0/PHASE_0_REBASELINE.md",
+        "kind": "other",
+        "sizeBytes": 2286
+      },
+      {
+        "path": "docs/audit/phase1/PHASE_1_DURABLE_TASK_ENGINE.md",
+        "kind": "other",
+        "sizeBytes": 2505
+      },
+      {
+        "path": "docs/review/IDEAS-4.10.5.md",
+        "kind": "other",
+        "sizeBytes": 32994
+      },
+      {
+        "path": "docs/review/ISSUES-4.10.5.md",
+        "kind": "other",
+        "sizeBytes": 51944
+      },
+      {
+        "path": "docs/review/STATUS-4.11.0.md",
+        "kind": "other",
+        "sizeBytes": 6460
+      },
+      {
+        "path": "docs/screenshots/home.jpg",
+        "kind": "other",
+        "sizeBytes": 130407
+      },
+      {
+        "path": "docs/screenshots/memory.jpg",
+        "kind": "other",
+        "sizeBytes": 102341
+      },
+      {
+        "path": "docs/screenshots/settings-ai-providers.jpg",
+        "kind": "other",
+        "sizeBytes": 130886
+      },
+      {
+        "path": "docs/screenshots/settings-developer.jpg",
+        "kind": "other",
+        "sizeBytes": 149393
+      },
+      {
+        "path": "docs/screenshots/settings-workspace.jpg",
+        "kind": "other",
+        "sizeBytes": 165902
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-09-boltdroid-v422.md",
+        "kind": "other",
+        "sizeBytes": 21556
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-09-boltdroid-v422-design.md",
+        "kind": "other",
+        "sizeBytes": 2670
+      },
+      {
+        "path": "gradle/libs.versions.toml",
+        "kind": "other",
+        "sizeBytes": 4619
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.jar",
+        "kind": "other",
+        "sizeBytes": 43583
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.properties",
+        "kind": "other",
+        "sizeBytes": 253
+      },
+      {
+        "path": "gradle.properties",
+        "kind": "other",
+        "sizeBytes": 1104
+      },
+      {
+        "path": "gradlew",
+        "kind": "other",
+        "sizeBytes": 8762
+      },
+      {
+        "path": "gradlew.bat",
+        "kind": "other",
+        "sizeBytes": 2966
+      },
+      {
+        "path": "keystore/debug.keystore",
+        "kind": "other",
+        "sizeBytes": 2666
+      },
+      {
+        "path": "settings.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 621
+      },
+      {
+        "path": "tools/build_source_mirror.py",
+        "kind": "Python",
+        "sizeBytes": 4835
+      },
+      {
+        "path": "tools/deep_audit_30.py",
+        "kind": "Python",
+        "sizeBytes": 12684
+      },
+      {
+        "path": "tools/final_release_audit.py",
+        "kind": "Python",
+        "sizeBytes": 2103
+      },
+      {
+        "path": "tools/generate_launcher_icons.py",
+        "kind": "Python",
+        "sizeBytes": 3801
+      },
+      {
+        "path": "tools/icon-source/anvex-icon-source.jpg",
+        "kind": "other",
+        "sizeBytes": 698008
+      },
+      {
+        "path": "tools/opencode_probe.sh",
+        "kind": "other",
+        "sizeBytes": 2803
+      },
+      {
+        "path": "tools/osv_audit_catalog.py",
+        "kind": "Python",
+        "sizeBytes": 3745
+      },
+      {
+        "path": "tools/verify_build_environment.py",
+        "kind": "Python",
+        "sizeBytes": 1475
+      },
+      {
+        "path": "tools/verify_launcher_icon.py",
+        "kind": "Python",
+        "sizeBytes": 8278
+      },
+      {
+        "path": "tools/verify_room_schema_snapshots.py",
+        "kind": "Python",
+        "sizeBytes": 1966
+      },
+      {
+        "path": "tools/verify_source_mirror.py",
+        "kind": "Python",
+        "sizeBytes": 4180
+      },
+      {
+        "path": "tools/write_apk_build_info.py",
+        "kind": "Python",
+        "sizeBytes": 2037
+      }
+    ],
+    "languages": [
+      "C++",
+      "CSS",
+      "HTML",
+      "JavaScript",
+      "JavaScript/React",
+      "Kotlin",
+      "Python",
+      "TypeScript"
+    ],
+    "buildSystems": [
+      "Gradle",
+      "Gradle Kotlin DSL"
+    ],
+    "dependencyFiles": [
+      "app/build.gradle.kts",
+      "build.gradle.kts",
+      "core/ai/build.gradle.kts",
+      "core/android/build.gradle.kts",
+      "core/engine/build.gradle.kts",
+      "core/model/build.gradle.kts"
+    ],
+    "testIndicators": [
+      "app/src/test/kotlin/com/anvex/app/i18n/TranslationCoverageTest.kt",
+      "app/src/test/kotlin/com/anvex/app/project/ArchiveTextExtractorTest.kt",
+      "app/src/test/kotlin/com/anvex/app/ui/components/BidiTextTest.kt",
+      "app/src/test/kotlin/com/anvex/app/ui/components/MarkdownParserTest.kt",
+      "app/src/test/kotlin/com/anvex/app/ui/components/ReadAloudTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/FallbackProviderClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/OpenAiEffortTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/OpenCodeClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/ProviderClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/SseProtocolTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/ThinkingLevelMappingTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpConfigSaveTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/zai/ZaiAccountCoordinatorTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeLineDeliveryTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeRuntimeSmokeTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/PiPocTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiChatBridgeTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiEngineTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiRuntimeTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/CryptoEnvelopeTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/DurableApprovalRepositoryTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/NodeRuntimeTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/PortableBackupBytesTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/SelfHealingEngineTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/db/MigrationTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/harness/SkillGitInstallerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/mcp/McpApprovalBrokerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/repo/CloudBuildRepositoryTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/ProviderAgentPlannerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/RuntimeSecurityTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/StdinHangTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/git/ConflictTextParserTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiMappingsTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiTranscriptReducerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/VecStoreTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/WordPieceTokenizerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsEditTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsProtocolTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/server/LoopbackLeakTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/session/ChatSessionTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/session/IntentDetectionTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/signing/SigningSealedBoxTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/terminal/InteractivePromptDetectorTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/terminal/VtEmulatorTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/tools/AgentToolExecutorTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/update/AppUpdateCheckerHostTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ActionSafetyPolicyTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ArtifactPackagingTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/AuditFixWaveTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/Batch1AgentRuntimeTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/BatchMutationTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/BoltStreamParserTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ContextBuilderSecurityTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/DiagramPreviewTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/DispatcherProtectionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/EngineTests.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ExportDetectionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ExternalReviewRegressionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/FakeFs.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/McpToolTargetTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/MediaDetectionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/PatchEngineTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/PreviewHarnessSecurityTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ProjectSearchTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SecondReviewRegressionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SecurityFixesRegressionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SensitivePathsBypassTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SkillExecutionRuntimeTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SkillsRuntimeTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/UserIntentClassifierTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/V1_1_RegressionsTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/V42FeaturesTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/VersionNumbersTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/CodeChunkerTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/FoldMathTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/SymbolIndexCoreTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/diagnostics/LightDiagnosticsTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/lsp/LspFramingTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/memory/MemoryTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/vcs/GitLiteTest.kt",
+      "docs/DESIGN_SPEC_WEB_PORT.md",
+      "docs/superpowers/specs/2026-10-09-boltdroid-v422-design.md"
+    ],
+    "ciIndicators": [
+      ".github/workflows/build-apk.yml",
+      ".github/workflows/codeql.yml",
+      ".github/workflows/dependency-audit.yml",
+      ".github/workflows/emulator-smoke.yml",
+      ".github/workflows/libnode-reassemble.yml",
+      ".github/workflows/libnode-release.yml",
+      ".github/workflows/poc-libnode.yml",
+      ".github/workflows/release-signed.yml"
+    ],
+    "secretIndicators": [],
+    "schemaVersion": "1.0.0",
+    "generatedAt": "2026-11-04T20:32:13.024767+00:00"
+  },
+  "dependencies": [
+    {
+      "id": "DEP-KOTLIN",
+      "name": "Kotlin",
+      "kind": "build",
+      "version": "2.0.21",
+      "reason": "Language and compiler of the host",
+      "criticality": "critical",
+      "status": "required",
+      "license": "Apache-2.0",
+      "securityRisk": "low",
+      "updatePolicy": "follow host catalog"
+    },
+    {
+      "id": "DEP-COROUTINES",
+      "name": "kotlinx-coroutines",
+      "kind": "runtime",
+      "version": "1.9.0",
+      "reason": "Execution host in agents-runtime only",
+      "criticality": "high",
+      "status": "required",
+      "license": "Apache-2.0",
+      "securityRisk": "low",
+      "updatePolicy": "follow host catalog"
+    },
+    {
+      "id": "DEP-ROOM",
+      "name": "Room",
+      "kind": "runtime",
+      "version": "2.6.1",
+      "reason": "agents.db persistence",
+      "criticality": "high",
+      "status": "required",
+      "license": "Apache-2.0",
+      "securityRisk": "low",
+      "updatePolicy": "follow host catalog"
+    },
+    {
+      "id": "DEP-COMPOSE",
+      "name": "Compose BOM / Material 3",
+      "kind": "runtime",
+      "version": "2024.12.01",
+      "reason": "Agent Teams UI",
+      "criticality": "medium",
+      "status": "required",
+      "license": "Apache-2.0",
+      "securityRisk": "low",
+      "updatePolicy": "follow host catalog"
+    },
+    {
+      "id": "DEP-JUNIT",
+      "name": "JUnit",
+      "kind": "development",
+      "version": "4.13.2",
+      "reason": "Unit tests",
+      "criticality": "medium",
+      "status": "required",
+      "license": "EPL-1.0",
+      "securityRisk": "low",
+      "updatePolicy": "follow host catalog"
+    },
+    {
+      "id": "DEP-ANVEX-ENGINE",
+      "name": "Anvex core:engine",
+      "kind": "organizational",
+      "version": "4.15.2",
+      "reason": "ProjectFileSystem, PathSanitizer, parser, dispatcher, patch engine",
+      "criticality": "critical",
+      "status": "required",
+      "fallback": "Adapters isolate the module from API drift",
+      "license": "project-internal",
+      "securityRisk": "low",
+      "updatePolicy": "re-verify signatures at M6"
+    },
+    {
+      "id": "DEP-ANVEX-AI",
+      "name": "Anvex core:ai",
+      "kind": "organizational",
+      "version": "4.15.2",
+      "reason": "ProviderClient for model calls",
+      "criticality": "critical",
+      "status": "required",
+      "license": "project-internal",
+      "securityRisk": "medium",
+      "updatePolicy": "re-verify signatures at M6"
+    }
+  ],
+  "risks": [
+    {
+      "id": "RISK-001",
+      "title": "Merge or integrator defect silently corrupts user code",
+      "probability": "medium",
+      "impact": "critical",
+      "score": 9,
+      "mitigation": "Conservative policy, property tests, fault injection, deep review",
+      "owner": "reviewer",
+      "trigger": "Any change to merge or integrator",
+      "contingency": "Block release; rollback via snapshots",
+      "status": "open"
+    },
+    {
+      "id": "RISK-002",
+      "title": "Android process death during a run",
+      "probability": "high",
+      "impact": "high",
+      "score": 9,
+      "mitigation": "Event log replay, atomic apply, Interrupted state",
+      "owner": "runtime",
+      "trigger": "Process kill",
+      "contingency": "Resume or discard run from persisted state",
+      "status": "open"
+    },
+    {
+      "id": "RISK-003",
+      "title": "Cost overrun from parallel agents",
+      "probability": "medium",
+      "impact": "high",
+      "score": 6,
+      "mitigation": "Hard caps, 80 percent warning, cost shown before start",
+      "owner": "budget",
+      "trigger": "Budget reaches 80 percent",
+      "contingency": "Pause and ask the user",
+      "status": "open"
+    },
+    {
+      "id": "RISK-004",
+      "title": "Host API drift between baseline 4.15.2 and the final integration",
+      "probability": "medium",
+      "impact": "medium",
+      "score": 4,
+      "mitigation": "Adapters at the composition root; re-verify signatures at M6",
+      "owner": "integration",
+      "trigger": "Host release during build",
+      "contingency": "Update adapters only",
+      "status": "open"
+    },
+    {
+      "id": "RISK-005",
+      "title": "Android layers cannot be verified in the planning sandbox",
+      "probability": "high",
+      "impact": "medium",
+      "score": 6,
+      "mitigation": "Label UNVERIFIED; verify on real tooling before acceptance",
+      "owner": "owner",
+      "trigger": "Milestones 3 and 4",
+      "contingency": "Do not close the milestone until built and run",
+      "status": "open"
+    },
+    {
+      "id": "RISK-006",
+      "title": "Device memory or rate limits reduce usable concurrency",
+      "probability": "medium",
+      "impact": "medium",
+      "score": 4,
+      "mitigation": "Configurable cap; decide default with measurements (ADR-028)",
+      "owner": "product owner",
+      "trigger": "M3 measurements",
+      "contingency": "Lower default cap",
+      "status": "open"
+    }
+  ],
+  "assumptions": [
+    {
+      "id": "ASM-001",
+      "statement": "ProjectFileSystem and RealProjectFileSystem keep their 4.15.2 semantics during the build.",
+      "status": "unvalidated",
+      "validation": "Signature re-check at M2 and M6",
+      "impactIfFalse": "Adjust RealWorkspaceFileSystem adapter"
+    },
+    {
+      "id": "ASM-002",
+      "statement": "Most target projects live on RealProjectFileSystem in app-private storage.",
+      "status": "unvalidated",
+      "validation": "Check project storage types in the host",
+      "impactIfFalse": "Prioritize the SAF gateway"
+    },
+    {
+      "id": "ASM-003",
+      "statement": "Devices have storage for one project copy per concurrent agent.",
+      "status": "unvalidated",
+      "validation": "Storage estimate shown before run start",
+      "impactIfFalse": "Lower concurrency cap"
+    },
+    {
+      "id": "ASM-004",
+      "statement": "The app manifest declares FOREGROUND_SERVICE and FOREGROUND_SERVICE_DATA_SYNC and already runs a dataSync service, so the module service only needs foregroundServiceType dataSync.",
+      "status": "validated",
+      "validation": "Read app/src/main/AndroidManifest.xml lines 8-9 and 54 in Anvex 4.15.2; re-check at M6",
+      "impactIfFalse": "Add the permission at integration"
+    }
+  ],
+  "compatibility": [
+    {
+      "id": "COMP-001",
+      "components": [
+        "Kotlin",
+        "KSP",
+        "Room"
+      ],
+      "constraints": [
+        "KSP must match the Kotlin version",
+        "Room 2.6.1 requires the host's KSP setup"
+      ],
+      "minimumVersions": {
+        "Kotlin": "2.0.21"
+      },
+      "recommendedVersions": {
+        "Kotlin": "2.0.21",
+        "KSP": "2.0.21-1.0.28",
+        "Room": "2.6.1"
+      },
+      "testedVersions": {
+        "Kotlin": "2.0.21 (kotlinc compile in planning sandbox)"
+      },
+      "status": "untested"
+    },
+    {
+      "id": "COMP-002",
+      "components": [
+        "JVM target 17",
+        "Android Gradle Plugin"
+      ],
+      "constraints": [
+        "Core modules compile to JVM 17 bytecode"
+      ],
+      "minimumVersions": {
+        "AGP": "8.7.3"
+      },
+      "recommendedVersions": {
+        "AGP": "8.7.3",
+        "JDK": "17"
+      },
+      "testedVersions": {},
+      "status": "untested"
+    }
+  ],
+  "migrationPlan": {
+    "currentState": "Anvex 4.15.2 is a multi-module Android app (core:model, core:engine, core:ai, core:android, app) with a single-agent chat engine, a harness web UI, Room database version 13 and a manual DI graph.",
+    "targetState": "Anvex gains a separable multi-agent module (four Gradle modules) integrated only at contract points.",
+    "strategy": "Build the module completely in a copy of Anvex 4.15.2, then integrate at the listed contract points.",
+    "rollback": "Remove the include lines, dependency lines, graph wiring, route and strings; agents.db is separate and can be deleted without affecting anvex.db.",
+    "steps": [
+      "M0 baseline",
+      "M1 pure core",
+      "M2 workspaces and merge",
+      "M3 runtime",
+      "M4 UI",
+      "M5 assurance",
+      "M6 integration"
+    ]
+  },
+  "governance": {
+    "approvals": [
+      {
+        "decisionId": "ADR-001",
+        "level": "REVIEW",
+        "reason": "Security boundary: a URI-backed workspace would break atomic apply, isolation and conflict detection."
+      },
+      {
+        "decisionId": "ADR-002",
+        "level": "REVIEW",
+        "reason": "Single-sourcing of hardened path, symlink and atomic-write code."
+      },
+      {
+        "decisionId": "ADR-003",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-004",
+        "level": "REVIEW",
+        "reason": "Prevents absolute-path leakage into core logic."
+      },
+      {
+        "decisionId": "ADR-005",
+        "level": "REVIEW",
+        "reason": "Restore and rollback correctness depend on it."
+      },
+      {
+        "decisionId": "ADR-006",
+        "level": "REVIEW",
+        "reason": "Incorrect merges silently corrupt user code."
+      },
+      {
+        "decisionId": "ADR-007",
+        "level": "REVIEW",
+        "reason": "Authorization location must be single and testable."
+      },
+      {
+        "decisionId": "ADR-008",
+        "level": "REVIEW",
+        "reason": "Agent output is attacker-influenced (prompt injection)."
+      },
+      {
+        "decisionId": "ADR-009",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-010",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-011",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-012",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-013",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-014",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-015",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-016",
+        "level": "REVIEW",
+        "reason": "Avoids touching anvex.db schema version 13 and its migration chain."
+      },
+      {
+        "decisionId": "ADR-017",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-018",
+        "level": "REVIEW",
+        "reason": "Credential exposure surface."
+      },
+      {
+        "decisionId": "ADR-019",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-020",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-021",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-022",
+        "level": "REVIEW",
+        "reason": "Clarifies how requirement 'PFP governance' is satisfied."
+      },
+      {
+        "decisionId": "ADR-023",
+        "level": "REVIEW",
+        "reason": "Prevents uncontrolled changes to the main source at the end."
+      },
+      {
+        "decisionId": "ADR-024",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-025",
+        "level": "REVIEW",
+        "reason": "Scope change against the original vision (scope decision SD-003)."
+      },
+      {
+        "decisionId": "ADR-026",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      },
+      {
+        "decisionId": "ADR-027",
+        "level": "REVIEW",
+        "reason": "Reduces availability for SAF-backed projects until delivered."
+      },
+      {
+        "decisionId": "ADR-028",
+        "level": "HUMAN_REQUIRED",
+        "reason": "Cost and device-load trade-off belongs to the product owner."
+      },
+      {
+        "decisionId": "ADR-029",
+        "level": "HUMAN_REQUIRED",
+        "reason": "Weakening review defaults is a governance decision."
+      },
+      {
+        "decisionId": "ADR-030",
+        "level": "REVIEW",
+        "reason": "Moves decision-adjacent wiring into the verifiable core."
+      },
+      {
+        "decisionId": "ADR-031",
+        "level": "REVIEW",
+        "reason": "Persistence and tamper evidence depend on it."
+      },
+      {
+        "decisionId": "ADR-032",
+        "level": "REVIEW",
+        "reason": "Crash semantics of the integration workspace."
+      },
+      {
+        "decisionId": "ADR-033",
+        "level": "REVIEW",
+        "reason": "Prevents two layers from interpreting one path differently."
+      },
+      {
+        "decisionId": "ADR-034",
+        "level": "AUTO",
+        "reason": "Routine decision within the package's governance boundary."
+      }
+    ],
+    "budgets": [
+      {
+        "id": "BUD-SCHED",
+        "kind": "performance",
+        "metric": "scheduler transition, 100 tasks (JVM)",
+        "target": 5,
+        "unit": "ms",
+        "sourceRefs": [
+          "PRD-FR-6"
+        ]
+      },
+      {
+        "id": "BUD-MERGE",
+        "kind": "performance",
+        "metric": "three-way merge of a 5000-line file (JVM)",
+        "target": 500,
+        "unit": "ms",
+        "sourceRefs": [
+          "PRD-FR-17"
+        ]
+      },
+      {
+        "id": "BUD-STORE",
+        "kind": "storage",
+        "metric": "fork storage overhead over project size",
+        "target": 10,
+        "unit": "percent",
+        "sourceRefs": [
+          "PRD-FR-16"
+        ]
+      },
+      {
+        "id": "BUD-MEM",
+        "kind": "memory",
+        "metric": "agents-core heap with 3 agents and 100 tasks",
+        "target": 64,
+        "unit": "MB",
+        "sourceRefs": [
+          "PRD-FR-21"
+        ]
+      },
+      {
+        "id": "BUD-TOKEN",
+        "kind": "token",
+        "metric": "default per-run hard token cap (user-configurable)",
+        "target": 500000,
+        "unit": "tokens",
+        "sourceRefs": [
+          "PRD-FR-20"
+        ]
+      },
+      {
+        "id": "BUD-COST",
+        "kind": "cost",
+        "metric": "default per-run hard cost cap (user-configurable)",
+        "target": 5,
+        "unit": "USD",
+        "sourceRefs": [
+          "PRD-FR-20"
+        ]
+      }
+    ],
+    "costModel": {
+      "status": "estimated",
+      "currency": "USD",
+      "period": "monthly",
+      "items": [
+        {
+          "name": "module infrastructure (no backend)",
+          "amount": 0,
+          "unit": "USD/month",
+          "sourceRef": "PRD-FR-30"
+        }
+      ],
+      "assumptions": [
+        "Model usage is billed by the user's own providers and is capped per run (BUD-COST).",
+        "The module adds no server cost."
+      ]
+    },
+    "observability": {
+      "status": "required",
+      "logging": "Structured local logs with identifiers, sizes and digests; no file contents, prompts or credentials.",
+      "metrics": "Per-agent and per-task tokens, cost, run duration, conflict count, retry count.",
+      "tracing": "Run and task IDs propagate through events and audit records.",
+      "auditEvents": "Every state transition, policy decision, gate verdict, apply, rollback and budget stop.",
+      "healthChecks": "Startup recovery check of persisted runs and CAS integrity sampling.",
+      "alerts": "User notifications for conflicts, gates awaiting a decision, budget at 80 percent and interrupted runs.",
+      "slo": "No accepted ChangeSet lost and no half-applied workspace after a process kill.",
+      "sli": "Count of recovery anomalies and of blob verification failures per 1000 runs."
+    },
+    "changeImpact": {
+      "version": "1.0.0",
+      "changes": [
+        {
+          "id": "CHANGE-001",
+          "affectedRefs": [
+            "ADR-002",
+            "ADR-005",
+            "ARC-FS-1",
+            "ARC-FS-2"
+          ],
+          "rationale": "Filesystem port, delegation and snapshot semantics must be assessed together.",
+          "status": "assessed"
+        },
+        {
+          "id": "CHANGE-002",
+          "affectedRefs": [
+            "ADR-006",
+            "ARC-CORE-4",
+            "AC-012"
+          ],
+          "rationale": "Any merge-table change affects the integrator and its edge-case acceptance test.",
+          "status": "assessed"
+        },
+        {
+          "id": "CHANGE-003",
+          "affectedRefs": [
+            "ADR-007",
+            "ADR-008",
+            "ARC-SEC-1",
+            "ARC-CORE-3"
+          ],
+          "rationale": "Authorization point and output validation form one security boundary.",
+          "status": "assessed"
+        }
+      ]
+    },
+    "quality": {
+      "score": 100.0,
+      "methodVersion": "1.1.0",
+      "components": {
+        "overall": 100.0,
+        "requirements": 100.0,
+        "technologyDecisions": 100.0,
+        "security": 100.0,
+        "approvals": 100.0,
+        "registries": 100.0
+      }
+    }
+  }
+}

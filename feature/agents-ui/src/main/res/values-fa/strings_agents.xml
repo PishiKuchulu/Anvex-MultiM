@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UNVERIFIED (never built). Persian strings of the Agent Teams module (RTL). -->
+<resources>
+    <string name="agents_title">تیم‌های عامل</string>
+    <string name="agents_back">بازگشت</string>
+    <string name="agents_new_team">تیم جدید</string>
+    <string name="agents_team_name">نام تیم</string>
+    <string name="agents_no_teams">هنوز تیمی نیست. یکی بسازید تا چند عامل هوش مصنوعی روی این پروژه کار کنند.</string>
+    <string name="agents_add_agent">افزودن عامل</string>
+    <string name="agents_agent_name">نام</string>
+    <string name="agents_agent_role">نقش و دستورالعمل</string>
+    <string name="agents_provider">ارائه‌دهنده</string>
+    <string name="agents_model">مدل</string>
+    <string name="agents_temperature">دما (اختیاری)</string>
+    <string name="agents_write_globs">فایل‌هایی که می‌تواند تغییر دهد (با ویرگول جدا کنید، مثل src/**)</string>
+    <string name="agents_can_execute">اجازه‌ی اجرای دستور</string>
+    <string name="agents_can_approve">اجازه‌ی بازبینی و تأیید کار دیگران</string>
+    <string name="agents_add_task">افزودن وظیفه</string>
+    <string name="agents_task_title">عنوان</string>
+    <string name="agents_task_acceptance">معیار پذیرش</string>
+    <string name="agents_task_claims">فایل‌های مورد انتظار (با ویرگول جدا کنید، اختیاری)</string>
+    <string name="agents_task_assignees">واگذاری به (برای مقایسه‌ی نتایج چند نفر را انتخاب کنید)</string>
+    <string name="agents_max_concurrent">تعداد عامل هم‌زمان</string>
+    <string name="agents_token_budget">بودجه‌ی توکن (۰ = بدون سقف)</string>
+    <string name="agents_start_run">شروع</string>
+    <string name="agents_save">ذخیره</string>
+    <string name="agents_cancel">انصراف</string>
+    <string name="agents_delete">حذف</string>
+    <string name="agents_unsupported_project">این پروژه در یک پوشه‌ی اشتراکی ذخیره شده و فعلاً توسط تیم‌های عامل پشتیبانی نمی‌شود.</string>
+    <string name="agents_tokens_used">توکن مصرف‌شده: %1$s</string>
+    <string name="agents_cost_used">هزینه: %1$s دلار</string>
+    <string name="agents_state_pending">در انتظار</string>
+    <string name="agents_state_assigned">واگذار شده</string>
+    <string name="agents_state_in_progress">در حال کار</string>
+    <string name="agents_state_blocked">نیاز به شما</string>
+    <string name="agents_state_under_review">در حال بازبینی</string>
+    <string name="agents_state_revision">نیاز به بازنگری</string>
+    <string name="agents_state_completed">انجام شد</string>
+    <string name="agents_state_failed">ناموفق</string>
+    <string name="agents_state_cancelled">لغو شد</string>
+    <string name="agents_pause">توقف موقت</string>
+    <string name="agents_resume">ادامه</string>
+    <string name="agents_stop">توقف</string>
+    <string name="agents_show_changes">نمایش تغییرات</string>
+    <string name="agents_approve">تأیید</string>
+    <string name="agents_reject">رد</string>
+    <string name="agents_rerun">اجرای دوباره</string>
+    <string name="agents_retry">تلاش دوباره</string>
+    <string name="agents_undo">بازگردانی</string>
+    <string name="agents_gate_needs_review">نیاز به بازبینی مستقل دارد. نویسنده نمی‌تواند آن را تأیید کند.</string>
+    <string name="agents_need_conflict">با تغییرات عامل دیگری تعارض دارد. چیزی اعمال نشد.</string>
+    <string name="agents_need_approval">فایل‌هایی خارج از وظیفه را تغییر می‌دهد. تأیید شما لازم است.</string>
+    <string name="agents_need_stopped">عامل متوقف شد.</string>
+    <string name="agents_need_budget">به بودجه رسیدیم.</string>
+    <string name="agents_choose_result">نتیجه‌ای را که می‌خواهید نگه دارید انتخاب کنید:</string>
+    <string name="agents_notice_budget_warning">۸۰ درصد بودجه مصرف شده است.</string>
+    <string name="agents_notice_gate_attempt">کسی بدون اجازه تلاش کرد تأیید کند. رد شد.</string>
+    <string name="agents_no_changes">تغییری نیست.</string>
+</resources>

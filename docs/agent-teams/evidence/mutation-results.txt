@@ -1,0 +1,54 @@
+MUTATION SANITY CHECK  (tool: mutate2.py; each mutation breaks ONE safety rule; the suite must fail)
+Environment: kotlinc 2.0.21, JDK 21 (-jvm-target 17), JUnit 4.13.2 + hamcrest 2.2 (Debian builds), 1 CPU core.
+Method: the mutated source set is compiled; the UNCHANGED baseline test classes are run against it (rule bodies change, signatures do not).
+Baselines: M01-M35 against the 157-test suite (core before the orchestrator work); M36-M45 against the 189-test suite. M01/M04 re-run on 189.
+
+ID   mutation                                                              result
+M01  gate: author may verify own work                                      KILLED (4/189)   [initially SURVIVED: the author had no approve grant, masking the rule -> tests added]
+M02  gate: any channel accepted for agent verdicts                         KILLED (1/157)
+M03  gate: reviewer needs no approve grant                                 KILLED (2/157)
+M04  gate: apply allowed without satisfied gate                            KILLED (1/189)   [initially SURVIVED: redundant defense in depth -> state-tampering test added]
+M05  scheduler: file claims ignored                                        KILLED (5/157)
+M06  scheduler: concurrency cap ignored                                    KILLED (4/157)
+M07  scheduler: dependencies not awaited                                   KILLED (5/157)
+M08  scheduler: cancel does not cascade                                    KILLED (1/157)
+M09  scheduler: budget exhaustion never triggers                           KILLED (3/157)
+M10  scheduler: failed dependency does not block dependents                KILLED (2/157)
+M11  policy: precedence inverted (min instead of max)                      KILLED (6/157)
+M12  policy: sensitive paths not denied                                    KILLED (4/157)
+M13  policy: oracle failure fails open                                     KILLED (1/157)
+M14  credentials: scrub is a no-op                                         KILLED (4/157)
+M15  path: dotdot accepted                                                 KILLED (4/157)
+M16  glob: overlap never reported                                          KILLED (2/157)
+M17  eventlog: verify always true                                          KILLED (2/157)
+M18  merge: adjacent hunks no longer conflict                              KILLED (5/157)
+M19  integrator: conflicts do not stop the write                           KILLED (5/157)
+M20  integrator: no rollback after a failed apply                          KILLED (3/157)
+M21  integrator: escalation ignored                                        KILLED (1/157)
+M22  validator: forged base digest on modify accepted                      KILLED (2/157)
+M23  integrator: no read-back verification                                 KILLED (1/157)
+M24  merge: delete-vs-edit silently deletes                                KILLED (1/157)
+M25  manifest: non-canonical manifests accepted                            KILLED (1/157)
+M26  utf8: surrogates accepted                                             KILLED (1/157)
+M27  deriver: ignored paths are diffed                                     KILLED (1/157)
+M28  json: duplicate keys accepted                                         KILLED (3/157)
+M29  verdict: rejection without findings accepted                          KILLED (1/157)
+M30  verdict: verdict for another task accepted                            KILLED (1/157)
+M31  plan: a plan may disable mandatory review                             KILLED (1/157)
+M32  plan: approval digest not checked                                     KILLED (1/157)
+M33  plan: forward dependencies accepted                                   KILLED (1/157)
+M34  json: lone surrogates accepted                                        KILLED (1/157)
+M35  json: nesting limit disabled                                          KILLED (1/157)
+M36  orchestrator: agent output is not vetted                              KILLED (10/189)
+M37  orchestrator: restart does not repair a half-applied project          KILLED (1/189)
+M38  orchestrator: authors may review their own task                       KILLED (1/189)
+M39  integrator: apply is not journaled                                    KILLED (4/189)
+M40  scheduler: a restart consumes an attempt                              KILLED (3/189)
+M41  orchestrator: forks deleted while the run may still write             KILLED (1/189)
+M42  orchestrator: free text is not scrubbed before persisting             KILLED (1/189)
+M43  codec: decoding accepts unknown fields                                KILLED (1/189)
+M44  eventlog: hash ignores the event content                              KILLED (2/189)
+M45  orchestrator: cancelled runs are not told to stop                     KILLED (2/189)
+
+45 mutants, 45 killed, 0 survived (2 of them survived once and led to real test improvements).
+Limit: mutations are hand-written; this shows the suite is not blind to these rules, not that it is blind to nothing.

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UNVERIFIED. The host manifest already declares FOREGROUND_SERVICE and FOREGROUND_SERVICE_DATA_SYNC (verified in Anvex 4.15.2, app/src/main/AndroidManifest.xml). Re-check at integration. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <service
+            android:name="com.anvex.agents.runtime.service.AgentTeamsService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+    </application>
+</manifest>

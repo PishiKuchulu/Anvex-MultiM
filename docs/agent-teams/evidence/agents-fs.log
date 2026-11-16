@@ -1,0 +1,16 @@
+== agents-fs build 2026-11-12T09:27:21Z
+kotlinc: info: kotlinc-jvm 2.0.21 (JRE 21.0.12.1+1-1-24.04.4-Ubuntu)
+java: openjdk version "21.0.12.1" 2026-08-18
+flags: -jvm-target 17 -Werror
+-- main sources: 5 files, 303 lines
+-- main compile OK
+-- test compile OK
+-- test classes: com.anvex.agents.fs.CasStoreTest com.anvex.agents.fs.EndToEndTest com.anvex.agents.fs.ForkTest com.anvex.agents.fs.FsArchitectureGuardTest com.anvex.agents.fs.FsParityTest com.anvex.agents.fs.RealWorkspaceFileSystemTest com.anvex.agents.fs.SnapshotRestoreTest 
+JUnit version 4.13.2
+.....................300-file pipeline (2 forks, 2 change sets, apply): 574 ms
+................parity soup: accepted 8159, host rejects 87981, host rewrites (non-canonical) 23860
+.................
+Time: 5.431
+
+OK (54 tests)
+

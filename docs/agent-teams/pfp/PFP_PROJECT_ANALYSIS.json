@@ -1,0 +1,2767 @@
+{
+  "schemaVersion": "1.0.0",
+  "mode": "hybrid",
+  "project": {
+    "id": "ANVEX-AGENTS",
+    "name": "Anvex Agent Teams (multi-agent module)"
+  },
+  "inventory": {
+    "root": "Anvex_4.15.2 (source archive)",
+    "files": [
+      {
+        "path": ".editorconfig",
+        "kind": "other",
+        "sizeBytes": 229
+      },
+      {
+        "path": ".gitattributes",
+        "kind": "other",
+        "sizeBytes": 351
+      },
+      {
+        "path": ".github/dependabot.yml",
+        "kind": "other",
+        "sizeBytes": 608
+      },
+      {
+        "path": ".github/workflows/build-apk.yml",
+        "kind": "other",
+        "sizeBytes": 6665
+      },
+      {
+        "path": ".github/workflows/codeql.yml",
+        "kind": "other",
+        "sizeBytes": 1054
+      },
+      {
+        "path": ".github/workflows/dependency-audit.yml",
+        "kind": "other",
+        "sizeBytes": 990
+      },
+      {
+        "path": ".github/workflows/emulator-smoke.yml",
+        "kind": "other",
+        "sizeBytes": 2787
+      },
+      {
+        "path": ".github/workflows/libnode-reassemble.yml",
+        "kind": "other",
+        "sizeBytes": 14186
+      },
+      {
+        "path": ".github/workflows/libnode-release.yml",
+        "kind": "other",
+        "sizeBytes": 11634
+      },
+      {
+        "path": ".github/workflows/poc-libnode.yml",
+        "kind": "other",
+        "sizeBytes": 2212
+      },
+      {
+        "path": ".github/workflows/release-signed.yml",
+        "kind": "other",
+        "sizeBytes": 5625
+      },
+      {
+        "path": ".gitignore",
+        "kind": "other",
+        "sizeBytes": 813
+      },
+      {
+        "path": "CHANGELOG.md",
+        "kind": "other",
+        "sizeBytes": 116604
+      },
+      {
+        "path": "LICENSE",
+        "kind": "other",
+        "sizeBytes": 1228
+      },
+      {
+        "path": "README.md",
+        "kind": "other",
+        "sizeBytes": 15648
+      },
+      {
+        "path": "app/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 10911
+      },
+      {
+        "path": "app/proguard-rules.pro",
+        "kind": "other",
+        "sizeBytes": 1411
+      },
+      {
+        "path": "app/src/main/AndroidManifest.xml",
+        "kind": "other",
+        "sizeBytes": 3683
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-Bold.ttf",
+        "kind": "other",
+        "sizeBytes": 105228
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-ExtraBold.ttf",
+        "kind": "other",
+        "sizeBytes": 105404
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-Medium.ttf",
+        "kind": "other",
+        "sizeBytes": 104724
+      },
+      {
+        "path": "app/src/main/assets/fonts/Vazirmatn-Regular.ttf",
+        "kind": "other",
+        "sizeBytes": 104640
+      },
+      {
+        "path": "app/src/main/assets/harness/app.jsx",
+        "kind": "JavaScript/React",
+        "sizeBytes": 45941
+      },
+      {
+        "path": "app/src/main/assets/harness/bridge.js",
+        "kind": "JavaScript",
+        "sizeBytes": 14946
+      },
+      {
+        "path": "app/src/main/assets/harness/fonts/JetBrainsMono-Bold.ttf",
+        "kind": "other",
+        "sizeBytes": 274096
+      },
+      {
+        "path": "app/src/main/assets/harness/fonts/JetBrainsMono-Medium.ttf",
+        "kind": "other",
+        "sizeBytes": 270316
+      },
+      {
+        "path": "app/src/main/assets/harness/fonts/JetBrainsMono-Regular.ttf",
+        "kind": "other",
+        "sizeBytes": 270224
+      },
+      {
+        "path": "app/src/main/assets/harness/index.html",
+        "kind": "HTML",
+        "sizeBytes": 808
+      },
+      {
+        "path": "app/src/main/assets/harness/jszip.min.js",
+        "kind": "JavaScript",
+        "sizeBytes": 97642
+      },
+      {
+        "path": "app/src/main/assets/harness/styles.css",
+        "kind": "CSS",
+        "sizeBytes": 15051
+      },
+      {
+        "path": "app/src/main/assets/python/index.html",
+        "kind": "HTML",
+        "sizeBytes": 1459
+      },
+      {
+        "path": "app/src/main/assets/runtime/babel.min.js",
+        "kind": "JavaScript",
+        "sizeBytes": 2983906
+      },
+      {
+        "path": "app/src/main/assets/runtime/mermaid.min.js",
+        "kind": "JavaScript",
+        "sizeBytes": 5494801
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-dom-client.js",
+        "kind": "JavaScript",
+        "sizeBytes": 212
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-dom.js",
+        "kind": "JavaScript",
+        "sizeBytes": 349
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-dom.umd.js",
+        "kind": "JavaScript",
+        "sizeBytes": 132102
+      },
+      {
+        "path": "app/src/main/assets/runtime/react-jsx-runtime.js",
+        "kind": "JavaScript",
+        "sizeBytes": 809
+      },
+      {
+        "path": "app/src/main/assets/runtime/react.js",
+        "kind": "JavaScript",
+        "sizeBytes": 1365
+      },
+      {
+        "path": "app/src/main/assets/runtime/react.umd.js",
+        "kind": "JavaScript",
+        "sizeBytes": 10782
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/AnvexApplication.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1267
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/MainActivity.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14519
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/i18n/Strings.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 85297
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/project/ArchiveTextExtractor.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15437
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/project/ProjectKnowledge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1792
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/AgentForegroundService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7234
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/AgentRuntimeState.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 559
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/AgentServiceController.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 807
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/BackupAlarmReceiver.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 920
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/BackupScheduler.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1229
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/runtime/RuntimeBootReceiver.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1226
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/share/IncomingShare.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1479
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/AnvexApp.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 23878
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AnvexDock.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5392
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AnvexUi.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4884
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AppUpdate.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 27903
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ApprovalDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2326
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ArtifactCard.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14799
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/AtelierDock.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5268
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/BidiText.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4020
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ChatTranscriptExporter.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3636
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/CodeSearchDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7587
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ConfirmDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2046
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/DeliverableCard.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15257
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/DiffSheet.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6118
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/GooThinkingIcon.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5919
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/MarkdownText.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17714
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/MessageActions.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6172
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/Nebula.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10773
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ProjectKnowledgeDialog.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3758
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ProjectScaffold.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14278
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/PythonRunner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6467
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/QuickActionsRow.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1771
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ReadAloud.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3709
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/components/ThinkingCard.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7525
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/editor/CodeEditorField.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10037
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/editor/SyntaxHighlighter.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14518
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/backup/BackupScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9459
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/chat/ChatScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 83404
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/chat/DirectChatScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 61589
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/chat/ReviewChanges.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20148
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/debug/DebugScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8011
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/developer/AgentCenterScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 21257
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/developer/DeveloperCenterScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19219
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/editor/EditorScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 32776
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/editor/FileExplorerSheet.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11120
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/extensions/ExtensionsScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13520
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/git/ConflictResolverScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10657
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/git/GitRoot.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 789
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/git/GitScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 18618
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/github/GitHubScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 16090
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/harness/HarnessScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15288
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/history/HistoryScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6676
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/home/AtelierHome.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 27593
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/home/HomeScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 37108
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/memory/MemoryScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10671
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/preview/PreviewScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 31037
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/projects/ProjectsScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 12968
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/providers/ProvidersScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 42110
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/settings/AtelierSettingsHeader.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13376
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/settings/PiEnginePanel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9944
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/settings/SettingsScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 44485
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/signing/SigningKeyScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17974
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/terminal/TerminalScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 23129
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/screens/usage/UsageScreen.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3005
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/theme/DesignSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1667
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/theme/Theme.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 36315
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/ui/theme/Typography.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6952
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/BuildViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19860
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/ChatViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 73422
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/DirectChatViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 41121
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/EditorViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 32820
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/ExtensionsViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10099
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/HomeViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10351
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/PreviewViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9837
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/ProvidersViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20327
+      },
+      {
+        "path": "app/src/main/kotlin/com/anvex/app/vm/SigningKeyViewModel.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4730
+      },
+      {
+        "path": "app/src/main/res/drawable/anvex_emblem.png",
+        "kind": "other",
+        "sizeBytes": 59613
+      },
+      {
+        "path": "app/src/main/res/drawable/ic_stat_agent.xml",
+        "kind": "other",
+        "sizeBytes": 352
+      },
+      {
+        "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+        "kind": "other",
+        "sizeBytes": 337
+      },
+      {
+        "path": "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+        "kind": "other",
+        "sizeBytes": 337
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 11288
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 36849
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 9917
+      },
+      {
+        "path": "app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 11276
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 5218
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 17647
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 4747
+      },
+      {
+        "path": "app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 5240
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 19149
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 62790
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 16888
+      },
+      {
+        "path": "app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 19159
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 41054
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 132897
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 35660
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 41043
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+        "kind": "other",
+        "sizeBytes": 71028
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png",
+        "kind": "other",
+        "sizeBytes": 223696
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+        "kind": "other",
+        "sizeBytes": 59394
+      },
+      {
+        "path": "app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+        "kind": "other",
+        "sizeBytes": 71014
+      },
+      {
+        "path": "app/src/main/res/values/colors.xml",
+        "kind": "other",
+        "sizeBytes": 209
+      },
+      {
+        "path": "app/src/main/res/values/strings.xml",
+        "kind": "other",
+        "sizeBytes": 107
+      },
+      {
+        "path": "app/src/main/res/values/themes.xml",
+        "kind": "other",
+        "sizeBytes": 599
+      },
+      {
+        "path": "app/src/main/res/values-fa/strings.xml",
+        "kind": "other",
+        "sizeBytes": 110
+      },
+      {
+        "path": "app/src/main/res/values-night/themes.xml",
+        "kind": "other",
+        "sizeBytes": 463
+      },
+      {
+        "path": "app/src/main/res/xml/backup_rules.xml",
+        "kind": "other",
+        "sizeBytes": 337
+      },
+      {
+        "path": "app/src/main/res/xml/data_extraction_rules.xml",
+        "kind": "other",
+        "sizeBytes": 917
+      },
+      {
+        "path": "app/src/main/res/xml/file_paths.xml",
+        "kind": "other",
+        "sizeBytes": 1014
+      },
+      {
+        "path": "app/src/main/res/xml/locales_config.xml",
+        "kind": "other",
+        "sizeBytes": 197
+      },
+      {
+        "path": "app/src/main/res/xml/network_security_config.xml",
+        "kind": "other",
+        "sizeBytes": 1214
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/i18n/TranslationCoverageTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2226
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/project/ArchiveTextExtractorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6611
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/ui/components/BidiTextTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 995
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/ui/components/MarkdownParserTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2906
+      },
+      {
+        "path": "app/src/test/kotlin/com/anvex/app/ui/components/ReadAloudTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 628
+      },
+      {
+        "path": "build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 366
+      },
+      {
+        "path": "core/ai/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 492
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/AiTypes.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4342
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/AnthropicClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14560
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/FallbackProviderClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4556
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/GeminiCapabilities.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 774
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/GeminiClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10589
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/JsonExtensions.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 335
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/OpenAiCompatibleClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14804
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/OpenCodeClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9569
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/ProviderClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2476
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/ProviderFeatures.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5544
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/Sse.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11139
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/mcp/McpClient.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13129
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/zai/ZaiAccountCoordinator.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11612
+      },
+      {
+        "path": "core/ai/src/main/kotlin/com/anvex/core/ai/zai/ZaiProtocol.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10114
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/FallbackProviderClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3276
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/OpenAiEffortTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5541
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/OpenCodeClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 22145
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/ProviderClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14628
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/SseProtocolTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9758
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/ThinkingLevelMappingTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2029
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpClientTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7042
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpConfigSaveTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1808
+      },
+      {
+        "path": "core/ai/src/test/kotlin/com/anvex/core/ai/zai/ZaiAccountCoordinatorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13163
+      },
+      {
+        "path": "core/android/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 14235
+      },
+      {
+        "path": "core/android/schemas/com.anvex.core.android.db.AnvexDatabase/12.json",
+        "kind": "other",
+        "sizeBytes": 26668
+      },
+      {
+        "path": "core/android/schemas/com.anvex.core.android.db.AnvexDatabase/13.json",
+        "kind": "other",
+        "sizeBytes": 26849
+      },
+      {
+        "path": "core/android/schemas/com.anvex.core.android.db.AnvexDatabase/2.json",
+        "kind": "other",
+        "sizeBytes": 9066
+      },
+      {
+        "path": "core/android/src/androidTest/AndroidManifest.xml",
+        "kind": "other",
+        "sizeBytes": 438
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-poc.zip",
+        "kind": "other",
+        "sizeBytes": 2669620
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-test/ext/scripted-provider-v2.ts",
+        "kind": "TypeScript",
+        "sizeBytes": 3039
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-test/ext/scripted-provider.ts",
+        "kind": "TypeScript",
+        "sizeBytes": 4182
+      },
+      {
+        "path": "core/android/src/androidTest/assets/pi-test/vendor/event-stream.js",
+        "kind": "JavaScript",
+        "sizeBytes": 4027
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeLineDeliveryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1989
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeRuntimeSmokeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1140
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/PiPocTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5437
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiChatBridgeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3400
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiEngineTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4201
+      },
+      {
+        "path": "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1118
+      },
+      {
+        "path": "core/android/src/main/AndroidManifest.xml",
+        "kind": "other",
+        "sizeBytes": 1288
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/devserver-host.js",
+        "kind": "JavaScript",
+        "sizeBytes": 7363
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/lsp-host.js",
+        "kind": "JavaScript",
+        "sizeBytes": 5369
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/npm.zip",
+        "kind": "other",
+        "sizeBytes": 4584223
+      },
+      {
+        "path": "core/android/src/main/assets/node-runtime/preload.js",
+        "kind": "JavaScript",
+        "sizeBytes": 2446
+      },
+      {
+        "path": "core/android/src/main/assets/pi-runtime.zip",
+        "kind": "other",
+        "sizeBytes": 2652776
+      },
+      {
+        "path": "core/android/src/main/assets/rag/vocab.txt",
+        "kind": "other",
+        "sizeBytes": 231508
+      },
+      {
+        "path": "core/android/src/main/assets/runtime/node_compat_prelude.js",
+        "kind": "JavaScript",
+        "sizeBytes": 7594
+      },
+      {
+        "path": "core/android/src/main/cpp/CMakeLists.txt",
+        "kind": "other",
+        "sizeBytes": 10090
+      },
+      {
+        "path": "core/android/src/main/cpp/git/git_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 19081
+      },
+      {
+        "path": "core/android/src/main/cpp/node_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 2444
+      },
+      {
+        "path": "core/android/src/main/cpp/pty/pty_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 5773
+      },
+      {
+        "path": "core/android/src/main/cpp/ts/ts_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 17117
+      },
+      {
+        "path": "core/android/src/main/cpp/vec/vec_bridge.cpp",
+        "kind": "C++",
+        "sizeBytes": 14551
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/AgentIdeBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2194
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/AppGraph.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15132
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/KeystoreCrypto.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5905
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/PortableBackup.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8203
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/ProjectBackupService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4470
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/artifacts/ArtifactManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20598
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/artifacts/VideoRenderer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17073
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/db/Database.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 31459
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/fs/ProjectFileObserver.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4145
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/fs/RealProjectFileSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8632
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/fs/SafProjectFileSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19580
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/harness/HarnessBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 59414
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/harness/SkillGitInstaller.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10595
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/mcp/McpApprovalBroker.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1543
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/mcp/McpServerStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2985
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/mcp/McpToolRunner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2486
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/pdf/PdfPageRenderer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2106
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/AdvancedBackupMigration.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2603
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/AgentTaskBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11335
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/CommandApprovalService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3362
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/DeviceCapabilityDetector.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2059
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/DurableApprovalRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2492
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/DurableTaskEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10959
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/InternalWebServer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 940
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/LanAccessManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9745
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/PluginMarketplace.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6147
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/PluginPackageInstaller.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8754
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/PluginRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1886
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/ReliabilityRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 19759
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/SelfHealingEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2625
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/reliability/SkillRuntimeService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1708
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ChatRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7897
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/CloudBuildRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 28517
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ConversationMetaStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4122
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/GitHubRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 27820
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/MemoryRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4934
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/MutationRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2576
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ProjectRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 33479
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/ProviderRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20194
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/repo/SettingsRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14375
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/AndroidRuntimeGateway.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5522
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/AndroidShellRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9864
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/AndroidTerminalSession.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6300
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/NodeCompatRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11923
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/NodeRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5154
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ProviderAgentPlanner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2692
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/TermuxBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4772
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/ConflictTextParser.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4448
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/GitBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2510
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/GitMirror.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3802
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/git/GitRepository.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6562
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/lsp/LspManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 15802
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/lsp/LspService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3489
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/node/NodeBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2077
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/node/NodeExecService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4031
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/node/NodeMobileRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11380
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiChatBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7553
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 16171
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiProviderMapping.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2840
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2702
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiTaskBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5768
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiToolMapping.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8516
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pi/PiTranscriptReducer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3114
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pty/PtyBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3236
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/pty/PtySession.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3838
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/CodebaseIndexer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4815
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/OnnxEmbedder.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3053
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/RagManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6116
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/RagModelManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4777
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/VecBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1394
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/VecStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5416
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/rag/WordPieceTokenizer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3795
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/server/NodeServerService.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3759
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/symbols/SymbolIndexManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5559
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/symbols/SymbolStore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4782
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TreeSitterCodeIntelligence.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1913
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TsBridge.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2521
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TsEdit.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3067
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/runtime/ts/TsProtocol.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3582
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/DevServerManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10898
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/HarnessWebServer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 20501
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/LoopbackAuth.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2843
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/server/StaticPreviewServer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 25324
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/session/ChatSession.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 82871
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/session/IntentDetection.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6994
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/signing/SigningKeyManager.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14352
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/terminal/InteractivePromptDetector.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2234
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/terminal/VtEmulator.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 12835
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/tools/AgentToolExecutor.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 17997
+      },
+      {
+        "path": "core/android/src/main/kotlin/com/anvex/core/android/update/AppUpdateChecker.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 12876
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/CryptoEnvelopeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5173
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/DurableApprovalRepositoryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1610
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/NodeRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 603
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/PortableBackupBytesTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 831
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/SelfHealingEngineTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1598
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/db/MigrationTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 26238
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/harness/SkillGitInstallerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 974
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/mcp/McpApprovalBrokerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 922
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/repo/CloudBuildRepositoryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5249
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/ProviderAgentPlannerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1342
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/RuntimeSecurityTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2288
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/StdinHangTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1646
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/git/ConflictTextParserTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1902
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiMappingsTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7516
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiTranscriptReducerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2642
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/VecStoreTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1941
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/WordPieceTokenizerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1945
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsEditTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1569
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsProtocolTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1489
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/server/LoopbackLeakTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3236
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/session/ChatSessionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 25607
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/session/IntentDetectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3496
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/signing/SigningSealedBoxTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1733
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/terminal/InteractivePromptDetectorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1612
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/terminal/VtEmulatorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2473
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/tools/AgentToolExecutorTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8334
+      },
+      {
+        "path": "core/android/src/test/kotlin/com/anvex/core/android/update/AppUpdateCheckerHostTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1705
+      },
+      {
+        "path": "core/engine/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 297
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ActionDispatcher.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 30742
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ActionSafetyPolicy.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 18876
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/AgentOrchestration.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4687
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ArtifactPackaging.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 14266
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ArtifactRunner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4048
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BatchMutation.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3896
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BoltActions.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3348
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BoltStreamParser.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 18931
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/BuildScriptRiskScanner.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1100
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/CommandTranslator.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 11102
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ContextBuilder.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8483
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/DiffEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2822
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ErrorMessages.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 863
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/PatchEngine.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6166
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/PathSanitizer.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2267
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/PreviewHarness.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 26055
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectFileSystem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2721
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5115
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectSearch.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3422
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ProjectTemplates.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5384
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SensitivePaths.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9592
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SkillExecutionRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1964
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SkillsRuntime.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 993
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/SystemPromptFactory.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 30670
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ToolSecurity.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 214
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/UserIntentClassifier.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5107
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/VersionNumbers.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1222
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/ZipCodec.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6777
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/CodeChunker.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2865
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/CodeIntelligence.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3004
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/FoldMath.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5279
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/codeintel/SymbolIndexCore.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4152
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/diagnostics/LightDiagnostics.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 10353
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/lsp/LspFraming.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2293
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/memory/Memory.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6025
+      },
+      {
+        "path": "core/engine/src/main/kotlin/com/anvex/core/engine/vcs/GitLite.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 33814
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ActionSafetyPolicyTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 943
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ArtifactPackagingTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5210
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/AuditFixWaveTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5728
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/Batch1AgentRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2898
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/BatchMutationTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3134
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/BoltStreamParserTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9766
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ContextBuilderSecurityTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 4912
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/DiagramPreviewTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 7295
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/DispatcherProtectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2836
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/EngineTests.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 13275
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ExportDetectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 668
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ExternalReviewRegressionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8325
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/FakeFs.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3217
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/McpToolTargetTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 469
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/MediaDetectionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2653
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/PatchEngineTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5775
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/PreviewHarnessSecurityTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 569
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/ProjectSearchTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1864
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SecondReviewRegressionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 6232
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SecurityFixesRegressionTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5838
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SensitivePathsBypassTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1807
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SkillExecutionRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 958
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/SkillsRuntimeTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 532
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/UserIntentClassifierTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1714
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/V1_1_RegressionsTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 16935
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/V42FeaturesTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 5170
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/VersionNumbersTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1353
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/CodeChunkerTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2063
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/FoldMathTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2024
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/SymbolIndexCoreTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2661
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/diagnostics/LightDiagnosticsTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2914
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/lsp/LspFramingTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1566
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/memory/MemoryTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2909
+      },
+      {
+        "path": "core/engine/src/test/kotlin/com/anvex/core/engine/vcs/GitLiteTest.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 8226
+      },
+      {
+        "path": "core/model/build.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 336
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Chat.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 3902
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Memory.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 1167
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Project.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 2349
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/Provider.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 9782
+      },
+      {
+        "path": "core/model/src/main/kotlin/com/anvex/core/model/TaskRunItem.kt",
+        "kind": "Kotlin",
+        "sizeBytes": 668
+      },
+      {
+        "path": "docs/AI_PROVIDERS.md",
+        "kind": "other",
+        "sizeBytes": 4911
+      },
+      {
+        "path": "docs/ANDROID_IDE_AI_AGENT_V2.md",
+        "kind": "other",
+        "sizeBytes": 2307
+      },
+      {
+        "path": "docs/ANDROID_RUNTIME.md",
+        "kind": "other",
+        "sizeBytes": 4302
+      },
+      {
+        "path": "docs/ANTIGRAVITY_ASSESSMENT.md",
+        "kind": "other",
+        "sizeBytes": 11239
+      },
+      {
+        "path": "docs/ANTIGRAVITY_SIGNIN_FIRST_BLOCKER.md",
+        "kind": "other",
+        "sizeBytes": 7314
+      },
+      {
+        "path": "docs/ARCHITECTURE.md",
+        "kind": "other",
+        "sizeBytes": 4416
+      },
+      {
+        "path": "docs/ARTIFACT_PACKAGING.md",
+        "kind": "other",
+        "sizeBytes": 2166
+      },
+      {
+        "path": "docs/BUILD.md",
+        "kind": "other",
+        "sizeBytes": 5908
+      },
+      {
+        "path": "docs/CHANGELOG.md",
+        "kind": "other",
+        "sizeBytes": 6123
+      },
+      {
+        "path": "docs/CHANGES_V4_4.md",
+        "kind": "other",
+        "sizeBytes": 8927
+      },
+      {
+        "path": "docs/CHANGES_V4_4_1.md",
+        "kind": "other",
+        "sizeBytes": 8261
+      },
+      {
+        "path": "docs/CLINE_INTEGRATION_REPORT.md",
+        "kind": "other",
+        "sizeBytes": 9984
+      },
+      {
+        "path": "docs/DESIGN_SPEC_WEB_PORT.md",
+        "kind": "other",
+        "sizeBytes": 5827
+      },
+      {
+        "path": "docs/DESIGN_SYSTEM.md",
+        "kind": "other",
+        "sizeBytes": 4826
+      },
+      {
+        "path": "docs/DSHA_FULL_CLONE_MASTER_PLAN.md",
+        "kind": "other",
+        "sizeBytes": 18060
+      },
+      {
+        "path": "docs/HARNESS.md",
+        "kind": "other",
+        "sizeBytes": 6066
+      },
+      {
+        "path": "docs/KNOWN_LIMITATIONS.md",
+        "kind": "other",
+        "sizeBytes": 14289
+      },
+      {
+        "path": "docs/MANUAL_DEVICE_CHECKLIST.md",
+        "kind": "other",
+        "sizeBytes": 4864
+      },
+      {
+        "path": "docs/MEMORY.md",
+        "kind": "other",
+        "sizeBytes": 1583
+      },
+      {
+        "path": "docs/OPENCODE_INTEGRATION_REPORT.md",
+        "kind": "other",
+        "sizeBytes": 7088
+      },
+      {
+        "path": "docs/OPENCODE_RUNTIME_FEASIBILITY.md",
+        "kind": "other",
+        "sizeBytes": 23716
+      },
+      {
+        "path": "docs/PFP_V4_TRACEABILITY.md",
+        "kind": "other",
+        "sizeBytes": 7751
+      },
+      {
+        "path": "docs/RELIABILITY_CENTER.md",
+        "kind": "other",
+        "sizeBytes": 1659
+      },
+      {
+        "path": "docs/RUNTIME_EVALUATION.md",
+        "kind": "other",
+        "sizeBytes": 6917
+      },
+      {
+        "path": "docs/SECURITY.md",
+        "kind": "other",
+        "sizeBytes": 5803
+      },
+      {
+        "path": "docs/SECURITY_AUDIT_V1_1.md",
+        "kind": "other",
+        "sizeBytes": 8434
+      },
+      {
+        "path": "docs/THIRD_PARTY_NOTICES.md",
+        "kind": "other",
+        "sizeBytes": 3586
+      },
+      {
+        "path": "docs/V1_1_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 10531
+      },
+      {
+        "path": "docs/assets/anvex-emblem.jpg",
+        "kind": "other",
+        "sizeBytes": 702865
+      },
+      {
+        "path": "docs/assets/anvex-wordmark.jpg",
+        "kind": "other",
+        "sizeBytes": 231526
+      },
+      {
+        "path": "docs/audit/18_ITEM_COMPLETION.md",
+        "kind": "other",
+        "sizeBytes": 1583
+      },
+      {
+        "path": "docs/audit/ARCHITECTURE_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 7406
+      },
+      {
+        "path": "docs/audit/ARTIFACT_PACKAGING_V3.3.1.md",
+        "kind": "other",
+        "sizeBytes": 1706
+      },
+      {
+        "path": "docs/audit/AUDIT_RECONCILIATION_V3.3.9.md",
+        "kind": "other",
+        "sizeBytes": 3961
+      },
+      {
+        "path": "docs/audit/BATCH_1_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1343
+      },
+      {
+        "path": "docs/audit/BATCH_1_HARDENING_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 2020
+      },
+      {
+        "path": "docs/audit/BATCH_1_IMPLEMENTATION.md",
+        "kind": "other",
+        "sizeBytes": 1468
+      },
+      {
+        "path": "docs/audit/BATCH_2_IMPLEMENTATION_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1563
+      },
+      {
+        "path": "docs/audit/BATCH_3_IMPLEMENTATION_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1665
+      },
+      {
+        "path": "docs/audit/BATCH_4_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 1476
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_30_FINAL_v3.1.0.md",
+        "kind": "other",
+        "sizeBytes": 3564
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_EXTERNAL_SECURITY_FIX_v3.1.1.md",
+        "kind": "other",
+        "sizeBytes": 2153
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_FINAL_v3.1.2.md",
+        "kind": "other",
+        "sizeBytes": 1657
+      },
+      {
+        "path": "docs/audit/DEEP_AUDIT_V3.3.8.md",
+        "kind": "other",
+        "sizeBytes": 3458
+      },
+      {
+        "path": "docs/audit/DEEP_VERIFICATION_V3.2.8.md",
+        "kind": "other",
+        "sizeBytes": 2769
+      },
+      {
+        "path": "docs/audit/DEPENDENCY_AUDIT.md",
+        "kind": "other",
+        "sizeBytes": 3000
+      },
+      {
+        "path": "docs/audit/DSHA_CAPABILITY_EXPANSION_19_30.md",
+        "kind": "other",
+        "sizeBytes": 1433
+      },
+      {
+        "path": "docs/audit/EXTERNAL_AI_AUDIT_REVIEW_V3.2.7.md",
+        "kind": "other",
+        "sizeBytes": 3819
+      },
+      {
+        "path": "docs/audit/FINAL_AUDIT_CORRECTION_V3.3.7.md",
+        "kind": "other",
+        "sizeBytes": 2489
+      },
+      {
+        "path": "docs/audit/FINAL_UIUX_DEEP_AUDIT_V3.2.2.md",
+        "kind": "other",
+        "sizeBytes": 889
+      },
+      {
+        "path": "docs/audit/FINAL_UIUX_DEEP_AUDIT_V3.2.4.md",
+        "kind": "other",
+        "sizeBytes": 4469
+      },
+      {
+        "path": "docs/audit/GROK_AUDIT_REMEDIATION_V3.2.5.md",
+        "kind": "other",
+        "sizeBytes": 1295
+      },
+      {
+        "path": "docs/audit/MIGRATION_PLAN.md",
+        "kind": "other",
+        "sizeBytes": 5204
+      },
+      {
+        "path": "docs/audit/PERSIAN_LANGUAGE_SUPPORT_V3.2.6.md",
+        "kind": "other",
+        "sizeBytes": 1320
+      },
+      {
+        "path": "docs/audit/POST_AUDIT_FIX_3.1.3.md",
+        "kind": "other",
+        "sizeBytes": 1617
+      },
+      {
+        "path": "docs/audit/POST_AUDIT_FIX_3.1.4.md",
+        "kind": "other",
+        "sizeBytes": 2022
+      },
+      {
+        "path": "docs/audit/RUNTIME_ANALYSIS.md",
+        "kind": "other",
+        "sizeBytes": 6196
+      },
+      {
+        "path": "docs/audit/UIUX_REDESIGN_V3.2.0.md",
+        "kind": "other",
+        "sizeBytes": 3107
+      },
+      {
+        "path": "docs/audit/UIUX_REDESIGN_V3.2.1.md",
+        "kind": "other",
+        "sizeBytes": 1187
+      },
+      {
+        "path": "docs/audit/UIUX_REDESIGN_V3.2.2.md",
+        "kind": "other",
+        "sizeBytes": 858
+      },
+      {
+        "path": "docs/audit/deep-audit/DEEP_AUDIT_FIX_REPORT_v2.9.1.md",
+        "kind": "other",
+        "sizeBytes": 2206
+      },
+      {
+        "path": "docs/audit/deep-audit/DEEP_AUDIT_HARDENING.md",
+        "kind": "other",
+        "sizeBytes": 3557
+      },
+      {
+        "path": "docs/audit/deep-audit/DEEP_AUDIT_HARDENING_v2.9.0.md",
+        "kind": "other",
+        "sizeBytes": 2319
+      },
+      {
+        "path": "docs/audit/phase0/PHASE_0_REBASELINE.md",
+        "kind": "other",
+        "sizeBytes": 2286
+      },
+      {
+        "path": "docs/audit/phase1/PHASE_1_DURABLE_TASK_ENGINE.md",
+        "kind": "other",
+        "sizeBytes": 2505
+      },
+      {
+        "path": "docs/review/IDEAS-4.10.5.md",
+        "kind": "other",
+        "sizeBytes": 32994
+      },
+      {
+        "path": "docs/review/ISSUES-4.10.5.md",
+        "kind": "other",
+        "sizeBytes": 51944
+      },
+      {
+        "path": "docs/review/STATUS-4.11.0.md",
+        "kind": "other",
+        "sizeBytes": 6460
+      },
+      {
+        "path": "docs/screenshots/home.jpg",
+        "kind": "other",
+        "sizeBytes": 130407
+      },
+      {
+        "path": "docs/screenshots/memory.jpg",
+        "kind": "other",
+        "sizeBytes": 102341
+      },
+      {
+        "path": "docs/screenshots/settings-ai-providers.jpg",
+        "kind": "other",
+        "sizeBytes": 130886
+      },
+      {
+        "path": "docs/screenshots/settings-developer.jpg",
+        "kind": "other",
+        "sizeBytes": 149393
+      },
+      {
+        "path": "docs/screenshots/settings-workspace.jpg",
+        "kind": "other",
+        "sizeBytes": 165902
+      },
+      {
+        "path": "docs/superpowers/plans/2026-10-09-boltdroid-v422.md",
+        "kind": "other",
+        "sizeBytes": 21556
+      },
+      {
+        "path": "docs/superpowers/specs/2026-10-09-boltdroid-v422-design.md",
+        "kind": "other",
+        "sizeBytes": 2670
+      },
+      {
+        "path": "gradle/libs.versions.toml",
+        "kind": "other",
+        "sizeBytes": 4619
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.jar",
+        "kind": "other",
+        "sizeBytes": 43583
+      },
+      {
+        "path": "gradle/wrapper/gradle-wrapper.properties",
+        "kind": "other",
+        "sizeBytes": 253
+      },
+      {
+        "path": "gradle.properties",
+        "kind": "other",
+        "sizeBytes": 1104
+      },
+      {
+        "path": "gradlew",
+        "kind": "other",
+        "sizeBytes": 8762
+      },
+      {
+        "path": "gradlew.bat",
+        "kind": "other",
+        "sizeBytes": 2966
+      },
+      {
+        "path": "keystore/debug.keystore",
+        "kind": "other",
+        "sizeBytes": 2666
+      },
+      {
+        "path": "settings.gradle.kts",
+        "kind": "Kotlin",
+        "sizeBytes": 621
+      },
+      {
+        "path": "tools/build_source_mirror.py",
+        "kind": "Python",
+        "sizeBytes": 4835
+      },
+      {
+        "path": "tools/deep_audit_30.py",
+        "kind": "Python",
+        "sizeBytes": 12684
+      },
+      {
+        "path": "tools/final_release_audit.py",
+        "kind": "Python",
+        "sizeBytes": 2103
+      },
+      {
+        "path": "tools/generate_launcher_icons.py",
+        "kind": "Python",
+        "sizeBytes": 3801
+      },
+      {
+        "path": "tools/icon-source/anvex-icon-source.jpg",
+        "kind": "other",
+        "sizeBytes": 698008
+      },
+      {
+        "path": "tools/opencode_probe.sh",
+        "kind": "other",
+        "sizeBytes": 2803
+      },
+      {
+        "path": "tools/osv_audit_catalog.py",
+        "kind": "Python",
+        "sizeBytes": 3745
+      },
+      {
+        "path": "tools/verify_build_environment.py",
+        "kind": "Python",
+        "sizeBytes": 1475
+      },
+      {
+        "path": "tools/verify_launcher_icon.py",
+        "kind": "Python",
+        "sizeBytes": 8278
+      },
+      {
+        "path": "tools/verify_room_schema_snapshots.py",
+        "kind": "Python",
+        "sizeBytes": 1966
+      },
+      {
+        "path": "tools/verify_source_mirror.py",
+        "kind": "Python",
+        "sizeBytes": 4180
+      },
+      {
+        "path": "tools/write_apk_build_info.py",
+        "kind": "Python",
+        "sizeBytes": 2037
+      }
+    ],
+    "languages": [
+      "C++",
+      "CSS",
+      "HTML",
+      "JavaScript",
+      "JavaScript/React",
+      "Kotlin",
+      "Python",
+      "TypeScript"
+    ],
+    "buildSystems": [
+      "Gradle",
+      "Gradle Kotlin DSL"
+    ],
+    "dependencyFiles": [
+      "app/build.gradle.kts",
+      "build.gradle.kts",
+      "core/ai/build.gradle.kts",
+      "core/android/build.gradle.kts",
+      "core/engine/build.gradle.kts",
+      "core/model/build.gradle.kts"
+    ],
+    "testIndicators": [
+      "app/src/test/kotlin/com/anvex/app/i18n/TranslationCoverageTest.kt",
+      "app/src/test/kotlin/com/anvex/app/project/ArchiveTextExtractorTest.kt",
+      "app/src/test/kotlin/com/anvex/app/ui/components/BidiTextTest.kt",
+      "app/src/test/kotlin/com/anvex/app/ui/components/MarkdownParserTest.kt",
+      "app/src/test/kotlin/com/anvex/app/ui/components/ReadAloudTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/FallbackProviderClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/OpenAiEffortTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/OpenCodeClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/ProviderClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/SseProtocolTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/ThinkingLevelMappingTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpClientTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/mcp/McpConfigSaveTest.kt",
+      "core/ai/src/test/kotlin/com/anvex/core/ai/zai/ZaiAccountCoordinatorTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeLineDeliveryTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/NodeRuntimeSmokeTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/node/PiPocTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiChatBridgeTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiEngineTest.kt",
+      "core/android/src/androidTest/kotlin/com/anvex/core/android/runtime/pi/PiRuntimeTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/CryptoEnvelopeTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/DurableApprovalRepositoryTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/NodeRuntimeTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/PortableBackupBytesTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/SelfHealingEngineTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/db/MigrationTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/harness/SkillGitInstallerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/mcp/McpApprovalBrokerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/repo/CloudBuildRepositoryTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/ProviderAgentPlannerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/RuntimeSecurityTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/StdinHangTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/git/ConflictTextParserTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiMappingsTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/pi/PiTranscriptReducerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/VecStoreTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/rag/WordPieceTokenizerTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsEditTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/runtime/ts/TsProtocolTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/server/LoopbackLeakTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/session/ChatSessionTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/session/IntentDetectionTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/signing/SigningSealedBoxTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/terminal/InteractivePromptDetectorTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/terminal/VtEmulatorTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/tools/AgentToolExecutorTest.kt",
+      "core/android/src/test/kotlin/com/anvex/core/android/update/AppUpdateCheckerHostTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ActionSafetyPolicyTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ArtifactPackagingTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/AuditFixWaveTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/Batch1AgentRuntimeTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/BatchMutationTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/BoltStreamParserTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ContextBuilderSecurityTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/DiagramPreviewTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/DispatcherProtectionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/EngineTests.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ExportDetectionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ExternalReviewRegressionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/FakeFs.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/McpToolTargetTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/MediaDetectionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/PatchEngineTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/PreviewHarnessSecurityTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/ProjectSearchTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SecondReviewRegressionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SecurityFixesRegressionTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SensitivePathsBypassTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SkillExecutionRuntimeTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/SkillsRuntimeTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/UserIntentClassifierTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/V1_1_RegressionsTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/V42FeaturesTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/VersionNumbersTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/CodeChunkerTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/FoldMathTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/codeintel/SymbolIndexCoreTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/diagnostics/LightDiagnosticsTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/lsp/LspFramingTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/memory/MemoryTest.kt",
+      "core/engine/src/test/kotlin/com/anvex/core/engine/vcs/GitLiteTest.kt",
+      "docs/DESIGN_SPEC_WEB_PORT.md",
+      "docs/superpowers/specs/2026-10-09-boltdroid-v422-design.md"
+    ],
+    "ciIndicators": [
+      ".github/workflows/build-apk.yml",
+      ".github/workflows/codeql.yml",
+      ".github/workflows/dependency-audit.yml",
+      ".github/workflows/emulator-smoke.yml",
+      ".github/workflows/libnode-reassemble.yml",
+      ".github/workflows/libnode-release.yml",
+      ".github/workflows/poc-libnode.yml",
+      ".github/workflows/release-signed.yml"
+    ],
+    "secretIndicators": [],
+    "fileCount": 498,
+    "totalBytes": 27258677,
+    "contentHash": "1c159a447a515576e4fb9d4ecb17c6d06200725cacd73d3da26aaa9e04945d39"
+  },
+  "findings": [
+    {
+      "id": "FIND-001",
+      "severity": "high",
+      "category": "architecture",
+      "title": "DurableTaskEngine executes tasks strictly serially",
+      "evidence": [
+        "core/android/.../reliability/DurableTaskEngine.kt: drain() holds workerMutex and joins each task"
+      ],
+      "impact": "Cannot provide parallel agent execution.",
+      "recommendation": "Implement a dedicated parallel scheduler in the module; reuse the engine only as a pattern."
+    },
+    {
+      "id": "FIND-002",
+      "severity": "high",
+      "category": "architecture",
+      "title": "GitLite has a single working tree and no merge",
+      "evidence": [
+        "core/engine/.../vcs/GitLite.kt header: no merge, rebase or worktree"
+      ],
+      "impact": "Git worktrees and Git-based merging are not available.",
+      "recommendation": "Use CAS-backed workspace forks and an in-module three-way merge."
+    },
+    {
+      "id": "FIND-003",
+      "severity": "medium",
+      "category": "maintainability",
+      "title": "ChatSession (1525 lines) and HarnessBridge (1232 lines) are oversized and coupled to chat persistence/UI",
+      "evidence": [
+        "CHANGELOG.md known technical debt",
+        "core/android/.../session/ChatSession.kt"
+      ],
+      "impact": "Adding multi-agent logic there would worsen coupling.",
+      "recommendation": "Do not modify; compose ProviderClient, BoltStreamParser, ActionDispatcher and PatchEngine in a new runner."
+    },
+    {
+      "id": "FIND-004",
+      "severity": "low",
+      "category": "security",
+      "title": "RealProjectFileSystem already enforces confinement, atomic writes and symlink safety",
+      "evidence": [
+        "core/android/.../fs/RealProjectFileSystem.kt"
+      ],
+      "impact": "Positive: reuse avoids duplicating security-critical code.",
+      "recommendation": "Delegate to it (ADR-002)."
+    },
+    {
+      "id": "FIND-005",
+      "severity": "medium",
+      "category": "compatibility",
+      "title": "SAF workspaces fail closed in the runtime gateway",
+      "evidence": [
+        "AndroidRuntimeGateway / AppGraph comments"
+      ],
+      "impact": "SAF-backed projects cannot host isolated workspaces.",
+      "recommendation": "Real-path-only engine; SAF import gateway deferred."
+    },
+    {
+      "id": "FIND-006",
+      "severity": "info",
+      "category": "build",
+      "title": "Room database anvex.db is at schema version 13 with verified schema snapshots",
+      "evidence": [
+        "core/android/.../db/Database.kt",
+        "tools/verify_room_schema_snapshots.py"
+      ],
+      "impact": "Changing it adds migration risk.",
+      "recommendation": "Use a separate agents.db."
+    },
+    {
+      "id": "FIND-007",
+      "severity": "info",
+      "category": "testing",
+      "title": "Test infrastructure present: JUnit 4.13.2 and 83 test indicators",
+      "evidence": [
+        "gradle/libs.versions.toml",
+        "inventory.testIndicators"
+      ],
+      "impact": "Module tests can follow existing conventions.",
+      "recommendation": "Use JUnit 4.13.2."
+    }
+  ],
+  "currentState": {
+    "summary": "Anvex 4.15.2 is a multi-module Android app (core:model, core:engine, core:ai, core:android, app) with a single-agent chat engine, a harness web UI, Room database version 13 and a manual DI graph.",
+    "architecture": [
+      "core:engine is pure JVM (parser, dispatcher, patch engine, safety policy, ProjectFileSystem)",
+      "core:ai provides ProviderClient implementations",
+      "core:android holds sessions, Room, services, RealProjectFileSystem",
+      "app holds Compose UI and AppGraph"
+    ],
+    "technology": [
+      "Kotlin 2.0.21",
+      "AGP 8.7.3",
+      "Room 2.6.1",
+      "OkHttp 4.12.0",
+      "coroutines 1.9.0",
+      "Compose BOM 2024.12.01",
+      "minSdk 26 / target 35",
+      "JUnit 4.13.2"
+    ],
+    "gaps": [
+      "no multi-agent orchestration",
+      "no parallel task execution",
+      "no isolated workspaces",
+      "no merge capability in GitLite",
+      "no independent review gates"
+    ]
+  },
+  "targetState": {
+    "summary": "Anvex gains a separable multi-agent module (four Gradle modules) integrated only at contract points.",
+    "architecture": [
+      "agents-core pure JVM",
+      "agents-fs over ProjectFileSystem",
+      "agents-runtime with agents.db",
+      "agents-ui Compose"
+    ],
+    "technology": [
+      "Kotlin 2.0.21",
+      "Room 2.6.1 (separate database)",
+      "manual DI via AgentsGraph",
+      "JUnit 4.13.2"
+    ]
+  },
+  "migration": {
+    "strategy": "Build the module completely in a copy of Anvex 4.15.2, then integrate at the listed contract points.",
+    "steps": [
+      "M0 baseline",
+      "M1 pure core",
+      "M2 workspaces and merge",
+      "M3 runtime",
+      "M4 UI",
+      "M5 assurance",
+      "M6 integration"
+    ],
+    "rollback": "Remove the include lines, dependency lines, graph wiring, route and strings; agents.db is separate and can be deleted without affecting anvex.db.",
+    "validation": [
+      "module acceptance tests",
+      "Anvex final_release_audit.py",
+      "verify_source_mirror.py",
+      "verify_room_schema_snapshots.py",
+      "manual device checklist"
+    ]
+  }
+}

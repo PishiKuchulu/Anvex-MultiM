@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pfp.dev/schema/project-analysis/1.0.0",
+  "title": "PFP Phase 2 Project Analysis",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "mode",
+    "project",
+    "inventory",
+    "findings",
+    "currentState"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0.0"
+    },
+    "mode": {
+      "enum": [
+        "existing",
+        "migration",
+        "refactor",
+        "hybrid"
+      ]
+    },
+    "project": {
+      "type": "object",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inventory": {
+      "$ref": "#/$defs/inventory"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "currentState": {
+      "type": "object",
+      "required": [
+        "summary",
+        "architecture",
+        "technology",
+        "gaps"
+      ],
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "technology": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "targetState": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "technology": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "migration": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rollback": {
+          "type": "string"
+        },
+        "validation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "inventory": {
+      "type": "object",
+      "required": [
+        "root",
+        "files",
+        "languages",
+        "buildSystems",
+        "dependencyFiles",
+        "testIndicators",
+        "ciIndicators",
+        "secretIndicators",
+        "fileCount",
+        "totalBytes",
+        "contentHash"
+      ],
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path",
+              "kind",
+              "sizeBytes"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "sizeBytes": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "buildSystems": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dependencyFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "testIndicators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ciIndicators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "secretIndicators": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fileCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "totalBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contentHash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "required": [
+        "id",
+        "severity",
+        "category",
+        "title",
+        "evidence",
+        "impact"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "info",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "category": {
+          "enum": [
+            "architecture",
+            "dependency",
+            "security",
+            "testing",
+            "build",
+            "documentation",
+            "maintainability",
+            "compatibility",
+            "migration"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "impact": {
+          "type": "string"
+        },
+        "recommendation": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

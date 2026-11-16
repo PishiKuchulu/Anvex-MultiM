@@ -1,0 +1,16 @@
+== agents-core build 2026-11-11T19:28:55Z
+kotlinc: info: kotlinc-jvm 2.0.21 (JRE 21.0.12.1+1-1-24.04.4-Ubuntu)
+java: openjdk version "21.0.12.1" 2026-08-18
+flags: -jvm-target 17 -Werror
+-- main sources: 31 files, 2771 lines
+-- main compile OK
+-- test compile OK
+-- test classes: com.anvex.agents.core.ArchitectureGuardTest com.anvex.agents.core.AssuranceTest com.anvex.agents.core.BudgetTest com.anvex.agents.core.ChangeSetTest com.anvex.agents.core.DomainTest com.anvex.agents.core.EventCodecTest com.anvex.agents.core.EventLogTest com.anvex.agents.core.IntegratorTest com.anvex.agents.core.JournalTest com.anvex.agents.core.JsonTest com.anvex.agents.core.MergeTest com.anvex.agents.core.OrchestratorTest com.anvex.agents.core.PathTest com.anvex.agents.core.PersistenceCodecsTest com.anvex.agents.core.PolicyEngineTest com.anvex.agents.core.PromptsAndDiffTest com.anvex.agents.core.RegistryTest com.anvex.agents.core.RequeueTest com.anvex.agents.core.SchedulerPropertyTest com.anvex.agents.core.SchedulerTest 
+JUnit version 4.13.2
+...............................................................................................merge 5000 lines, 25+25 edits: 11 ms (budget BUD-MERGE 500 ms)
+...................................................................fuzz: 300 seeds, 180000 events, 853 tasks completed, 2997 failed, 3357 gate-violation attempts rejected, 7 budget stops, 238 conflicts
+.........................................
+Time: 10.003
+
+OK (203 tests)
+

@@ -1,0 +1,50 @@
+# Normalized user input for ANVEX-AGENTS.
+# English lines are verbatim lines of the product specification (ANVEX — Advanced Multi-Agent Development System).
+# Persian lines are the product owner's planning directives with markdown markers removed; meaning unchanged.
+Transform Anvex from a single-agent AI coding application into an advanced, extensible, multi-agent software development environment.
+The system must support multiple AI agents working collaboratively on the same software project, using different AI models, providers, tools, roles, and execution strategies.
+Select a different AI provider and model for each agent.
+Configure individual temperature and other supported model parameters.
+Assign the same task to multiple agents.
+Run multiple agents simultaneously.
+Define task dependencies and execution order.
+Compare independent implementations.
+Approve, reject, modify, or reassign tasks.
+Pause, resume, or terminate individual agents.
+Control which agents can read, modify, execute, or approve project changes.
+Agents must not mark their own work as successfully verified merely because their implementation process completed.
+The system must never silently overwrite another agent's changes.
+An agent must never be able to bypass mandatory verification gates simply by requesting approval from the Project Manager.
+Parallel execution must be based on task dependencies and actual file-level conflicts, not simply the number of available agents.
+Isolated agent workspaces.
+Merge and conflict resolution.
+Rollback and recovery.
+Per-agent token consumption tracking.
+Configurable execution budgets.
+Maximum concurrent agent limits.
+Interrupted execution recovery.
+Agent messages and generated content must be treated as untrusted input unless independently validated.
+Secure credential handling.
+Governance enforcement must not depend on the selected AI provider or model.
+Avoid repeatedly sending the entire project source code to every model. Use relevant context retrieval and controlled context distribution.
+Add new agent types without modifying the core orchestration engine.
+Design the architecture so that the following capabilities can be added without redesigning the core engine:
+Compatibility with the existing Anvex architecture.
+No unnecessary external infrastructure dependencies.
+PFP must remain the authoritative governance layer.
+Git branches and Git Worktrees where supported.
+A central Project Manager Agent manages a team of specialized subordinate agents.
+Import and export agent configurations.
+موتور چندعاملی (ارکستراسیون، گیت، پچ، مرج، تشخیص تعارض، ایزوله‌سازی) فقط و فقط با RealProjectFileSystem (مسیرهای واقعی فایل) کار می‌کند.
+پشتیبانی مستقیم از SAF (URIهای content://) در هسته موتور چندعاملی ممنوع است.
+در ورودی: فایل‌ها از SAF به فضای کاری واقعی (app-private یا مسیر واقعی) کپی/وارد می‌شوند.
+قانون: به‌محض ورود پروژه به فضای کاری چندعاملی، باید به RealProjectFileSystem تبدیل شده باشد.
+تأیید تغییر اسم به WorkspaceFileSystem / RealWorkspaceFileSystem — بدون اعتراض.
+تأیید حذف getAbsolutePath و استفاده از پورت‌های جدا — با مدل مسیرِ نسبت‌به‌ریشه در هسته.
+ADR-002: رابطهٔ WorkspaceFileSystem با ProjectFileSystem موجود = واگذاری/سوارشدن، نه موازی‌سازی.
+اصلاح معنای اسنپ‌شات: مانیفست باید به محتوای قابل‌بازیابی (ذخیره‌ساز محتوامحور یا COW) پشتوانه شود، نه هشِ تنها.
+سیاست ادغام برای MVP: خودکار فقط برای ناحیه‌های غیرهم‌پوشان؛ هم‌پوشانی = تعارض.
+تعریف رفتار لبه‌ها (باینری، CRLF، حذف+ویرایش، اضافه در هر دو طرف).
+نقطهٔ اعمال مالکیت فایل و مجوزها: در هسته/Integrator (سیاست)، نه در پورت‌ها.
+هر خروجی عامل ورودی غیرقابل‌اعتماد است و قبل از اعمال باید اعتبارسنجی شود.
+این قابلیت رو کامل بسازیم و در انتها اضافش کنیم به سورس اصلی
