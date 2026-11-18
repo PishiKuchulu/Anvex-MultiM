@@ -32,10 +32,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@ed408507eac070d1f99cc633dbcf757c94c7933a
 
       - name: Pure JVM modules (core logic and real-filesystem tests)
-        run: ./gradlew :feature:agents-core:test :feature:agents-fs:test --stacktrace
+        run: ./gradlew :feature:agents-core:test :feature:agents-fs:test --stacktrace 2>&1 | tee jvm-build.log
 
       - name: Android modules compile (runtime and UI)
-        run: ./gradlew :feature:agents-runtime:compileDebugKotlin :feature:agents-ui:compileDebugKotlin --stacktrace
+        run: ./gradlew :feature:agents-runtime:compileDebugKotlin :feature:agents-ui:compileDebugKotlin --stacktrace 2>&1 | tee android-build.log
+
+      - name: Surface errors as annotations
+        if: always()
+        run: python3 .github/scripts/ci_annotations.py jvm-build.log android-build.log
 
       - name: Upload test reports
         if: always()
